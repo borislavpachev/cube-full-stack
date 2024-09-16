@@ -16,7 +16,10 @@ const orderSchema = new Schema({
   createdAt: Date,
   status: {
     type: String,
-    enum: ['In Progress', 'Shipped'],
+    enum: {
+      values: ['In Progress', 'Shipped'],
+      message: 'Order status is either: In Progress or Shipped',
+    },
   },
 });
 
