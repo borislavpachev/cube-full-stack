@@ -27,12 +27,14 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
+    enum: {
+      values: ['User', 'Admin'],
+      message: 'The user roles are: User or Admin',
+    },
+    default: 'User',
   },
   phoneNumber: {
     type: String,
-    validate: [validator.isMobilePhone, 'A phone number must be valid'],
   },
   favorites: {
     type: Array,
