@@ -7,6 +7,7 @@ const productSchema = new Schema({
     trim: true,
     minLength: 3,
     maxLength: 40,
+    unique: true,
     required: [true, 'A product must have a name'],
   },
   description: {
@@ -18,13 +19,18 @@ const productSchema = new Schema({
     type: Number,
     min: 0,
   },
-  images: {
+  gallery: {
     type: [String],
     required: [true, 'A product must have images'],
+    default: [],
   },
-  coverImages: {
+  sizes: {
     type: [String],
-    required: [true, 'A product must have cover image'],
+    enum: {
+      values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+      message: 'The product sizes are: XS, S, M, L, XL or XXL',
+    },
+    default: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
   },
   quantity: {
     extraSmall: {
@@ -59,12 +65,19 @@ const productSchema = new Schema({
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female'],
+    enum: {
+      values: ['Male', 'Female'],
+      message: 'Products are either Male or Female',
+    },
   },
   category: {
     type: String,
     required: [true, 'A product must have a category'],
-    enum: ['Maths', 'Space', 'Nature', 'Art', 'Love', 'Technology'],
+    enum: {
+      values: ['Maths', 'Space', 'Nature', 'Art', 'Love', 'Technology'],
+      message: `Product category must be one of the following:
+      Maths, Space, Nature, Art, Love or Technology`,
+    },
   },
 });
 
