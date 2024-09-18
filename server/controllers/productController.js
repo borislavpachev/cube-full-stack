@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 const Product = require('../models/productModel');
+const productServices = require('../services/productServices');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const allProducts = await Product.find();
+  const allProducts = await productServices.getAllProducts();
 
   res.status(200).json({
     status: 'success',
@@ -15,7 +16,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  const newProduct = await Product.create(req.body);
+  const newProduct = await productServices.createProduct(req, res);
 
   res.status(201).json({
     status: 'success',
@@ -26,8 +27,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
+  const product = await productServices.getProduct(req, res);
 
   res.status(200).json({
     status: 'success',
@@ -38,15 +38,7 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.updateProduct = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!updatedProduct) {
-    next(new Error(`Product with id: ${id} does not exists`, 404));
-  }
+  const updatedProduct = await productServices.updateProduct(req, res, next);
 
   res.status(201).json({
     status: 'success',
@@ -57,14 +49,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  console.log(id);
-
-  const productToDelete = await Product.findByIdAndDelete(id);
-
-  if (!productToDelete) {
-    next(new Error(`Product with id: ${id} does not exists`));
-  }
+  await productServices.deleteProduct(req, res, next);
 
   res.status(204).json({
     status: 'success',
