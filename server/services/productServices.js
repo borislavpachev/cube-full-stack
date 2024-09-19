@@ -5,12 +5,12 @@ exports.getAllProducts = async () => {
   return allProducts;
 };
 
-exports.createProduct = async (req, res) => {
+exports.createProduct = async (req) => {
   const newProduct = await Product.create(req.body);
   return newProduct;
 };
 
-exports.getProduct = async (req, res) => {
+exports.getProduct = async (req) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   return product;
