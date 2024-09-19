@@ -8,11 +8,15 @@ router.post('/login', authController.login);
 
 router.use(authController.protect);
 
-router.patch('/me/update-password', userController.updateCurrentUserPassword);
+router.patch(
+  '/me/update-password',
+  userController.updateCurrentlyLoggedInUserPassword
+);
+
 router
   .route('/me')
-  .patch(userController.updateMe)
-  .delete(userController.deleteMe);
+  .patch(userController.updateCurrentlyLoggedInUserData)
+  .delete(userController.deleteCurrentlyLoggedInUser);
 
 router.use(authController.restrictTo('Admin'));
 
