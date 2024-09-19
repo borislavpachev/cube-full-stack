@@ -1,8 +1,8 @@
 const rateLimit = require('express-rate-limit');
-const oneHour = 60 * 60 * 1000;
+const oneHourLimit = 60 * 60 * 1000;
 
 module.exports = rateLimit({
-  max: 1000,
-  windowMs: oneHour,
+  max: 500,
+  windowMs: oneHourLimit,
   message: 'Too many request from the same IP, try again in an hour',
 });
