@@ -1,58 +1,77 @@
 /* eslint-disable no-unused-vars */
-const Product = require('../models/productModel');
 const productServices = require('../services/productServices');
-const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
-exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const allProducts = await productServices.getAllProducts();
+exports.getAllProducts = async (req, res, next) => {
+  try {
+    const allProducts = await productServices.getAllProducts();
 
-  res.status(200).json({
-    status: 'success',
-    results: allProducts.length,
-    data: {
-      products: allProducts,
-    },
-  });
-});
+    res.status(200).json({
+      status: 'success',
+      results: allProducts.length,
+      data: {
+        products: allProducts,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error.message, error.status));
+  }
+};
 
-exports.createProduct = catchAsync(async (req, res, next) => {
-  const newProduct = await productServices.createProduct(req, res);
+exports.createProduct = async (req, res, next) => {
+  try {
+    const newProduct = await productServices.createProduct(req);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      product: newProduct,
-    },
-  });
-});
+    res.status(201).json({
+      status: 'success',
+      data: {
+        product: newProduct,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error.message, error.status));
+  }
+};
 
-exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await productServices.getProduct(req, res);
+exports.getProduct = async (req, res, next) => {
+  try {
+    const product = await productServices.getProduct(req);
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      product,
-    },
-  });
-});
+    res.status(200).json({
+      status: 'success',
+      data: {
+        product,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error.message, error.status));
+  }
+};
 
-exports.updateProduct = catchAsync(async (req, res, next) => {
-  const updatedProduct = await productServices.updateProduct(req, res, next);
+exports.updateProduct = async (req, res, next) => {
+  try {
+    const updatedProduct = await productServices.updateProduct(req, res, next);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      product: updatedProduct,
-    },
-  });
-});
+    res.status(201).json({
+      status: 'success',
+      data: {
+        product: updatedProduct,
+      },
+    });
+  } catch (error) {
+    return next(new AppError(error.message, error.status));
+  }
+};
 
-exports.deleteProduct = catchAsync(async (req, res, next) => {
-  await productServices.deleteProduct(req, res, next);
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    await productServices.deleteProduct(req, res, next);
 
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (error) {
+    return next(new AppError(error.message, error.status));
+  }
+};
