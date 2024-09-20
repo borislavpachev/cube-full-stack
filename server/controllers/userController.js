@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
+const userService = require('../services/userService');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await userService.getAllUsers();
 
     res.status(200).json({
       status: 'success',
@@ -20,7 +21,7 @@ exports.getAllUsers = async (req, res, next) => {
 
 exports.createUser = async (req, res, next) => {
   try {
-    const newUser = await User.create(req.body);
+    const newUser = await userService.createUser(req, res, next);
 
     res.status(201).json({
       status: 'success',
@@ -35,8 +36,8 @@ exports.createUser = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const user = await userService.getUserById(req, res, next);
+    if (!user) return;
 
     res.status(200).json({
       status: 'success',
@@ -51,16 +52,8 @@ exports.getUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedUser) {
-      return next(new AppError(`User with id: ${id} does not exists`, 404));
-    }
+    const updatedUser = await userService.updateUserById(req, res, next);
+    if (!updatedUser) return;
 
     res.status(201).json({
       status: 'success',
@@ -75,12 +68,8 @@ exports.updateUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const userToDelete = await User.findByIdAndDelete(id);
-
-    if (!userToDelete) {
-      return next(new AppError(`User with id: ${id} does not exists`, 404));
-    }
+    const user = await userService.deleteUserById(req, res, next);
+    if (!user) return;
 
     res.status(204).json({
       status: 'success',
@@ -93,15 +82,13 @@ exports.deleteUser = async (req, res, next) => {
 
 exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const user = await User.findById(id);
-    if (!req.body.password || !req.body.passwordConfirm) {
-      return next(new AppError('Password fields can not be empty', 404));
-    }
+    const user = await userService.updateCurrentlyLoggedInUserPassword(
+      req,
+      res,
+      next
+    );
 
-    user.password = req.body.password;
-    user.passwordConfirm = req.body.passwordConfirm;
-    user.save();
+    if (!user) return;
 
     res.status(201).json({
       status: 'success',
@@ -113,16 +100,12 @@ exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
 
 exports.updateCurrentlyLoggedInUserData = async (req, res, next) => {
   try {
-    const { id } = req.user;
-
-    if (req.body.password || req.body.passwordConfirm || req.body.role) {
-      return next(new AppError('This route is for user data update only', 404));
-    }
-
-    const user = await User.findByIdAndUpdate(id, req.body, {
-      runValidators: true,
-      new: true,
-    });
+    const user = await userService.updateCurrentlyLoggedInUserData(
+      req,
+      res,
+      next
+    );
+    if (!user) return;
 
     res.status(201).json({
       status: 'success',
@@ -137,13 +120,9 @@ exports.updateCurrentlyLoggedInUserData = async (req, res, next) => {
 
 exports.deleteCurrentlyLoggedInUser = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const user = await User.findByIdAndDelete(id);
-
-    if (!user) {
-      return next(new AppError(`No user with id: ${id}`, 404));
-    }
-
+    const user = await userService.deleteCurrentlyLoggedInUser(req, res, next);
+    if (!user) return;
+    
     res.status(204).json({
       status: 'success',
       data: null,
