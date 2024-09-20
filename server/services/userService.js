@@ -65,7 +65,7 @@ exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
   }
 
   if (!req.body.password || !req.body.passwordConfirm) {
-    return next(new AppError('Password fields can not be empty', 404));
+    return next(new AppError('Password fields can not be empty', 400));
   }
 
   user.password = req.body.password;
