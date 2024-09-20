@@ -49,7 +49,7 @@ exports.deleteUserById = async (req, res, next) => {
   const userToDelete = await User.findByIdAndDelete(id);
 
   if (!userToDelete) {
-    return next(new AppError(`User with id: ${id} does not exists`, 404));
+    return next(new AppError(`User with id: ${id} does not exist`, 404));
   }
 
   return userToDelete;
