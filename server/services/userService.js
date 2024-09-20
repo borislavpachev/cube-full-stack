@@ -11,7 +11,7 @@ exports.createUser = async (req, res, next) => {
   const newUser = await User.create(req.body);
 
   if (!newUser) {
-    return next(new AppError('Could not create this user', 404));
+    return next(new AppError('Could not create this user', 400));
   }
 
   return newUser;
