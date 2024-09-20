@@ -23,7 +23,7 @@ exports.getUserById = async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new AppError(`User with id: ${id} does not exists`, 404));
+    return next(new AppError(`User with id: ${id} does not exist`, 404));
   }
 
   return user;
