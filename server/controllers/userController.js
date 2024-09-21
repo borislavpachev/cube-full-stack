@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
-const User = require('../models/userModel');
-const AppError = require('../utils/AppError');
+const CustomError = require('../utils/CustomError');
+const userService = require('../services/userService');
+const httpStatus = require('../utils/httpStatus');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await userService.getAllUsers();
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       status: 'success',
       results: allUsers.length,
       data: {
@@ -14,141 +14,111 @@ exports.getAllUsers = async (req, res, next) => {
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
 exports.createUser = async (req, res, next) => {
   try {
-    const newUser = await User.create(req.body);
+    const newUser = await userService.createUser(req, res, next);
 
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       status: 'success',
       data: {
         user: newUser,
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
 exports.getUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+    const user = await userService.getUserById(req, res, next);
+    if (!user) return;
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       status: 'success',
       data: {
         user,
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const updatedUser = await userService.updateUserById(req, res, next);
+    if (!updatedUser) return;
 
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedUser) {
-      return next(new AppError(`User with id: ${id} does not exists`, 404));
-    }
-
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       status: 'success',
       data: {
         user: updatedUser,
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
 exports.deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const userToDelete = await User.findByIdAndDelete(id);
+    const user = await userService.deleteUserById(req, res, next);
+    if (!user) return;
 
-    if (!userToDelete) {
-      return next(new AppError(`User with id: ${id} does not exists`, 404));
-    }
-
-    res.status(204).json({
+    res.status(httpStatus.NO_CONTENT).json({
       status: 'success',
       data: null,
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
-exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
+exports.updateLoggedInUserPassword = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const user = await User.findById(id);
-    if (!req.body.password || !req.body.passwordConfirm) {
-      return next(new AppError('Password fields can not be empty', 404));
-    }
+    const user = await userService.updateLoggedInUserPassword(req, res, next);
 
-    user.password = req.body.password;
-    user.passwordConfirm = req.body.passwordConfirm;
-    user.save();
+    if (!user) return;
 
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       status: 'success',
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
-exports.updateCurrentlyLoggedInUserData = async (req, res, next) => {
+exports.updateLoggedInUserData = async (req, res, next) => {
   try {
-    const { id } = req.user;
+    const user = await userService.updateLoggedInUserData(req, res, next);
+    if (!user) return;
 
-    if (req.body.password || req.body.passwordConfirm || req.body.role) {
-      return next(new AppError('This route is for user data update only', 404));
-    }
-
-    const user = await User.findByIdAndUpdate(id, req.body, {
-      runValidators: true,
-      new: true,
-    });
-
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       status: 'success',
       data: {
         user,
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
-exports.deleteCurrentlyLoggedInUser = async (req, res, next) => {
+exports.deleteLoggedInUser = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const user = await User.findByIdAndDelete(id);
+    const user = await userService.deleteLoggedInUser(req, res, next);
+    if (!user) return;
 
-    if (!user) {
-      return next(new AppError(`No user with id: ${id}`, 404));
-    }
-
-    res.status(204).json({
+    res.status(httpStatus.NO_CONTENT).json({
       status: 'success',
       data: null,
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };

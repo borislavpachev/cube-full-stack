@@ -10,13 +10,13 @@ router.use(authController.protect);
 
 router.patch(
   '/me/update-password',
-  userController.updateCurrentlyLoggedInUserPassword
+  userController.updateLoggedInUserPassword
 );
 
 router
   .route('/me')
-  .patch(userController.updateCurrentlyLoggedInUserData)
-  .delete(userController.deleteCurrentlyLoggedInUser);
+  .patch(userController.updateLoggedInUserData)
+  .delete(userController.deleteLoggedInUser);
 
 router.use(authController.restrictTo('Admin'));
 

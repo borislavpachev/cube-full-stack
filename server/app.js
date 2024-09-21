@@ -1,5 +1,6 @@
 const express = require('express');
-const AppError = require('./utils/AppError');
+const CustomError = require('./utils/CustomError');
+const httpStatus = require('./utils/httpStatus');
 const errorHandler = require('./middleware/errorHandler');
 const middlewares = require('./middleware/index');
 
@@ -16,9 +17,9 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
 
 app.all('*', (req, res, next) => {
-  const error = new AppError(
+  const error = new CustomError(
     `Can't find ${req.originalUrl} on this server!`,
-    404
+    httpStatus.NOT_FOUND
   );
 
   next(error);
