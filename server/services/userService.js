@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
-const AppError = require('../utils/AppError');
+const httpStatus = require('../utils/httpStatus');
+const CustomError = require('../utils/CustomError');
 
 exports.getAllUsers = async () => {
   const allUsers = await User.find();
@@ -11,7 +12,7 @@ exports.createUser = async (req, res, next) => {
   const newUser = await User.create(req.body);
 
   if (!newUser) {
-    return next(new AppError('Could not create this user', 400));
+    return next(new CustomError('Could not create this user', httpStatus.BAD_REQUEST));
   }
 
   return newUser;
@@ -23,7 +24,7 @@ exports.getUserById = async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new AppError(`User with id: ${id} does not exist`, 404));
+    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
   }
 
   return user;
@@ -38,7 +39,7 @@ exports.updateUserById = async (req, res, next) => {
   });
 
   if (!updatedUser) {
-    return next(new AppError(`User with id: ${id} does not exists`, 404));
+    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
   }
 
   return updatedUser;
@@ -49,23 +50,23 @@ exports.deleteUserById = async (req, res, next) => {
   const userToDelete = await User.findByIdAndDelete(id);
 
   if (!userToDelete) {
-    return next(new AppError(`User with id: ${id} does not exist`, 404));
+    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
   }
 
   return userToDelete;
 };
 
-exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
+exports.updateLoggedInUserPassword = async (req, res, next) => {
   const { id } = req.params;
 
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new AppError('User not found', 404));
+    return next(new CustomError('User not found', httpStatus.NOT_FOUND));
   }
 
   if (!req.body.password || !req.body.passwordConfirm) {
-    return next(new AppError('Password fields can not be empty', 400));
+    return next(new CustomError('Password fields can not be empty', httpStatus.BAD_REQUEST));
   }
 
   user.password = req.body.password;
@@ -74,7 +75,7 @@ exports.updateCurrentlyLoggedInUserPassword = async (req, res, next) => {
   return user;
 };
 
-exports.updateCurrentlyLoggedInUserData = async (req, res, next) => {
+exports.updateLoggedInUserData = async (req, res, next) => {
   const { id } = req.user;
 
   const user = await User.findByIdAndUpdate(id, req.body, {
@@ -82,22 +83,24 @@ exports.updateCurrentlyLoggedInUserData = async (req, res, next) => {
     new: true,
   });
   if (!user) {
-    return next(new AppError('User not found', 404));
+    return next(new CustomError('User not found', httpStatus.NOT_FOUND));
   }
 
   if (req.body.password || req.body.passwordConfirm || req.body.role) {
-    return next(new AppError('This route is for user data update only', 404));
+    return next(
+      new CustomError('This route is for user data update only', httpStatus.NOT_FOUND)
+    );
   }
 
   return user;
 };
 
-exports.deleteCurrentlyLoggedInUser = async (req, res, next) => {
+exports.deleteLoggedInUser = async (req, res, next) => {
   const { id } = req.user;
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
-    return next(new AppError(`No user with id: ${id}`, 404));
+    return next(new CustomError(`No user with id: ${id}`, httpStatus.NOT_FOUND));
   }
 
   return user;
