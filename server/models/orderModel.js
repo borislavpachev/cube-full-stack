@@ -3,15 +3,21 @@ const { Schema, model } = mongoose;
 
 const orderSchema = new Schema({
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: [true, 'An order must have a user'],
   },
-  products: {
-    type: Array,
-    default: [],
-  },
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      default: [],
+    },
+  ],
   totalPrice: {
     type: Number,
+    required: [true, 'An order must have a total price'],
+    default: 0,
   },
   createdAt: Date,
   status: {

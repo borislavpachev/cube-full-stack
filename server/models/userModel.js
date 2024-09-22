@@ -44,19 +44,26 @@ const userSchema = new Schema({
       message: 'The mobile phone must be a real phone number',
     },
   },
-  favorites: {
-    type: Array,
-    default: [],
-  },
-  shoppingCart: {
-    type: Array,
-    default: [],
-  },
+  favorites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      default: [],
+    },
+  ],
+  shoppingCart: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      default: [],
+    },
+  ],
   deliveryAddress: {
     type: String,
   },
   orders: {
-    type: Array,
+    type: Schema.Types.ObjectId,
+    ref: 'Order',
     default: [],
   },
   password: {
