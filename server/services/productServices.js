@@ -1,4 +1,5 @@
 const Product = require('../models/productModel');
+const httpStatus = require('../utils/httpStatus');
 
 exports.getAllProducts = async () => {
   const allProducts = await Product.find();
@@ -24,7 +25,7 @@ exports.updateProduct = async (req, res, next) => {
   });
 
   if (!updatedProduct) {
-    next(new Error(`Product with id: ${id} does not exists`, 404));
+    next(new Error(`Product with id: ${id} does not exists`, httpStatus.NOT_FOUND));
   }
 
   return updatedProduct;
@@ -35,7 +36,7 @@ exports.deleteProduct = async (req, res, next) => {
   const productToDelete = await Product.findByIdAndDelete(id);
 
   if (!productToDelete) {
-    next(new Error(`Product with id: ${id} does not exists`));
+    next(new Error(`Product with id: ${id} does not exists`, httpStatus.NOT_FOUND));
   }
 
   return productToDelete;

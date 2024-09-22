@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-const User = require('../models/userModel');
-const AppError = require('../utils/AppError');
+const CustomError = require('../utils/CustomError');
+const httpStatus = require('../utils/httpStatus');
 const authService = require('../services/authService');
 const jwtService = require('../services/jwtService');
 
@@ -9,7 +8,7 @@ exports.signup = async (req, res, next) => {
     const newUser = await authService.signUpUser(req);
     const token = jwtService.signToken(newUser._id);
 
-    res.status(201).json({
+    res.status(httpStatus.CREATED).json({
       status: 'success',
       token,
       data: {
@@ -17,7 +16,7 @@ exports.signup = async (req, res, next) => {
       },
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
@@ -32,12 +31,12 @@ exports.login = async (req, res, next) => {
     // expires: Here we set the expires in ms
     // })
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       status: 'success',
       token,
     });
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
@@ -47,7 +46,7 @@ exports.protect = async (req, res, next) => {
     req.user = currentUser;
     next();
   } catch (error) {
-    return next(new AppError(error.message, error.status));
+    return next(new CustomError(error.message, error.status));
   }
 };
 
@@ -55,7 +54,10 @@ exports.restrictTo = (...roles) => {
   return async (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('You do not have permission for this action', 403)
+        new CustomError(
+          'You do not have permission for this action',
+          httpStatus.FORBIDDEN
+        )
       );
     }
     next();

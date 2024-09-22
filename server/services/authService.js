@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
-const AppError = require('../utils/AppError');
+const CustomError = require('../utils/CustomError');
 const jwtService = require('./jwtService');
+const httpStatus = require('../utils/httpStatus');
 
 exports.signUpUser = async (req) => {
   const newUser = await User.create({
@@ -20,18 +21,25 @@ exports.loginUser = async (req, res, next) => {
 
   if (!email || !password) {
     return next(
-      new AppError('No email or password provided. Please try again.', 401)
+      new CustomError(
+        'No email or password provided. Please try again.',
+        httpStatus.UNAUTHORIZED
+      )
     );
   }
 
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
-    return next(new AppError('Incorrect email or password', 401));
+    return next(
+      new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
+    );
   }
 
   const correct = await user.correctPassword(password, user.password);
   if (!correct) {
-    return next(new AppError('Incorrect email or password', 401));
+    return next(
+      new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
+    );
   }
 
   const token = jwtService.signToken(user._id);
@@ -50,7 +58,7 @@ exports.protect = async (req, res, next) => {
   }
 
   if (!token) {
-    return next(new AppError('Please login to get access', 401));
+    return next(new CustomError('Please login to get access', httpStatus.UNAUTHORIZED));
   }
 
   const decoded = jwtService.verifyToken(token, process.env.JWT_SECRET, next);
@@ -63,7 +71,7 @@ exports.protect = async (req, res, next) => {
 
   if (!currentUser) {
     return next(
-      new AppError('The user belonging this token does not exist', 404)
+      new CustomError('The user belonging this token does not exist', httpStatus.NOT_FOUND)
     );
   }
 
