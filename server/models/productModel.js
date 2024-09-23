@@ -33,27 +33,27 @@ const productSchema = new Schema({
     default: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
   },
   quantity: {
-    extraSmall: {
+    XS: {
       type: Number,
       default: 0,
     },
-    small: {
+    S: {
       type: Number,
       default: 0,
     },
-    medium: {
+    M: {
       type: Number,
       default: 0,
     },
-    large: {
+    L: {
       type: Number,
       default: 0,
     },
-    extraLarge: {
+    XL: {
       type: Number,
       default: 0,
     },
-    doubleExtraLarge: {
+    XXL: {
       type: Number,
       default: 0,
     },
