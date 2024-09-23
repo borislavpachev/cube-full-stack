@@ -5,6 +5,10 @@ const cartController = require('../controllers/cartController');
 
 router.use(authController.protect);
 
-router.route('/:userId').get(cartController.getCart);
+router
+  .route('/')
+  .get(cartController.getCart)
+  .patch(cartController.addToCart)
+//   .delete(cartController.emptyCart);
 
 module.exports = router;
