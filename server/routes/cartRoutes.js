@@ -9,6 +9,6 @@ router
   .route('/')
   .get(cartController.getCart)
   .patch(cartController.addToCart)
-//   .delete(cartController.emptyCart);
+  .delete(cartController.removeItemFromCart);
 
 module.exports = router;
