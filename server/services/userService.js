@@ -12,7 +12,9 @@ exports.createUser = async (req, res, next) => {
   const newUser = await User.create(req.body);
 
   if (!newUser) {
-    return next(new CustomError('Could not create this user', httpStatus.BAD_REQUEST));
+    return next(
+      new CustomError('Could not create this user', httpStatus.BAD_REQUEST)
+    );
   }
 
   return newUser;
@@ -24,7 +26,27 @@ exports.getUserById = async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
+    return next(
+      new CustomError(
+        `User with id: ${id} does not exist`,
+        httpStatus.NOT_FOUND
+      )
+    );
+  }
+
+  return user;
+};
+
+exports.findUserById = async (id, next) => {
+  const user = await User.findById(id);
+
+  if (!user) {
+    return next(
+      new CustomError(
+        `User with id: ${id} does not exist`,
+        httpStatus.NOT_FOUND
+      )
+    );
   }
 
   return user;
@@ -39,7 +61,12 @@ exports.updateUserById = async (req, res, next) => {
   });
 
   if (!updatedUser) {
-    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
+    return next(
+      new CustomError(
+        `User with id: ${id} does not exist`,
+        httpStatus.NOT_FOUND
+      )
+    );
   }
 
   return updatedUser;
@@ -50,7 +77,12 @@ exports.deleteUserById = async (req, res, next) => {
   const userToDelete = await User.findByIdAndDelete(id);
 
   if (!userToDelete) {
-    return next(new CustomError(`User with id: ${id} does not exist`, httpStatus.NOT_FOUND));
+    return next(
+      new CustomError(
+        `User with id: ${id} does not exist`,
+        httpStatus.NOT_FOUND
+      )
+    );
   }
 
   return userToDelete;
@@ -66,7 +98,12 @@ exports.updateLoggedInUserPassword = async (req, res, next) => {
   }
 
   if (!req.body.password || !req.body.passwordConfirm) {
-    return next(new CustomError('Password fields can not be empty', httpStatus.BAD_REQUEST));
+    return next(
+      new CustomError(
+        'Password fields can not be empty',
+        httpStatus.BAD_REQUEST
+      )
+    );
   }
 
   user.password = req.body.password;
@@ -88,7 +125,10 @@ exports.updateLoggedInUserData = async (req, res, next) => {
 
   if (req.body.password || req.body.passwordConfirm || req.body.role) {
     return next(
-      new CustomError('This route is for user data update only', httpStatus.NOT_FOUND)
+      new CustomError(
+        'This route is for user data update only',
+        httpStatus.NOT_FOUND
+      )
     );
   }
 
@@ -100,7 +140,9 @@ exports.deleteLoggedInUser = async (req, res, next) => {
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
-    return next(new CustomError(`No user with id: ${id}`, httpStatus.NOT_FOUND));
+    return next(
+      new CustomError(`No user with id: ${id}`, httpStatus.NOT_FOUND)
+    );
   }
 
   return user;
