@@ -7,13 +7,10 @@ const orderSchema = new Schema({
     ref: 'User',
     required: [true, 'An order must have a user'],
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-      default: [],
-    },
-  ],
+  products: {
+    type: Array,
+    default: [],
+  },
   totalPrice: {
     type: Number,
     required: [true, 'An order must have a total price'],

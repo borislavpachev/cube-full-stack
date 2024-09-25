@@ -55,10 +55,6 @@ const userSchema = new Schema({
   deliveryAddress: {
     type: String,
   },
-  orders: {
-    type: Array,
-    default: [],
-  },
   password: {
     type: String,
     required: [true, 'A user must have a password'],
