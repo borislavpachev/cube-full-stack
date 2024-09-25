@@ -21,14 +21,14 @@ exports.getCart = async (req, res, next) => {
 
 exports.addToCart = async (req, res, next) => {
   try {
-    const updatedUser = await cartService.addToCart(req, res, next);
+    const user = await cartService.addToCart(req, res, next);
 
-    if (!updatedUser) return;
+    if (!user) return;
 
     res.status(httpStatus.OK).json({
       status: 'success',
       data: {
-        shoppingCart: updatedUser.shoppingCart,
+        shoppingCart: user.shoppingCart,
       },
     });
   } catch (error) {
@@ -38,14 +38,14 @@ exports.addToCart = async (req, res, next) => {
 
 exports.removeItemFromCart = async (req, res, next) => {
   try {
-    const updatedUser = await cartService.removeFromCart(req, res, next);
+    const user = await cartService.removeFromCart(req, res, next);
 
-    if (!updatedUser) return;
+    if (!user) return;
 
     res.status(httpStatus.OK).json({
       status: 'success',
       data: {
-        shoppingCart: updatedUser.shoppingCart,
+        shoppingCart: user.shoppingCart,
       },
     });
   } catch (error) {
