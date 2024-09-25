@@ -10,6 +10,8 @@ dotenv.config({ path: './config.env' });
 const userRouter = require('./routes/userRoutes');
 const productRouter = require('./routes/productRoutes');
 const cartRouter = require('./routes/cartRoutes');
+const favoritesRouter = require('./routes/favoritesRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 const app = express();
 middlewares(app);
@@ -17,6 +19,8 @@ middlewares(app);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/cart', cartRouter);
+app.use('/api/v1/favorites', favoritesRouter);
+app.use('/api/v1/orders', orderRouter);
 
 app.all('*', (req, res, next) => {
   const error = new CustomError(
