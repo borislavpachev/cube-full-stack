@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const httpStatus = require('../utils/httpStatus');
 
 module.exports = (err, req, res, next) => {
