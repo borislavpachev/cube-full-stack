@@ -1,12 +1,15 @@
 const Product = require('../models/productModel');
 const User = require('../models/userModel');
-const CustomError = require('../utils/CustomError');
 const httpStatus = require('../utils/httpStatus');
+const CustomError = require('../utils/CustomError');
+const validateMongoId = require('../utils/validateMongo');
 const userService = require('./userService');
 
-const validateProduct = async (productId, size, quantity, next) => {
+const validateAddProduct = async (id, size, quantity, next) => {
+  const _id = await validateMongoId(id, next);
   let shoppingCartItem;
-  const product = await Product.findById(productId);
+
+  const product = await Product.findById(_id);
 
   if (!product) {
     return next(
@@ -18,7 +21,7 @@ const validateProduct = async (productId, size, quantity, next) => {
     );
   } else {
     shoppingCartItem = {
-      productId,
+      _id,
       quantity,
       size,
     };
@@ -27,10 +30,29 @@ const validateProduct = async (productId, size, quantity, next) => {
   return [product, shoppingCartItem];
 };
 
+const validateRemoveProduct = async (id, size, quantity, next) => {
+  const _id = await validateMongoId(id, next);
+
+  let shoppingCartItem;
+
+  const product = await Product.findById(_id);
+  if (!product) {
+    return next(
+      new CustomError('This product does not exist', httpStatus.NOT_FOUND)
+    );
+  } else {
+    shoppingCartItem = {
+      _id,
+      quantity,
+      size,
+    };
+  }
+  return [product, shoppingCartItem];
+};
+
 const checkProductExistence = (shoppingCart, shoppingCartItem, size) => {
   return shoppingCart.some(
-    (item) =>
-      item.productId === shoppingCartItem.productId && item.size === size
+    (item) => item._id === shoppingCartItem._id && item.size === size
   );
 };
 
@@ -42,7 +64,7 @@ const updateCartItems = (
   action
 ) => {
   return shoppingCart.reduce((cart, item) => {
-    if (item.productId === shoppingCartItem.productId && item.size === size) {
+    if (item._id === shoppingCartItem._id && item.size === size) {
       if (action === 'add') {
         item.quantity += quantity;
       } else if (action === 'remove') {
@@ -78,7 +100,7 @@ const updateQuantity = (product, size, quantity, action) => {
 const checkQuantity = (shoppingCart, shoppingCartItem) => {
   return shoppingCart.some((item) => {
     return (
-      item.productId === shoppingCartItem.productId &&
+      item._id === shoppingCartItem._id &&
       item.size === shoppingCartItem.size &&
       item.quantity < shoppingCartItem.quantity
     );
@@ -87,67 +109,52 @@ const checkQuantity = (shoppingCart, shoppingCartItem) => {
 
 exports.getCart = async (req, res, next) => {
   const userId = req.user._id;
-  const user = await User.findById(userId);
+  const user = await userService.findUserById(userId, next);
+  if (!user) return;
 
-  if (!user) {
-    return next(
-      new CustomError(
-        `User with id: ${userId} does not exist`,
-        httpStatus.NOT_FOUND
-      )
-    );
-  }
   const shoppingCart = user.shoppingCart;
 
   return shoppingCart;
 };
 
 exports.addToCart = async (req, res, next) => {
-  const {
-    _id: productId,
-    quantity: productQuantity = 1,
-    size: productSize,
-  } = req.body;
+  const { _id, quantity = 1, size } = req.body;
 
   const userId = req.user._id;
   const user = await userService.findUserById(userId, next);
 
   const shoppingCart = user.shoppingCart;
 
-  const [product, shoppingCartItem] = await validateProduct(
-    productId,
-    productSize,
-    productQuantity,
+  const [product, shoppingCartItem] = await validateAddProduct(
+    _id,
+    size,
+    quantity,
     next
   );
+  if (!product) return;
 
   const updatedShoppingCart = updateCartItems(
     shoppingCart,
     shoppingCartItem,
-    productSize,
-    productQuantity,
+    size,
+    quantity,
     'add'
   );
 
   const productExists = checkProductExistence(
     shoppingCart,
     shoppingCartItem,
-    productSize
+    size
   );
 
   if (!productExists) {
     updatedShoppingCart.push(shoppingCartItem);
   }
 
-  const updatedQuantity = updateQuantity(
-    product,
-    productSize,
-    productQuantity,
-    'add'
-  );
+  const updatedQuantity = updateQuantity(product, size, quantity, 'add');
 
   await Product.findByIdAndUpdate(
-    productId,
+    _id,
     { quantity: updatedQuantity },
     { runValidators: true }
   );
@@ -165,35 +172,24 @@ exports.addToCart = async (req, res, next) => {
 };
 
 exports.removeFromCart = async (req, res, next) => {
-  const {
-    _id: productId,
-    quantity: productQuantity = 1,
-    size: productSize,
-  } = req.body;
+  const { _id, quantity = 1, size } = req.body;
 
   const userId = req.user._id;
   const user = await userService.findUserById(userId, next);
 
   const shoppingCart = user.shoppingCart;
-  let shoppingCartItem;
-
-  const product = await Product.findById(productId);
-  if (!product) {
-    return next(
-      new CustomError('This product does not exist', httpStatus.NOT_FOUND)
-    );
-  } else {
-    shoppingCartItem = {
-      productId,
-      quantity: productQuantity,
-      size: productSize,
-    };
-  }
+  const [product, shoppingCartItem] = await validateRemoveProduct(
+    _id,
+    size,
+    quantity,
+    next
+  );
+  if (!product) return;
 
   const productExists = checkProductExistence(
     shoppingCart,
     shoppingCartItem,
-    productSize
+    size
   );
 
   if (!productExists) {
@@ -205,8 +201,9 @@ exports.removeFromCart = async (req, res, next) => {
     );
   }
 
-  const check = checkQuantity(shoppingCart, shoppingCartItem);
-  if (check) {
+  const checkProductQuantity = checkQuantity(shoppingCart, shoppingCartItem);
+
+  if (checkProductQuantity) {
     return next(
       new CustomError(
         'Can not remove more elements than the elements in the cart',
@@ -215,15 +212,10 @@ exports.removeFromCart = async (req, res, next) => {
     );
   }
 
-  const updatedQuantity = updateQuantity(
-    product,
-    productSize,
-    productQuantity,
-    'remove'
-  );
+  const updatedQuantity = updateQuantity(product, size, quantity, 'remove');
 
   await Product.findByIdAndUpdate(
-    productId,
+    _id,
     { quantity: updatedQuantity },
     { runValidators: true }
   );
@@ -231,8 +223,8 @@ exports.removeFromCart = async (req, res, next) => {
   const updatedShoppingCart = updateCartItems(
     shoppingCart,
     shoppingCartItem,
-    productSize,
-    productQuantity,
+    size,
+    quantity,
     'remove'
   );
 
