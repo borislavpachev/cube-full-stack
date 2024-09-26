@@ -5,7 +5,11 @@ export default {
     fontFamily: {
       rubik: ['Rubik', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      backgroundColor: {
+        secondary: '#809ed5',
+      },
+    },
   },
   plugins: [],
 };
