@@ -1,14 +1,19 @@
 import { Toaster } from 'react-hot-toast';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { ErrorPage, Home } from './pages';
+import { ROUTES } from './constants';
+import { Header } from './components/layout';
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Toaster />
-        <div className='bg-blue-400 text-5xl text-center'>CUBE</div>
-        {/* <Routes></Routes> */}
-      </BrowserRouter>
+      <Toaster />
+      <Header />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.ERROR} element={<ErrorPage />} />
+      </Routes>
     </>
   );
 }
