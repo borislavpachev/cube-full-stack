@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants';
+import { Button } from '../../components/buttons';
 
 export default function ErrorPage() {
   const navigate = useNavigate();
@@ -13,13 +14,7 @@ export default function ErrorPage() {
       />
       <div className="flex flex-col items-center justify-center space-y-10 p-10">
         <p className="text-2xl text-center">This page could not be found.</p>
-        <button
-          className="py-3 px-3 border-black border-2 rounded transition-colors ease-in duration-300
-          hover:border-transparent hover:bg-black hover:text-white"
-          onClick={() => navigate(ROUTES.HOME)}
-        >
-          Home page
-        </button>
+        <Button onClick={() => navigate(ROUTES.HOME)}>Home page</Button>
       </div>
     </div>
   );
