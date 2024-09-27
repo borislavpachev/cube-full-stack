@@ -9,11 +9,13 @@ export default function Header() {
         <p>Men</p>
       </div>
 
-      <img
-        src="/logos/4.png"
-        alt="logo"
-        className="rounded-2xl w-[100px] p-2 h-auto"
-      />
+      <div>
+        <img
+          src="/images/cube-logo.png"
+          alt="logo"
+          className="rounded-2xl p-2 w-1/3"
+        />
+      </div>
 
       <ul className="flex flex-col md:flex-row space-x-5 w-2/5 items-center justify-center">
         <li>

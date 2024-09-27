@@ -41,12 +41,8 @@ export default function Login() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-gradient-to-br from-red-200 to-blue-950">
-      <div className="flex mb-[340px] ml-[80px]">
-        <img
-          src="/images/no-bg-cube.png"
-          alt="cube"
-          className="rotate-90 w-2/3"
-        />
+      <div className="flex mb-[345px] ml-[245px]">
+        <img src="/images/cube-logo.png" alt="cube" className="w-2/3" />
       </div>
       <div className="absolute max-w-md w-full border-2 rounded m-5 backdrop-blur-sm">
         <form
@@ -54,7 +50,7 @@ export default function Login() {
           className="flex flex-col m-10"
         >
           {' '}
-          <h1 className="mb-10 p-5 font-semibold shadow-md text-center text-3xl text-white bg-white/10 rounded">
+          <h1 className="mb-10 p-5 font-semibold shadow-md tracking-widest text-center text-3xl text-white bg-white/10 rounded">
             Login
           </h1>
           <Label htmlFor="login-email">Email:</Label>
