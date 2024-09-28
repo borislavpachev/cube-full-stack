@@ -1,50 +1,34 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Input, Label } from '../../components/form';
 import { Button } from '../../components/buttons';
+import { login } from '../../services/authService';
+import { validateEmail, validatePassword } from '../../utils/validations';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //   const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate(location.state?.from.pathname || '/main');
-  //   }
-  // }, [user]);
+  const loginUser = async () => {
+    if (!validateEmail(email)) return;
+    if (!validatePassword(password)) return;
 
-  // const login = async () => {
-  //   if (form.email.length === 0) {
-  //     toast.error('Email cannot be empty');
-  //   } else if (form.password.length < 8) {
-  //     toast.error('Password must be at least 8 characters');
-  //   } else {
-  //     try {
-  //       const userCredentials = await loginUser(form.email, form.password);
-  //       setAppState({ user: userCredentials.user, userData: null });
-  //     } catch (error) {
-  //       if (error.message.includes('auth/')) {
-  //         toast.error('Username or password do not match.');
-  //       } else {
-  //         toast.error('Something went wrong! Please try again.');
-  //       }
-  //     }
-  //   }
-  // };
-
-  const login = () => {
-    console.log(1);
+    try {
+      await login(email, password);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="flex h-screen items-center justify-center bg-gradient-to-br from-red-200 to-blue-950">
-      <div className="flex mb-[345px] ml-[245px]">
+      <div className="hidden md:flex absolute mb-[345px] ml-[255px]">
         <img src="/images/cube-logo.png" alt="cube" className="w-2/3" />
       </div>
-      <div className="absolute max-w-md w-full border-2 rounded m-5 backdrop-blur-sm">
+      <div className="max-w-md w-full border-2 rounded m-5 backdrop-blur-sm">
         <form
           onSubmit={(e) => e.preventDefault()}
           className="flex flex-col m-10"
@@ -58,7 +42,7 @@ export default function Login() {
             id="login-email"
             name="email"
             placeholder="cube@cube.com"
-            type="e-mail"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e)}
           />
@@ -74,7 +58,7 @@ export default function Login() {
         </form>
 
         <div className="flex flex-col mb-5 px-10 space-y-5">
-          <Button onClick={login} disabled={!email && true}>
+          <Button onClick={loginUser} disabled={!email && true}>
             Login
           </Button>
 
