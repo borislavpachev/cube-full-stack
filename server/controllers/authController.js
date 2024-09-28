@@ -30,6 +30,11 @@ exports.login = async (req, res, next) => {
     // res.cookie = ('jwt', token, {
     // expires: Here we set the expires in ms
     // })
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Strict',
+    });
 
     res.status(httpStatus.OK).json({
       status: 'success',
