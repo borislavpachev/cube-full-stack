@@ -2,7 +2,7 @@ import { Toaster } from 'react-hot-toast';
 import { Routes, Route } from 'react-router-dom';
 import { ErrorPage, Home, Login } from './pages';
 import { ROUTES } from './constants';
-import { Header } from './components/layout';
+import { Footer, Header } from './components/layout';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.ERROR} element={<ErrorPage />} />
       </Routes>
+      <Footer/>
     </>
   );
 }
