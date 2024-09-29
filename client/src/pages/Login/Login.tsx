@@ -16,7 +16,9 @@ export default function Login() {
     if (!validatePassword(password)) return;
 
     try {
-      await login(email, password);
+      const test = await login(email, password);
+      if (!test) return;
+
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -34,7 +36,7 @@ export default function Login() {
           className="flex flex-col m-10"
         >
           {' '}
-          <h1 className="mb-10 p-5 font-semibold shadow-md tracking-widest text-center text-3xl text-white bg-white/10 rounded">
+          <h1 className="mb-10 p-5 font-semibold shadow-md tracking-widest text-center text-3xl text-black bg-white/30 rounded">
             Login
           </h1>
           <Label htmlFor="login-email">Email:</Label>
