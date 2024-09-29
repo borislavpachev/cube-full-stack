@@ -16,8 +16,8 @@ export const login = async (email: string, password: string) => {
       throw new Error('Login error');
     }
 
-    const json = await response.json();
-    console.log(json);
+    const token = await response.json();
+    return token;
   } catch (error) {
     console.error(error);
   }
