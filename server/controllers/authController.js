@@ -2,11 +2,23 @@ const CustomError = require('../utils/CustomError');
 const httpStatus = require('../utils/httpStatus');
 const authService = require('../services/authService');
 const jwtService = require('../services/jwtService');
+const jwtCookieExpires = require('../utils/jwtCookieExpires');
+
+const jwtInCookie = (res, token) => {
+  res.cookie('jwt', token, {
+    expires: jwtCookieExpires,
+    httpOnly: true,
+    // secure: true,
+    sameSite: 'None',
+  });
+};
 
 exports.signup = async (req, res, next) => {
   try {
     const newUser = await authService.signUpUser(req);
     const token = jwtService.signToken(newUser._id);
+
+    jwtInCookie(res, token);
 
     res.status(httpStatus.CREATED).json({
       status: 'success',
@@ -22,23 +34,18 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const token = await authService.loginUser(req, res, next);
+    const [token, user] = await authService.loginUser(req, res, next);
 
     if (!token) {
       return;
     }
-    // res.cookie = ('jwt', token, {
-    // expires: Here we set the expires in ms
-    // })
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'Strict',
-    });
+
+    jwtInCookie(res, token);
 
     res.status(httpStatus.OK).json({
       status: 'success',
       token,
+      user,
     });
   } catch (error) {
     return next(new CustomError(error.message, error.status));
