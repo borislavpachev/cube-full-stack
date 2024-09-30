@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 
 type ButtonProps = {
   onClick: () => void;
+  type?: 'submit' | 'reset' | 'button' | undefined;
   disabled: boolean;
   children: ReactNode;
 };
@@ -9,6 +10,7 @@ type ButtonProps = {
 export default function Button({
   onClick,
   disabled = false,
+  type = 'button',
   children,
   ...props
 }: ButtonProps) {
@@ -18,6 +20,7 @@ export default function Button({
           hover:border-transparent hover:bg-black hover:text-white
           disabled:bg-gray-100 disabled:text-gray-500 disabled:border-gray-300 disabled:cursor-not-allowed"
       onClick={onClick}
+      type={type}
       disabled={disabled}
       {...props}
     >
