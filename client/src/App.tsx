@@ -1,6 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { Routes, Route } from 'react-router-dom';
-import { ErrorPage, Home, Login } from './pages';
+import { ErrorPage, Home, Login, SignUp } from './pages';
 import { ROUTES } from './constants';
 import { Footer, Header } from './components/layout';
 
@@ -13,6 +13,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
         <Route path={ROUTES.ERROR} element={<ErrorPage />} />
       </Routes>
       <Footer/>
