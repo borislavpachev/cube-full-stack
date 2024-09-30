@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Input, Label } from '../../components/form';
+import {
+  Form,
+  FormTitle,
+  FormWrapper,
+  Input,
+  Label,
+} from '../../components/form';
+import { MainLayout } from '../../components/layout';
 import { Button } from '../../components/buttons';
+
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
 
@@ -16,69 +24,56 @@ export default function Login() {
     if (!validatePassword(password)) return;
 
     try {
-      const test = await login(email, password);
-      if (!test) return;
+      const data = await login(email, password);
+      if (!data) return;
 
       navigate('/');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-br from-red-200 to-blue-950">
-      <div className="hidden md:flex absolute mb-[345px] ml-[255px]">
-        <img src="/images/cube-logo.png" alt="cube" className="w-2/3" />
-      </div>
-      <div className="max-w-md w-full border-2 rounded m-5 backdrop-blur-sm">
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col m-10"
-        >
-          {' '}
-          <h1 className="mb-10 p-5 font-semibold shadow-md tracking-widest text-center text-3xl text-black bg-white/30 rounded">
-            Login
-          </h1>
+    <MainLayout>
+      <FormWrapper>
+        <FormTitle>Login</FormTitle>
+        <Form>
           <Label htmlFor="login-email">Email:</Label>
           <Input
             id="login-email"
             name="email"
             placeholder="cube@cube.com"
-            type="email"
             value={email}
-            onChange={(e) => setEmail(e)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Label htmlFor="login-password">Password: </Label>
           <Input
             id="login-password"
-            name="password"
+            name="login-password"
             placeholder="********"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        </form>
-
-        <div className="flex flex-col mb-5 px-10 space-y-5">
-          <Button onClick={loginUser} disabled={!email && true}>
+          <Button type="submit" onClick={loginUser} disabled={!email && true}>
             Login
           </Button>
+        </Form>
 
-          <div className="text-center">
-            <p>
-              Don`t have an account ?
-              <span>
-                <Link
-                  to="/sign-up"
-                  className="text-blue-500 font-bold ml-1 hover: underline-offset-2 hover:underline"
-                >
-                  Sign up
-                </Link>
-              </span>
-            </p>
-          </div>
+        <div className="mb-10 -mt-5 px-10 text-center">
+          <p>
+            Don`t have an account ?
+            <span>
+              <Link
+                to="/sign-up"
+                className="text-blue-500 font-bold ml-1 hover:underline-offset-2 hover:underline"
+              >
+                Sign up
+              </Link>
+            </span>
+          </p>
         </div>
-      </div>
-    </div>
+      </FormWrapper>
+    </MainLayout>
   );
 }
