@@ -7,7 +7,7 @@ type InputProps = {
   placeholder?: string;
   autoComplete?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function Input({
@@ -33,12 +33,13 @@ export default function Input({
           placeholder={placeholder}
           autoComplete={autoComplete}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={onChange}
           {...props}
         />
 
         {type === 'password' && (
           <button
+            type="button"
             onClick={() => setShowPassword(!showPassword)}
             className="absolute bottom-7 right-1 p-1"
           >
