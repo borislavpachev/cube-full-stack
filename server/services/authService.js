@@ -44,7 +44,7 @@ exports.loginUser = async (req, res, next) => {
 
   const token = jwtService.signToken(user._id);
 
-  return token;
+  return [token, user];
 };
 
 exports.protect = async (req, res, next) => {
@@ -55,10 +55,14 @@ exports.protect = async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
-    return next(new CustomError('Please login to get access', httpStatus.UNAUTHORIZED));
+    return next(
+      new CustomError('Please login to get access', httpStatus.UNAUTHORIZED)
+    );
   }
 
   const decoded = jwtService.verifyToken(token, process.env.JWT_SECRET, next);
@@ -71,7 +75,10 @@ exports.protect = async (req, res, next) => {
 
   if (!currentUser) {
     return next(
-      new CustomError('The user belonging this token does not exist', httpStatus.NOT_FOUND)
+      new CustomError(
+        'The user belonging this token does not exist',
+        httpStatus.NOT_FOUND
+      )
     );
   }
 
