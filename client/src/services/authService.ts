@@ -1,3 +1,4 @@
+import { normalizePhoneNumber } from '@/utils/validations';
 import { SignUpFormState } from '../pages/SignUp/SignUp';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -16,21 +17,25 @@ export const login = async (email: string, password: string) => {
     });
 
     if (!response.ok) {
-      throw new Error('Email or password are not correct! Please try again!');
+      const error = await response.json();
+      return { error: error.message || 'Login failed! Please try again!' };
     }
 
     const data = await response.json();
 
     return data;
   } catch (error) {
-    console.log(error);
+    return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
 
 export const signUp = async (form: SignUpFormState) => {
   const url = `${API_BASE_URL}users/signup`;
+
   const { firstName, lastName, email, phoneNumber, password, passwordConfirm } =
     form;
+
+  const updatedPhoneNumber = normalizePhoneNumber(phoneNumber);
 
   try {
     const response = await fetch(url, {
@@ -42,7 +47,7 @@ export const signUp = async (form: SignUpFormState) => {
         firstName,
         lastName,
         email,
-        phoneNumber,
+        phoneNumber: updatedPhoneNumber,
         password,
         passwordConfirm,
       }),
@@ -50,14 +55,13 @@ export const signUp = async (form: SignUpFormState) => {
     });
 
     if (!response.ok) {
-      throw new Error('Sign Up Failed! Please try again!');
+      const error = await response.json();
+      return { error: error.message || 'Sign Up failed! Please try again!' };
     }
 
     const user = await response.json();
-    console.log(user);
-    
     return user;
   } catch (error) {
-    console.log(error);
+    return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
