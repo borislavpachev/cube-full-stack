@@ -37,9 +37,12 @@ const userSchema = new Schema({
   phoneNumber: {
     type: String,
     required: [true, 'User must have a phone number'],
+    trim: true,
     validate: {
       validator: function (phoneNum) {
-        return validator.isMobilePhone(phoneNum, 'any');
+        const phoneRegex =
+          /^(\+?[1-9]\d{0,2}[-.\s]?)?(\(?0?\d{1,4}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+        return phoneRegex.test(phoneNum);
       },
       message: 'The mobile phone must be a real phone number',
     },
