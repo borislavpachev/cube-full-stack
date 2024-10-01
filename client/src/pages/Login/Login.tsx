@@ -12,6 +12,7 @@ import { Button } from '../../components/buttons';
 
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,16 +21,30 @@ export default function Login() {
   const navigate = useNavigate();
 
   const loginUser = async () => {
-    if (!validateEmail(email)) return;
-    if (!validatePassword(password)) return;
+    if (!validateEmail(email)) {
+      toast.error('Please provide a valid email');
+      return;
+    }
+    if (!validatePassword(password)) {
+      toast.error('Password must be at least 8 characters');
+      return;
+    }
 
     try {
-      const data = await login(email, password);
-      if (!data) return;
+      const result = await login(email, password);
 
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      console.log(result);
       navigate('/');
     } catch (error) {
       console.error(error);
+      toast.error(
+        'An unexpected error occurred during sign up. Please try again!'
+      );
     }
   };
 

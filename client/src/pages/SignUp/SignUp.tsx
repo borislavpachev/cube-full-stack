@@ -10,6 +10,14 @@ import {
   PhoneInput,
 } from '../../components/form';
 import { signUp } from '../../services/authService';
+import toast from 'react-hot-toast';
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePhoneNumber,
+} from '../../utils/validations';
+import { useNavigate } from 'react-router-dom';
 
 export type SignUpFormState = {
   firstName: string;
@@ -29,6 +37,7 @@ export default function SignUp() {
     password: '',
     passwordConfirm: '',
   });
+  const navigate = useNavigate();
 
   const updateForm =
     (prop: keyof SignUpFormState) =>
@@ -37,13 +46,54 @@ export default function SignUp() {
     };
 
   const signUpUser = async () => {
-    try {
-      const user = await signUp(form);
-      if (!user) return;
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password,
+      passwordConfirm,
+    } = form;
 
-      console.log(user);
+    if (!validateName(firstName)) {
+      toast.error('User must have a first name!');
+      return;
+    }
+    if (!validateName(lastName)) {
+      toast.error('User must have a last name!');
+      return;
+    }
+    if (!validateEmail(email)) {
+      toast.error('Please provide a valid email');
+      return;
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      toast.error('Please provide a valid phone number');
+      return;
+    }
+    if (!validatePassword(password) || !validatePassword(passwordConfirm)) {
+      toast.error('Password / Password confirm must be at least 8 characters');
+      return;
+    }
+    if (password !== passwordConfirm) {
+      toast.error('Double-check your passwords fields before Sign up!');
+      return;
+    }
+
+    try {
+      const result = await signUp(form);
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      console.log(result);
+      navigate('/');
     } catch (error) {
       console.error(error);
+      toast.error(
+        'An unexpected error occurred during sign up. Please try again!'
+      );
     }
   };
 
@@ -76,11 +126,12 @@ export default function SignUp() {
             value={form.email}
             onChange={updateForm('email')}
           />
+
           <Label htmlFor="sign-up-phone">Phone number:</Label>
           <PhoneInput
             id="sign-up-phone"
             name="sign-up-phone"
-            placeholder="123 456 789"
+            placeholder="+359 123 456 789"
             value={form.phoneNumber}
             onChange={updateForm('phoneNumber')}
           />
