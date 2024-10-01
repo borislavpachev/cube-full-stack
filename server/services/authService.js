@@ -3,7 +3,7 @@ const CustomError = require('../utils/CustomError');
 const jwtService = require('./jwtService');
 const httpStatus = require('../utils/httpStatus');
 
-exports.signUpUser = async (req) => {
+exports.signUpUser = async (req, next) => {
   const newUser = await User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -12,6 +12,10 @@ exports.signUpUser = async (req) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
+
+  if (!newUser) {
+    return next(new CustomError('Sign Up failed', httpStatus.BAD_REQUEST));
+  }
 
   return newUser;
 };
@@ -29,6 +33,7 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const user = await User.findOne({ email }).select('+password');
+
   if (!user) {
     return next(
       new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
@@ -36,6 +41,7 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const correct = await user.correctPassword(password, user.password);
+
   if (!correct) {
     return next(
       new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
@@ -43,6 +49,12 @@ exports.loginUser = async (req, res, next) => {
   }
 
   const token = jwtService.signToken(user._id);
+
+  if (!token) {
+    return next(
+      new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
+    );
+  }
 
   return [token, user];
 };

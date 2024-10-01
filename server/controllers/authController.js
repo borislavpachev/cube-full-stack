@@ -15,10 +15,14 @@ const jwtInCookie = (res, token) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    const newUser = await authService.signUpUser(req);
+    const newUser = await authService.signUpUser(req, next);
+    if (!newUser) return;
     const token = jwtService.signToken(newUser._id);
 
     jwtInCookie(res, token);
+
+    newUser.password = undefined;
+    newUser.passwordConfirm = undefined;
 
     res.status(httpStatus.CREATED).json({
       status: 'success',
@@ -36,7 +40,7 @@ exports.login = async (req, res, next) => {
   try {
     const [token, user] = await authService.loginUser(req, res, next);
 
-    if (!token) {
+    if (!token || !user) {
       return;
     }
 
