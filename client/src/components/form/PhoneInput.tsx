@@ -24,7 +24,7 @@ export default function PhoneInput({
       <TooltipButton
         content={
           <TooltipContent>
-            Formats:
+           <b className='underline mb-1'>Formats:</b>
             <br />
             0123456789
             <br />0 123 456 789
