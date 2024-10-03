@@ -1,5 +1,5 @@
 import { normalizePhoneNumber } from '@/utils/validations';
-import { SignUpFormState } from '../pages/SignUp/SignUp';
+import { SignUpForm } from '../pages/SignUp/SignUp';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -22,14 +22,13 @@ export const login = async (email: string, password: string) => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
 
-export const signUp = async (form: SignUpFormState) => {
+export const signUp = async (form: SignUpForm) => {
   const url = `${API_BASE_URL}users/signup`;
 
   const { firstName, lastName, email, phoneNumber, password, passwordConfirm } =
@@ -61,6 +60,33 @@ export const signUp = async (form: SignUpFormState) => {
 
     const user = await response.json();
     return user;
+  } catch (error) {
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};
+
+export const authenticate = async () => {
+  const url = `${API_BASE_URL}users/auth`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error: error.message || 'User authentication fail! Please try again!',
+      };
+    }
+
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
