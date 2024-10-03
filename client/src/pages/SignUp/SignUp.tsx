@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { MainLayout } from '../../components/layout';
 import { Button } from '../../components/buttons';
 import {
@@ -18,8 +17,9 @@ import {
   validatePhoneNumber,
 } from '../../utils/validations';
 import { useNavigate } from 'react-router-dom';
+import useForm from '@/hooks/useForm';
 
-export type SignUpFormState = {
+export type SignUpForm = {
   firstName: string;
   lastName: string;
   email: string;
@@ -29,7 +29,7 @@ export type SignUpFormState = {
 };
 
 export default function SignUp() {
-  const [form, setForm] = useState<SignUpFormState>({
+  const [form, updateForm] = useForm<SignUpForm>({
     firstName: '',
     lastName: '',
     email: '',
@@ -38,12 +38,6 @@ export default function SignUp() {
     passwordConfirm: '',
   });
   const navigate = useNavigate();
-
-  const updateForm =
-    (prop: keyof SignUpFormState) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setForm({ ...form, [prop]: e.target.value });
-    };
 
   const signUpUser = async () => {
     const {
