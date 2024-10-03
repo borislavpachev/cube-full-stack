@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
   FormTitle,
@@ -10,17 +8,29 @@ import {
 import { MainLayout } from '../../components/layout';
 import { Button } from '../../components/buttons';
 
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
 import toast from 'react-hot-toast';
+import { useAuth, useForm } from '@/hooks';
+
+type LoginForm = {
+  email: string;
+  password: string;
+};
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { setUser } = useAuth();
+  const [form, updateForm] = useForm<LoginForm>({
+    email: '',
+    password: '',
+  });
 
   const navigate = useNavigate();
 
   const loginUser = async () => {
+    const { email, password } = form;
+
     if (!validateEmail(email)) {
       toast.error('Please provide a valid email');
       return;
@@ -38,7 +48,8 @@ export default function Login() {
         return;
       }
 
-      console.log(result);
+      setUser(result.user);
+
       navigate('/');
     } catch (error) {
       console.error(error);
@@ -58,8 +69,8 @@ export default function Login() {
             id="login-email"
             name="email"
             placeholder="cube@cube.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={updateForm('email')}
           />
           <Label htmlFor="login-password">Password: </Label>
           <Input
@@ -67,10 +78,14 @@ export default function Login() {
             name="login-password"
             placeholder="********"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={updateForm('password')}
           />
-          <Button type="submit" onClick={loginUser} disabled={!email && true}>
+          <Button
+            type="submit"
+            onClick={loginUser}
+            disabled={!form.email && true}
+          >
             Login
           </Button>
         </Form>
