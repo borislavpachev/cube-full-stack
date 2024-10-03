@@ -14,7 +14,13 @@ const favoritesRouter = require('./routes/favoritesRoutes');
 const orderRouter = require('./routes/orderRoutes');
 
 const app = express();
+
 middlewares(app);
+
+app.use((req, res, next) => {
+  console.log('🍪', req.cookies);
+  next();
+});
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
