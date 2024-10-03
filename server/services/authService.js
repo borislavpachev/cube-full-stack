@@ -96,3 +96,32 @@ exports.protect = async (req, res, next) => {
 
   return currentUser;
 };
+
+exports.authenticateUser = async (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (!token) {
+    return next(
+      new CustomError('Please login to get access', httpStatus.UNAUTHORIZED)
+    );
+  }
+
+  const decoded = jwtService.verifyToken(token, process.env.JWT_SECRET, next);
+
+  if (!decoded) {
+    return;
+  }
+
+  const currentUser = await User.findById(decoded.id);
+
+  if (!currentUser) {
+    return next(
+      new CustomError(
+        'The user belonging this token does not exist',
+        httpStatus.NOT_FOUND
+      )
+    );
+  }
+
+  return currentUser;
+};

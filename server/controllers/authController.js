@@ -8,7 +8,7 @@ const jwtInCookie = (res, token) => {
   res.cookie('jwt', token, {
     expires: jwtCookieExpires,
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: 'None',
   });
 };
@@ -56,10 +56,28 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.authenticate = async (req, res, next) => {
+  try {
+    const user = await authService.authenticateUser(req, res, next);
+
+    if (!user) {
+      return;
+    }
+
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      user,
+    });
+  } catch (error) {
+    return next(new CustomError(error.message, error.status));
+  }
+};
+
 exports.protect = async (req, res, next) => {
   try {
     const currentUser = await authService.protect(req, res, next);
     req.user = currentUser;
+
     next();
   } catch (error) {
     return next(new CustomError(error.message, error.status));
