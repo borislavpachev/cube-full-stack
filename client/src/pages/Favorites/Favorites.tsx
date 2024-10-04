@@ -11,12 +11,17 @@ export default function Favorites() {
   return (
     <MainLayout>
       <div className="h-[100vh]">
-        <h1>Favorites</h1>
+        <h1 className="mt-10 text-2xl border-2 border-t-blue-200 text-center bg-white/30 rounded-t p-6 -mb-2">
+          Favorites
+        </h1>
         {!favorites?.length ? (
-          <section className="max-w-3xl bg-white rounded flex flex-col items-center justify-center border-2 border-blue-200 p-5">
-            <p>
-              No products added to your shopping cart. Check our deals and feel
-              free to add anything you like.
+          <section
+            className="max-w-3xl bg-white rounded flex flex-col 
+            items-center justify-center shadow-xl p-14"
+          >
+            <p className="text-center text-xl flex items-center">
+              No products added to your favorites. Check our deals and feel free
+              to add anything you like.
             </p>
             <div className="w-1/2 mt-12">
               <Button
@@ -30,7 +35,12 @@ export default function Favorites() {
             </div>
           </section>
         ) : (
-          <p>MYYYYYYYYYYY FAVS</p>
+          <section
+            className="max-w-3xl bg-white rounded flex flex-col 
+            items-center justify-center shadow-xl p-14"
+          >
+            <p>FAVS: {user?.favorites.length}</p>
+          </section>
         )}
       </div>
     </MainLayout>
