@@ -1,34 +1,50 @@
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../constants';
+import { Input } from '../form';
 
 export default function Header() {
   return (
-    <header className="flex bg-secondary items-center justify-around">
-      <div className="flex space-x-5 w-2/5 items-center justify-center">
+    <header className="flex h-16 bg-secondary items-center justify-around">
+      <div className="w-1/4 flex items-center justify-center">
+        <h1>LOGO</h1>
+      </div>
+      <div className="flex space-x-7 w-1/4 items-center justify-center">
         <p>Women</p>
         <p>Men</p>
       </div>
-
-      <div>
-        <img
-          src="/images/cube-logo.png"
-          alt="logo"
-          className="rounded-2xl p-2 w-1/3"
-        />
+      <div className="w-1/4 mt-5">
+        <Input value="" onChange={() => {}} placeholder="Search" />
       </div>
-
-      <ul className="flex flex-col md:flex-row space-x-5 w-2/5 items-center justify-center">
+      <ul className="flex space-x-5 w-1/4 items-center justify-center">
         <li>
-          <input className="rounded text-2xl px-2" placeholder="Search" />
+          <NavLink to={ROUTES.FAVORITES}>
+            <img
+              src="/images/heart.svg"
+              alt="Favorites"
+              width={35}
+              height={35}
+            />
+          </NavLink>
         </li>
         <li>
-          <NavLink to={ROUTES.FAVORITES}>Fav</NavLink>
+          <NavLink to={ROUTES.SHOPPING_CART}>
+            <img
+              src="/images/shopping-cart.svg"
+              alt="Shopping cart"
+              width={35}
+              height={35}
+            />
+          </NavLink>
         </li>
         <li>
-          <NavLink to={ROUTES.SHOPPING_CART}>Cart</NavLink>
-        </li>
-        <li>
-          <NavLink to={ROUTES.USER_PROFILE}>Profile</NavLink>
+          <NavLink to={ROUTES.USER_PROFILE}>
+            <img
+              src="/images/user-profile.svg"
+              alt="User profile"
+              width={35}
+              height={35}
+            />
+          </NavLink>
         </li>
       </ul>
     </header>
