@@ -1,12 +1,20 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants';
 import { Input } from '../form';
 
 export default function Header() {
+  const navigate = useNavigate();
+  
   return (
     <header className="flex h-16 bg-secondary items-center justify-around">
       <div className="w-1/4 flex items-center justify-center">
-        <h1>LOGO</h1>
+        <h1
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          LOGO
+        </h1>
       </div>
       <div className="flex space-x-7 w-1/4 items-center justify-center">
         <p>Women</p>
