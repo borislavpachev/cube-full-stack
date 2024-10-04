@@ -61,49 +61,51 @@ export default function Login() {
 
   return (
     <MainLayout>
-      <FormWrapper>
-        <FormTitle>Login</FormTitle>
-        <Form>
-          <Label htmlFor="login-email">Email:</Label>
-          <Input
-            id="login-email"
-            name="email"
-            placeholder="cube@cube.com"
-            value={form.email}
-            onChange={updateForm('email')}
-          />
-          <Label htmlFor="login-password">Password: </Label>
-          <Input
-            id="login-password"
-            name="login-password"
-            placeholder="********"
-            type="password"
-            value={form.password}
-            onChange={updateForm('password')}
-          />
-          <Button
-            type="submit"
-            onClick={loginUser}
-            disabled={!form.email && true}
-          >
-            Login
-          </Button>
-        </Form>
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <FormWrapper>
+          <FormTitle>Login</FormTitle>
+          <Form>
+            <Label htmlFor="login-email">Email:</Label>
+            <Input
+              id="login-email"
+              name="email"
+              placeholder="cube@cube.com"
+              value={form.email}
+              onChange={updateForm('email')}
+            />
+            <Label htmlFor="login-password">Password: </Label>
+            <Input
+              id="login-password"
+              name="login-password"
+              placeholder="********"
+              type="password"
+              value={form.password}
+              onChange={updateForm('password')}
+            />
+            <Button
+              type="submit"
+              onClick={loginUser}
+              disabled={!form.email && true}
+            >
+              Login
+            </Button>
+          </Form>
 
-        <div className="mb-10 -mt-5 px-10 text-center">
-          <p>
-            Don`t have an account ?
-            <span>
-              <Link
-                to="/sign-up"
-                className="text-blue-500 font-bold ml-1 hover:underline-offset-2 hover:underline"
-              >
-                Sign up
-              </Link>
-            </span>
-          </p>
-        </div>
-      </FormWrapper>
+          <div className="mb-10 -mt-5 px-10 text-center">
+            <p>
+              Don`t have an account ?
+              <span>
+                <Link
+                  to="/sign-up"
+                  className="text-blue-500 font-bold ml-1 hover:underline-offset-2 hover:underline"
+                >
+                  Sign up
+                </Link>
+              </span>
+            </p>
+          </div>
+        </FormWrapper>
+      </div>
     </MainLayout>
   );
 }
