@@ -1,5 +1,5 @@
 import { Button } from '@/components/buttons';
-import { MainLayout } from '@/components/layout';
+import { MainLayout, Section } from '@/components/layout';
 import { useAuth } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,7 @@ export default function Favorites() {
           Favorites
         </h1>
         {!favorites?.length ? (
-          <section
-            className="max-w-3xl bg-white rounded flex flex-col 
-            items-center justify-center shadow-xl p-14"
-          >
+          <Section>
             <p className="text-center text-xl flex items-center">
               No products added to your favorites. Check our deals and feel free
               to add anything you like.
@@ -33,14 +30,11 @@ export default function Favorites() {
                 Continue shopping
               </Button>
             </div>
-          </section>
+          </Section>
         ) : (
-          <section
-            className="max-w-3xl bg-white rounded flex flex-col 
-            items-center justify-center shadow-xl p-14"
-          >
+          <Section>
             <p>FAVS: {user?.favorites.length}</p>
-          </section>
+          </Section>
         )}
       </div>
     </MainLayout>

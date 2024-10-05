@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <MainLayout>
-        <div className="h-[100vh] mt-20">
+        <div className="h-screen my-10">
           <Product />
         </div>
       </MainLayout>
