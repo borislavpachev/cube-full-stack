@@ -8,4 +8,4 @@ export const ROUTES = {
   USER_PROFILE: '/profile',
 };
 
-export const API_URL = 'http://127.0.0.1:3001/api/v1/';
+export const API_BASE_URL = import.meta.env.VITE_API_URL;
