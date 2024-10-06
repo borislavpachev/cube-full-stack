@@ -1,7 +1,6 @@
 import { normalizePhoneNumber } from '@/utils/validations';
 import { SignUpForm } from '../pages/SignUp/SignUp';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import { API_BASE_URL } from '@/constants';
 
 export const login = async (email: string, password: string) => {
   const url = `${API_BASE_URL}users/login`;
@@ -91,3 +90,4 @@ export const authenticate = async () => {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
+
