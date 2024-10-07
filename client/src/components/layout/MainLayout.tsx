@@ -6,7 +6,7 @@ type MainLayoutProps = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex items-center justify-center bg-gradient-to-br from-blue-500 via-red-200 to-blue-950">
+    <main className="flex items-center justify-center bg-gradient-to-b from-blue-950 via-red-200 to-blue-950">
       {children}
     </main>
   );
