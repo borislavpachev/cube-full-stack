@@ -18,6 +18,9 @@ import {
 } from '../../utils/validations';
 import { useNavigate } from 'react-router-dom';
 import useForm from '@/hooks/useForm';
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
+import { AuthContextType } from '@/contexts/types';
 
 export type SignUpForm = {
   firstName: string;
@@ -29,6 +32,10 @@ export type SignUpForm = {
 };
 
 export default function SignUp() {
+  const { setUser } = useContext(
+    AuthContext
+  ) as AuthContextType;
+
   const [form, updateForm] = useForm<SignUpForm>({
     firstName: '',
     lastName: '',
@@ -81,7 +88,7 @@ export default function SignUp() {
         return;
       }
 
-      console.log(result);
+      setUser(result.data.user);
       navigate('/');
     } catch (error) {
       console.error(error);

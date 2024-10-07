@@ -12,7 +12,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
 import toast from 'react-hot-toast';
-import { useAuth, useForm } from '@/hooks';
+import { useForm } from '@/hooks';
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
+import { AuthContextType } from '@/contexts/types';
 
 type LoginForm = {
   email: string;
@@ -20,7 +23,7 @@ type LoginForm = {
 };
 
 export default function Login() {
-  const { setUser } = useAuth();
+  const { setUser } = useContext(AuthContext) as AuthContextType;
   const [form, updateForm] = useForm<LoginForm>({
     email: '',
     password: '',
