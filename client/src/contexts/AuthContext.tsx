@@ -7,6 +7,7 @@ const initialValue = {
   user: null,
   setUser: () => {},
   isAuthenticated: false,
+  setIsAuthenticated: () => {},
   loading: true,
 };
 
@@ -39,13 +40,15 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         setLoading(false);
       });
   }, []);
-  
+
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isAuthenticated, loading }}>
+    <AuthContext.Provider
+      value={{ user, setUser, isAuthenticated, setIsAuthenticated, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
