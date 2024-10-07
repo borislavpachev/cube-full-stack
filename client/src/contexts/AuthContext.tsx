@@ -1,50 +1,51 @@
 import { authenticate } from '@/services/authService';
-import { createContext, type ReactNode, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-
-type AuthProviderProps = {
-  children: ReactNode;
-};
-
-type User = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: 'Admin' | 'User';
-  phoneNumber: string;
-  favorites: [];
-  shoppingCart: [];
-  password: string;
-};
-
-type AuthContextValue = {
-  user: User | null;
-  setUser: (user: User | null) => void;
-};
+import { createContext, useEffect, useState } from 'react';
+import { AuthContextType, AuthProviderProps, User } from './types';
+import { Loading } from '@/components';
 
 const initialValue = {
   user: null,
   setUser: () => {},
+  isAuthenticated: false,
+  loading: true,
 };
 
-export const AuthContext = createContext<AuthContextValue | null>(initialValue);
+export const AuthContext = createContext<AuthContextType | null>(initialValue);
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(initialValue.user);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    initialValue.isAuthenticated
+  );
+  const [loading, setLoading] = useState(initialValue.loading);
 
   useEffect(() => {
     authenticate()
       .then((data) => {
-        setUser(data.user);
+        if (data.user) {
+          setUser(data.user);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
       })
       .catch((error) => {
-        toast.error(error);
+        console.error(error);
+        setUser(initialValue.user);
+        setIsAuthenticated(initialValue.isAuthenticated);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+  
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );
