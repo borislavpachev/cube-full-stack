@@ -8,12 +8,12 @@ import {
 import { MainLayout } from '../../components/layout';
 import { Button } from '../../components/buttons';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
 import toast from 'react-hot-toast';
 import { useForm } from '@/hooks';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 
@@ -23,13 +23,22 @@ type LoginForm = {
 };
 
 export default function Login() {
-  const { setUser } = useContext(AuthContext) as AuthContextType;
+  const { user, setUser, setIsAuthenticated } = useContext(
+    AuthContext
+  ) as AuthContextType;
   const [form, updateForm] = useForm<LoginForm>({
     email: '',
     password: '',
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from.pathname || '/');
+    }
+  }, [user]);
 
   const loginUser = async () => {
     const { email, password } = form;
@@ -52,6 +61,7 @@ export default function Login() {
       }
 
       setUser(result.user);
+      setIsAuthenticated(true);
 
       navigate('/');
     } catch (error) {
