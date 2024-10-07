@@ -1,3 +1,3 @@
-export { default as Card } from './Card';
-export { default as Product } from './Product';
 export { default as CustomCarousel } from './CustomCarousel';
+export { default as Loading } from './Loading';
+export { default as ProtectedRoute } from './ProtectedRoute';
