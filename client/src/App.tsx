@@ -39,8 +39,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path={ROUTES.LOGIN} element={<ProtectedRoute><Login /></ProtectedRoute>} />
-        <Route path={ROUTES.SIGN_UP} element={<ProtectedRoute><SignUp /></ProtectedRoute>} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
         <Route path={ROUTES.ERROR} element={<ErrorPage />} />
       </Routes>
       <Footer />
