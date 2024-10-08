@@ -12,18 +12,37 @@ export default function Header() {
 
   return (
     <header className="flex h-16 bg-secondary items-center justify-around">
-      <div className="w-1/4 flex items-center justify-center">
-        <h1 className='font-gope'
+      <div
+        className="w-1/4 flex items-center justify-center text-4xl border-r-2 
+      rounded-xl h-full cursor-pointer"
+      >
+        <p
+          className="font-gope"
           onClick={() => {
             navigate('/');
           }}
         >
           CUBE
-        </h1>
+        </p>
       </div>
-      <div className="flex space-x-7 w-1/4 items-center justify-center">
-        <p>Women</p>
-        <p>Men</p>
+      <div className="flex space-x-7 h-full w-1/4 text-lg uppercase items-center justify-center">
+        <div className="flex items-center border-r-2 h-full rounded-xl p-4 hover:text-white">
+          <NavLink
+            to={`${ROUTES.PRODUCTS}/women`}
+            className={({ isActive }) => (isActive ? 'active-nav-link' : '')}
+          >
+            Women
+          </NavLink>
+        </div>
+
+        <div className="group flex items-center border-r-2 h-full rounded-xl p-4 hover:text-white">
+          <NavLink
+            to={`${ROUTES.PRODUCTS}/women`}
+            className={({ isActive }) => (isActive ? 'active-nav-link' : '')}
+          >
+            Men
+          </NavLink>
+        </div>
       </div>
       <div className="w-1/4 mt-5">
         <Input value="" onChange={() => {}} placeholder="Search" />
@@ -61,7 +80,7 @@ export default function Header() {
             </NavLink>
           ) : (
             <div className="flex items-center">
-              <Button disabled={false} onClick={() => navigate('/login')}>
+              <Button disabled={false} onClick={() => navigate(`${ROUTES.LOGIN}`)}>
                 Login
               </Button>
             </div>

@@ -14,6 +14,13 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
+.active-nav-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color:white;
+  text-decoration-color: white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
