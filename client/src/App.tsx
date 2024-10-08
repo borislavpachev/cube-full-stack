@@ -1,17 +1,19 @@
 import { Toaster } from 'react-hot-toast';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import {
   ErrorPage,
   Favorites,
   Home,
   Login,
   Products,
+  Profile,
   ShoppingCart,
   SignUp,
 } from './pages';
 import { ROUTES } from './constants';
 import { Footer, Header } from './components/layout';
 import { ProtectedRoute } from './components';
+import { Orders, ProfileDetails, Security } from './pages/Profile/components';
 
 function App() {
   return (
@@ -21,8 +23,11 @@ function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.PRODUCTS} element={<Products />} />
-
+        <Route
+          path={ROUTES.PRODUCTS}
+          element={<Navigate to={`${ROUTES.PRODUCTS}/women`} />}
+        />
+        <Route path={`${ROUTES.PRODUCTS}/:g`} element={<Products />} />
         <Route
           path={ROUTES.FAVORITES}
           element={
@@ -39,6 +44,23 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path={ROUTES.USER_PROFILE}
+          element={<Navigate to={`${ROUTES.USER_PROFILE}/orders`} />}
+        />
+        <Route
+          path={`${ROUTES.USER_PROFILE}`}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="orders" element={<Orders />} />
+          <Route path="details" element={<ProfileDetails />} />
+          <Route path="security" element={<Security />} />
+        </Route>
+
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
         <Route path={ROUTES.ERROR} element={<ErrorPage />} />
