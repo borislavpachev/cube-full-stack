@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/buttons';
-import { MainLayout, Section } from '@/components/layout';
+import { MainLayout, Section, SectionTitle } from '@/components/layout';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 import { ProductCard } from '@/components/productComponents';
@@ -20,10 +20,8 @@ export default function Favorites() {
 
   return (
     <MainLayout>
-      <div>
-        <h1 className="mt-10 text-2xl border-2 border-t-blue-200 text-center bg-white/30 rounded-t p-6 -mb-2">
-          Favorites
-        </h1>
+      <div className="my-10">
+        <SectionTitle>Favorites</SectionTitle>
         {!favorites?.length ? (
           <Section>
             <p className="text-center text-xl flex items-center">

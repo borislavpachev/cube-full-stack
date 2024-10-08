@@ -7,7 +7,7 @@ type SectionProps = {
 export default function Section({ children }: SectionProps) {
   return (
     <section
-      className="max-w-3xl bg-white rounded flex flex-col 
+      className="max-w-5xl bg-white rounded flex flex-col 
             items-center justify-center shadow-xl p-14"
     >
       {children}
