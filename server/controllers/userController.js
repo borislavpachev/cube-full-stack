@@ -111,7 +111,8 @@ exports.updateLoggedInUserData = async (req, res, next) => {
 
 exports.deleteLoggedInUser = async (req, res, next) => {
   try {
-    const user = await userService.deleteLoggedInUser(req, res, next);
+    const user = await userService.deleteLoggedInUser(req);
+
     if (!user) return;
 
     res.status(httpStatus.NO_CONTENT).json({
