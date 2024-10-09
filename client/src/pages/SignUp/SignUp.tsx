@@ -32,7 +32,7 @@ export type SignUpForm = {
 };
 
 export default function SignUp() {
-  const { setUser } = useContext(
+  const { setUser, setIsAuthenticated } = useContext(
     AuthContext
   ) as AuthContextType;
 
@@ -89,6 +89,7 @@ export default function SignUp() {
       }
 
       setUser(result.data.user);
+      setIsAuthenticated(true);
       navigate('/');
     } catch (error) {
       console.error(error);
@@ -103,7 +104,7 @@ export default function SignUp() {
       <FormWrapper>
         <FormTitle>Sign Up</FormTitle>
         <Form>
-          <Label htmlFor="first-name">First Name:</Label>
+          <Label htmlFor="first-name">First name:</Label>
           <Input
             id="first-name"
             name="first-name"
@@ -111,7 +112,7 @@ export default function SignUp() {
             value={form.firstName}
             onChange={updateForm('firstName')}
           />
-          <Label htmlFor="last-name">Last Name:</Label>
+          <Label htmlFor="last-name">Last name:</Label>
           <Input
             id="last-name"
             name="last-name"
@@ -145,7 +146,7 @@ export default function SignUp() {
             value={form.password}
             onChange={updateForm('password')}
           />
-          <Label htmlFor="sign-up-passwordConfirm">Confirm Password: </Label>
+          <Label htmlFor="sign-up-passwordConfirm">Confirm password: </Label>
           <Input
             id="sign-up-passwordConfirm"
             name="sign-up-passwordConfirm"
