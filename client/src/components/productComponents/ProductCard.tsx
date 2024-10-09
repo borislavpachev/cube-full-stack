@@ -69,7 +69,7 @@ export default function ProductCard({ id, size }: CardProps) {
           </p>
           <p className="mt-2">size: {size}</p>
           <div className="flex items-center justify-center m-5">
-            <Button disabled={false} onClick={() => {}}>
+            <Button onClick={() => {}}>
               Add to Cart
             </Button>
           </div>

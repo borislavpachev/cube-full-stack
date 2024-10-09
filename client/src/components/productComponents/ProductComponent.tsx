@@ -43,7 +43,7 @@ export default function Product() {
             </div>
           </div>
 
-          <Button onClick={() => {}} disabled={false}>
+          <Button onClick={() => {}}>
             Add To Cart
           </Button>
         </div>

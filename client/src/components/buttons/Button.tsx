@@ -1,16 +1,16 @@
 import { type ReactNode } from 'react';
 
 type ButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   type?: 'submit' | 'reset' | 'button' | undefined;
-  disabled: boolean;
+  disabled?: boolean;
   children: ReactNode;
 };
 
 export default function Button({
   onClick,
-  disabled = false,
   type = 'button',
+  disabled = false,
   children,
   ...props
 }: ButtonProps) {
