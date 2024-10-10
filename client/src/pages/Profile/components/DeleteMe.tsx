@@ -29,13 +29,18 @@ export default function DeleteMe() {
   };
 
   return (
-    <div className="mt-10 bg-red-500">
+    <div className="mt-10 bg-red-500 rounded">
       <Modal
-        trigger={<Button>Delete my profile</Button>}
+        trigger="Delete my profile"
         title={
           <p className="text-center mt-5">
             Are you sure you want to delete your profile ?
           </p>
+        }
+        description={
+          <span className="text-gray-500 text-center">
+            This action is irreversible !
+          </span>
         }
         content={
           <div className="flex mx-10 mt-5 space-x-5">
