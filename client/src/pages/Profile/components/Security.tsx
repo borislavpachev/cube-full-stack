@@ -1,5 +1,5 @@
 import { Button } from '@/components/buttons';
-import { Form, FormTitle, FormWrapper, Input, Label } from '@/components/form';
+import { Form, FormTitle, FormInnerWrapper, Input, Label } from '@/components/form';
 import { Section, SectionTitle } from '@/components/layout';
 import { useForm } from '@/hooks';
 import { updateCurrentUserPassword } from '@/services/userService';
@@ -47,11 +47,11 @@ export default function Security() {
   };
 
   return (
-    <>
+    <div className='w-full'>
       <SectionTitle>Security</SectionTitle>
       <Section>
-        <FormWrapper>
-          <FormTitle>Update Password</FormTitle>
+        <FormInnerWrapper>
+          <FormTitle title='Update password' description='The password must be at least 8 characters'/>
           <Form>
             <Label htmlFor="new-password">New Password:</Label>
             <Input
@@ -79,9 +79,9 @@ export default function Security() {
               Update Password
             </Button>
           </Form>
-        </FormWrapper>
+        </FormInnerWrapper>
         <DeleteMe />
       </Section>
-    </>
+    </div>
   );
 }
