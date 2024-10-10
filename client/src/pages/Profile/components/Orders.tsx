@@ -21,7 +21,7 @@ export default function Orders() {
   }, []);
 
   return (
-    <>
+    <div className='flex flex-col w-full'>
       <SectionTitle>Orders</SectionTitle>
       {!orders.length ? (
         <Section>
@@ -48,6 +48,6 @@ export default function Orders() {
           })}
         </Section>
       )}
-    </>
+    </div>
   );
 }

@@ -20,11 +20,11 @@ export default function PhoneInput({
   ...props
 }: PhoneInputProps) {
   return (
-    <div className="flex rounded w-full mb-3 items-center justify-center">
+    <div className="flex rounded text-lg border border-black focus-within:border-2 w-full mb-3 items-center justify-center">
       <TooltipButton
         content={
           <TooltipContent>
-           <b className='underline mb-1'>Formats:</b>
+            <b className="underline">Formats:</b>
             <br />
             0123456789
             <br />0 123 456 789
@@ -34,7 +34,7 @@ export default function PhoneInput({
           </TooltipContent>
         }
       >
-        <div className="flex bg-slate-100 p-3 rounded-l border border-blue-200">
+        <div className="flex bg-slate-200 p-3 rounded-l">
           <button>
             <img
               src="/images/info-circle.svg"
@@ -46,7 +46,7 @@ export default function PhoneInput({
         </div>
       </TooltipButton>
       <input
-        className="w-full border p-3 rounded-r focus:outline-blue-200"
+        className="w-full p-3 rounded focus:outline-none"
         id={id}
         name={name}
         type="tel"

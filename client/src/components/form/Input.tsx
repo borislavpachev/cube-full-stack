@@ -26,7 +26,7 @@ export default function Input({
     <>
       <div className="relative w-full">
         <input
-          className="w-full border p-3 mb-5 rounded focus:outline-blue-200"
+          className="w-full text-lg border p-3 mb-5 rounded border-black focus:outline-black"
           id={id}
           name={name}
           type={showPassword ? 'text' : type}

@@ -8,8 +8,8 @@ export default function Profile() {
 
   return (
     <MainLayout>
-      <div className="flex md:w-3/4 flex-col items-start justify-start m-5">
-        <div className="flex w-full items-center justify-center space-x-2 bg-white rounded p-2">
+      <div className="flex flex-col md:w-3/4 items-center justify-start m-5">
+        <div className="max-w-5xl flex w-full items-center justify-center space-x-2 bg-white rounded p-2">
           <Button onClick={() => navigate(`${ROUTES.USER_PROFILE}/orders`)}>
             Orders
           </Button>
@@ -21,7 +21,7 @@ export default function Profile() {
             Security
           </Button>
         </div>
-        <div className="min-w-full mt-5">
+        <div className="max-w-5xl w-full flex flex-col items-center justify-center mt-5">
           <Outlet />
         </div>
       </div>

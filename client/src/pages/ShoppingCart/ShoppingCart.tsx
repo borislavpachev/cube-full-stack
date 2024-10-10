@@ -1,3 +1,5 @@
+import { MainLayout } from '@/components/layout';
+
 export default function ShoppingCart() {
-  return <>shopping cart</>;
+  return <MainLayout>shopping cart</MainLayout>;
 }
