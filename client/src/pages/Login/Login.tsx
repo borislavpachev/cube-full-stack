@@ -1,9 +1,10 @@
 import {
   Form,
-  FormTitle,
-  FormWrapper,
+  FormOuterWrapper,
+  FormInnerWrapper,
   Input,
   Label,
+  FormTitle,
 } from '../../components/form';
 import { MainLayout } from '../../components/layout';
 import { Button } from '../../components/buttons';
@@ -16,6 +17,7 @@ import { useForm } from '@/hooks';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
+import { Logo } from '@/components';
 
 type LoginForm = {
   email: string;
@@ -74,11 +76,22 @@ export default function Login() {
 
   return (
     <MainLayout>
-      <div className="w-full h-[100vh] flex items-center justify-center">
-        <FormWrapper>
-          <FormTitle>Login</FormTitle>
+      <div className="relative">
+        <div className="absolute left-2 top-3">
+          <Logo />
+        </div>
+        <img
+          src="/images/Back.png"
+          alt="Image of Product"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <FormOuterWrapper>
+        <FormInnerWrapper>
+          <FormTitle title="Welcome 👋" description="Please login here" />
           <Form>
-            <Label htmlFor="login-email">Email:</Label>
+            <Label htmlFor="login-email">Email Address</Label>
             <Input
               id="login-email"
               name="email"
@@ -86,7 +99,7 @@ export default function Login() {
               value={form.email}
               onChange={updateForm('email')}
             />
-            <Label htmlFor="login-password">Password: </Label>
+            <Label htmlFor="login-password">Password</Label>
             <Input
               id="login-password"
               name="login-password"
@@ -110,15 +123,15 @@ export default function Login() {
               <span>
                 <Link
                   to="/sign-up"
-                  className="text-blue-500 font-bold ml-1 hover:underline-offset-2 hover:underline"
+                  className="font-bold ml-1 hover:underline-offset-2 hover:underline"
                 >
                   Sign up
                 </Link>
               </span>
             </p>
           </div>
-        </FormWrapper>
-      </div>
+        </FormInnerWrapper>
+      </FormOuterWrapper>
     </MainLayout>
   );
 }
