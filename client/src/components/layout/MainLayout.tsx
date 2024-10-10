@@ -6,8 +6,6 @@ type MainLayoutProps = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="flex items-center justify-center bg-gradient-to-b from-blue-950 via-red-200 to-blue-950">
-      {children}
-    </main>
+    <main className="min-h-screen flex flex-col md:flex-row">{children}</main>
   );
 }
