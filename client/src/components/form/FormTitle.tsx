@@ -1,13 +1,13 @@
-import { type ReactNode } from 'react';
-
 type FormTitleProps = {
-  children: ReactNode;
+  title: string;
+  description?: string;
 };
 
-export default function FormTitle({ children }: FormTitleProps) {
+export default function FormTitle({ title, description }: FormTitleProps) {
   return (
-    <h1 className="mt-14 mx-10 p-5 font-semibold shadow-md tracking-widest text-center text-2xl md:text-3xl text-black bg-red-200/30 rounded">
-      {children}
-    </h1>
+    <div>
+      <p className="text-3xl font-semibold mb-1">{title}</p>
+      <p className="text-gray-400">{description}</p>
+    </div>
   );
 }
