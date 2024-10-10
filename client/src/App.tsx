@@ -1,5 +1,5 @@
 import { Toaster } from 'react-hot-toast';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import {
   ErrorPage,
   Favorites,
@@ -16,9 +16,13 @@ import { ProtectedRoute } from './components';
 import { Orders, ProfileDetails, Security } from './pages/Profile/components';
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
-      <Header />
+      {location.pathname !== '/login' && location.pathname !== '/sign-up' && (
+        <Header />
+      )}
       <Toaster />
       <Routes>
         <Route index element={<Home />} />
@@ -65,7 +69,9 @@ function App() {
         <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
         <Route path={ROUTES.ERROR} element={<ErrorPage />} />
       </Routes>
-      <Footer />
+      {location.pathname !== '/login' && location.pathname !== '/sign-up' && (
+        <Footer />
+      )}
     </>
   );
 }
