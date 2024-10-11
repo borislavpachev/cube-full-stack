@@ -4,10 +4,10 @@ import { Button } from '../buttons';
 
 type CardProps = {
   id: string;
-  size: string;
+  size?: string;
 };
 
-type ProductValue = {
+export type ProductValue = {
   _id: string;
   category: string;
   color: string;
@@ -22,14 +22,18 @@ type ProductValue = {
 
 export default function ProductCard({ id, size }: CardProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
-  const [isLiked, setIsLiked] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
-    getProduct(id).then((res) => {
-      const item = res.data.product;
+    getProduct(id)
+      .then((res) => {
+        const item = res.data.product;
 
-      setProduct(item);
-    });
+        setProduct(item);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [id]);
 
   return (
@@ -60,18 +64,21 @@ export default function ProductCard({ id, size }: CardProps) {
             />
           )}
         </div>
-
-        <img src="/images/Back.png" alt="product-cover" />
+        <div>
+          <img
+            src="/images/Back.png"
+            alt="product-cover"
+            className="w-full h-full"
+          />
+        </div>
         <div className="flex flex-col text-center p-5">
           <h1 className="text-3xl">{product?.name}</h1>
-          <p className="text-sm text-gray-400 line-clamp-1">
+          <p className="text-sm text-gray-500 line-clamp-1">
             {product?.description}
           </p>
-          <p className="mt-2">size: {size}</p>
+          {size && <p className="mt-2">size: {size}</p>}
           <div className="flex items-center justify-center m-5">
-            <Button onClick={() => {}}>
-              Add to Cart
-            </Button>
+            <Button onClick={() => {}}>Add to Cart</Button>
           </div>
         </div>
       </div>
