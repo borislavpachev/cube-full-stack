@@ -5,15 +5,21 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
+import { Button } from './buttons';
 
 type ModalProps = {
-  trigger: ReactNode;
+  trigger: string;
   title: ReactNode;
+  description: ReactNode;
   content: ReactNode;
 };
-export default function Modal({ trigger, title, content }: ModalProps) {
+export default function Modal({
+  trigger,
+  title,
+  description,
+  content,
+}: ModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -22,12 +28,15 @@ export default function Modal({ trigger, title, content }: ModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger onClick={() => setIsOpen(true)}>{trigger}</DialogTrigger>
+      <Button onClick={() => setIsOpen(true)}>{trigger}</Button>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription onClick={handleClose}>{content}</DialogDescription>
+          <DialogDescription className="text-center text-gray-500 text-md">
+            {description}
+          </DialogDescription>
         </DialogHeader>
+        <div onClick={handleClose}>{content}</div>
       </DialogContent>
     </Dialog>
   );
