@@ -20,7 +20,7 @@ export default function Favorites() {
 
   return (
     <MainLayout>
-      <div className="my-10">
+      <div className="w-full p-10">
         <SectionTitle>Favorites</SectionTitle>
         {!favorites?.length ? (
           <Section>
@@ -41,17 +41,12 @@ export default function Favorites() {
           </Section>
         ) : (
           <Section>
-            <div
-              className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))]
-          place-items-center gap-x-2 gap-y-2 overflow-auto"
-            >
+            <div className="flex flex-wrap w-full justify-center md:justify-start items-center gap-5">
               {favorites.map((item, index) => {
                 return (
-                  <ProductCard
-                    key={index}
-                    id={item?.productId}
-                    size={item.productSize}
-                  />
+                  <div key={index} className="w-[300px]">
+                    <ProductCard id={item?.productId} size={item.productSize} />
+                  </div>
                 );
               })}
             </div>
