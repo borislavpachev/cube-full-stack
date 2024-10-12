@@ -1,4 +1,5 @@
 import { TooltipButton, TooltipContent } from '../buttons';
+import { InfoIcon } from '../icons';
 
 type PhoneInputProps = {
   id?: string;
@@ -36,12 +37,7 @@ export default function PhoneInput({
       >
         <div className="flex bg-slate-200 p-3 rounded-l">
           <button>
-            <img
-              src="/images/info-circle.svg"
-              alt="info-circle"
-              width={29}
-              height={29}
-            />
+            <InfoIcon size={29}/>
           </button>
         </div>
       </TooltipButton>

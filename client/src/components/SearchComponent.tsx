@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Input } from './form';
+import { SearchIcon } from './icons';
 
 export default function SearchComponent() {
   const [show, setShow] = useState(false);
@@ -19,16 +20,12 @@ export default function SearchComponent() {
         />
       </div>
 
-      <img
+      <div className='cursor-pointer'
         onClick={() => {
           setShow(!show);
         }}
-        src="/images/search.svg"
-        alt="Search Icon"
-        width={35}
-        height={35}
-        className="cursor-pointer"
-      />
+      ><SearchIcon size={35}/></div>
+      
     </>
   );
 }

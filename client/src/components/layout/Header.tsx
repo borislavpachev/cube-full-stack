@@ -6,6 +6,7 @@ import { AuthContextType } from '@/contexts/types';
 import { Button, LogoutButton } from '../buttons';
 import Logo from '../Logo';
 import SearchComponent from '../SearchComponent';
+import { HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
 
 export default function Header() {
   const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
@@ -34,35 +35,20 @@ export default function Header() {
         <div className="flex space-x-5 w-2/4 items-center justify-center">
           <SearchComponent />
 
-          <NavLink to={ROUTES.FAVORITES}>
-            <img
-              src="/images/heart.svg"
-              alt="User favorites list"
-              width={35}
-              height={35}
-            />
+          <NavLink to={`${ROUTES.USER_PROFILE}/favorites`}>
+            <HeartIcon size={35} />
           </NavLink>
 
           <NavLink to={ROUTES.SHOPPING_CART}>
-            <img
-              src="/images/shopping-cart.svg"
-              alt="User shopping cart"
-              width={35}
-              height={35}
-            />
+            <ShoppingCartIcon size={35} />
           </NavLink>
 
           {isAuthenticated && (
             <>
-            <NavLink to={ROUTES.USER_PROFILE}>
-              <img
-                src="/images/user-profile.svg"
-                alt="User profile"
-                width={35}
-                height={35}
-              />
-            </NavLink>
-            <LogoutButton/>
+              <NavLink to={ROUTES.USER_PROFILE}>
+                <UserIcon size={35} />
+              </NavLink>
+              <LogoutButton />
             </>
           )}
           {!isAuthenticated && (

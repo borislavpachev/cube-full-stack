@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ClosedEyeIcon, OpenEyeIcon } from '../icons';
 
 type InputProps = {
   id?: string;
@@ -44,25 +45,9 @@ export default function Input({
             className="absolute bottom-7 right-1 p-1"
           >
             {showPassword ? (
-              <img
-                src="/images/eye-open.svg"
-                alt="eye-open"
-                width={25}
-                height={25}
-                style={{
-                  filter: `brightness(0) saturate(100%) invert(56%) sepia(0%) saturate(1%) hue-rotate(158deg) brightness(89%) contrast(90%)`,
-                }}
-              />
+              <OpenEyeIcon size={25} />
             ) : (
-              <img
-                src="/images/eye-closed.svg"
-                alt="eye-closed"
-                width={25}
-                height={25}
-                style={{
-                  filter: `brightness(0) saturate(100%) invert(56%) sepia(0%) saturate(1%) hue-rotate(158deg) brightness(89%) contrast(90%)`,
-                }}
-              />
+              <ClosedEyeIcon size={25} />
             )}
           </button>
         )}

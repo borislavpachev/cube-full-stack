@@ -1,6 +1,7 @@
 import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
 import { Button } from '../buttons';
+import { HeartIcon } from '../icons';
 
 type CardProps = {
   id: string;
@@ -46,22 +47,13 @@ export default function ProductCard({ id, size }: CardProps) {
           }}
         >
           {!isLiked ? (
-            <img
-              src="/images/heart.svg"
-              alt="favorite"
-              width={35}
-              height={35}
-              className="p-1"
-            />
+            <div className="p-1">
+              <HeartIcon size={25} />
+            </div>
           ) : (
-            <img
-              src="/images/heart-red-2.svg"
-              alt="favorite"
-              width={35}
-              height={35}
-              className="p-1"
-              style={{ fill: 'red' }}
-            />
+            <div className="p-1">
+              <HeartIcon size={25} fillColor="red" />
+            </div>
           )}
         </div>
         <div>
