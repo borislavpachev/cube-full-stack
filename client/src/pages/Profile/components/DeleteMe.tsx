@@ -29,7 +29,7 @@ export default function DeleteMe() {
   };
 
   return (
-    <div className="mt-10 bg-red-500 rounded">
+    <div className="bg-red-500 rounded">
       <Modal
         trigger="Delete my profile"
         title={
