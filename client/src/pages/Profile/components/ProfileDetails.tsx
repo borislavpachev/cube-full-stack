@@ -7,7 +7,7 @@ import {
   Label,
   PhoneInput,
 } from '@/components/form';
-import { Section, SectionTitle } from '@/components/layout';
+import { Section } from '@/components/layout';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 import { useForm } from '@/hooks';
@@ -80,51 +80,51 @@ export default function ProfileDetails() {
   };
 
   return (
-    <div className="w-full">
-      <SectionTitle>Profile Details</SectionTitle>
-      <Section>
-        <FormInnerWrapper>
-          <FormTitle title="Personal Information" description='Keep it up-to-date'/>
-          <Form>
-            <Label htmlFor="update-first-name">First name</Label>
-            <Input
-              id="update-first-name"
-              name="update-first-name"
-              placeholder="First name"
-              value={form.firstName || ''}
-              onChange={updateForm('firstName')}
-            />
-            <Label htmlFor="update-last-name">Last name</Label>
-            <Input
-              id="update-last-name"
-              name="update-last-name"
-              placeholder="Last name"
-              value={form.lastName || ''}
-              onChange={updateForm('lastName')}
-            />
-            <Label htmlFor="update-user-email">Email address</Label>
-            <Input
-              id="update-user-email"
-              name="update-user-email"
-              placeholder="cube@cube.com"
-              type="text"
-              value={form.email || ''}
-              onChange={updateForm('email')}
-            />
-            <Label htmlFor="update-user-phone">Phone number:</Label>
-            <PhoneInput
-              id="update-user-phone"
-              name="update-user-phone"
-              placeholder="+359 123 456 789"
-              value={form.phoneNumber || ''}
-              onChange={updateForm('phoneNumber')}
-            />
-            <Button type="submit" onClick={updateMe}>
-              Update User
-            </Button>
-          </Form>
-        </FormInnerWrapper>
-      </Section>
-    </div>
+    <Section>
+      <FormInnerWrapper>
+        <FormTitle
+          title="Personal Information"
+          description="Keep it up-to-date"
+        />
+        <Form>
+          <Label htmlFor="update-first-name">First name</Label>
+          <Input
+            id="update-first-name"
+            name="update-first-name"
+            placeholder="First name"
+            value={form.firstName || ''}
+            onChange={updateForm('firstName')}
+          />
+          <Label htmlFor="update-last-name">Last name</Label>
+          <Input
+            id="update-last-name"
+            name="update-last-name"
+            placeholder="Last name"
+            value={form.lastName || ''}
+            onChange={updateForm('lastName')}
+          />
+          <Label htmlFor="update-user-email">Email address</Label>
+          <Input
+            id="update-user-email"
+            name="update-user-email"
+            placeholder="cube@cube.com"
+            type="text"
+            value={form.email || ''}
+            onChange={updateForm('email')}
+          />
+          <Label htmlFor="update-user-phone">Phone number:</Label>
+          <PhoneInput
+            id="update-user-phone"
+            name="update-user-phone"
+            placeholder="+359 123 456 789"
+            value={form.phoneNumber || ''}
+            onChange={updateForm('phoneNumber')}
+          />
+          <Button type="submit" onClick={updateMe}>
+            Update User
+          </Button>
+        </Form>
+      </FormInnerWrapper>
+    </Section>
   );
 }

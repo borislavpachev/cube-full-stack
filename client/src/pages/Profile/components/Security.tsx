@@ -1,6 +1,12 @@
 import { Button } from '@/components/buttons';
-import { Form, FormTitle, FormInnerWrapper, Input, Label } from '@/components/form';
-import { Section, SectionTitle } from '@/components/layout';
+import {
+  Form,
+  FormTitle,
+  FormInnerWrapper,
+  Input,
+  Label,
+} from '@/components/form';
+import { Section } from '@/components/layout';
 import { useForm } from '@/hooks';
 import { updateCurrentUserPassword } from '@/services/userService';
 import { validatePassword } from '@/utils/validations';
@@ -47,41 +53,41 @@ export default function Security() {
   };
 
   return (
-    <div className='w-full'>
-      <SectionTitle>Security</SectionTitle>
-      <Section>
-        <FormInnerWrapper>
-          <FormTitle title='Update password' description='The password must be at least 8 characters'/>
-          <Form>
-            <Label htmlFor="new-password">New Password:</Label>
-            <Input
-              id="new-password"
-              name="new-password"
-              placeholder="********"
-              type="password"
-              value={form.newPassword}
-              onChange={updateForm('newPassword')}
-            />
-            <Label htmlFor="new-password">Confirm New Password:</Label>
-            <Input
-              id="confirm-new-password"
-              name="confirm-new-password"
-              placeholder="********"
-              type="password"
-              value={form.passwordConfirm}
-              onChange={updateForm('passwordConfirm')}
-            />
-            <Button
-              disabled={(!form.newPassword || !form.passwordConfirm) && true}
-              type="submit"
-              onClick={updatePassword}
-            >
-              Update Password
-            </Button>
-          </Form>
-        </FormInnerWrapper>
-        <DeleteMe />
-      </Section>
-    </div>
+    <Section>
+      <FormInnerWrapper>
+        <FormTitle
+          title="Update password"
+          description="The new password must be at least 8 characters"
+        />
+        <Form>
+          <Label htmlFor="new-password">New Password:</Label>
+          <Input
+            id="new-password"
+            name="new-password"
+            placeholder="********"
+            type="password"
+            value={form.newPassword}
+            onChange={updateForm('newPassword')}
+          />
+          <Label htmlFor="new-password">Confirm New Password:</Label>
+          <Input
+            id="confirm-new-password"
+            name="confirm-new-password"
+            placeholder="********"
+            type="password"
+            value={form.passwordConfirm}
+            onChange={updateForm('passwordConfirm')}
+          />
+          <Button
+            disabled={(!form.newPassword || !form.passwordConfirm) && true}
+            type="submit"
+            onClick={updatePassword}
+          >
+            Update Password
+          </Button>
+        </Form>
+      </FormInnerWrapper>
+      <DeleteMe />
+    </Section>
   );
 }

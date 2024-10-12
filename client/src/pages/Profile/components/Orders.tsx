@@ -1,5 +1,5 @@
 import { Button } from '@/components/buttons';
-import { Section, SectionTitle } from '@/components/layout';
+import { Section } from '@/components/layout';
 import { getMyOrders } from '@/services/ordersService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +21,7 @@ export default function Orders() {
   }, []);
 
   return (
-    <div className='flex flex-col w-full'>
-      <SectionTitle>Orders</SectionTitle>
+    <>
       {!orders.length ? (
         <Section>
           <p className="text-center text-xl flex items-center">
@@ -48,6 +47,6 @@ export default function Orders() {
           })}
         </Section>
       )}
-    </div>
+    </>
   );
 }
