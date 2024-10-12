@@ -22,6 +22,11 @@ body {
   text-decoration-color: black;
 }
 
+.profile-nav-link {
+  background-color: black;
+  color: white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
