@@ -2,7 +2,6 @@ import { Toaster } from 'react-hot-toast';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import {
   ErrorPage,
-  Favorites,
   Home,
   Login,
   Products,
@@ -13,7 +12,12 @@ import {
 import { ROUTES } from './constants';
 import { Footer, Header } from './components/layout';
 import { ProtectedRoute } from './components';
-import { Orders, ProfileDetails, Security } from './pages/Profile/components';
+import {
+  Favorites,
+  Orders,
+  ProfileDetails,
+  Security,
+} from './pages/Profile/components';
 
 function App() {
   const location = useLocation();
@@ -32,14 +36,6 @@ function App() {
           element={<Navigate to={`${ROUTES.PRODUCTS}/women`} />}
         />
         <Route path={`${ROUTES.PRODUCTS}/:g`} element={<Products />} />
-        <Route
-          path={ROUTES.FAVORITES}
-          element={
-            <ProtectedRoute>
-              <Favorites />
-            </ProtectedRoute>
-          }
-        />
         <Route
           path={ROUTES.SHOPPING_CART}
           element={
@@ -61,6 +57,7 @@ function App() {
           }
         >
           <Route path="orders" element={<Orders />} />
+          <Route path="favorites" element={<Favorites />} />
           <Route path="details" element={<ProfileDetails />} />
           <Route path="security" element={<Security />} />
         </Route>
