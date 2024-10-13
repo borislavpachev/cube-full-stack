@@ -14,7 +14,7 @@ import { useForm } from '@/hooks';
 import { updateCurrentUserData } from '@/services/userService';
 import {
   validateEmail,
-  validateName,
+  validateText,
   validatePhoneNumber,
 } from '@/utils/validations';
 import { useContext } from 'react';
@@ -25,7 +25,7 @@ export type UpdateForm = {
   lastName?: string;
   email?: string;
   phoneNumber?: string;
-  address?: string;
+  deliveryAddress?: string;
 };
 
 export default function ProfileDetails() {
@@ -45,11 +45,11 @@ export default function ProfileDetails() {
       phoneNumber = '',
     } = form;
 
-    if (!validateName(firstName)) {
+    if (!validateText(firstName)) {
       toast.error('User must have a first name!');
       return;
     }
-    if (!validateName(lastName)) {
+    if (!validateText(lastName)) {
       toast.error('User must have a last name!');
       return;
     }
