@@ -45,7 +45,7 @@ export default function Header() {
 
           {isAuthenticated && (
             <>
-              <NavLink to={ROUTES.USER_PROFILE}>
+              <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
                 <UserIcon size={35} />
               </NavLink>
               <LogoutButton />
