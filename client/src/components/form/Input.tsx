@@ -45,9 +45,9 @@ export default function Input({
             className="absolute bottom-7 right-1 p-1"
           >
             {showPassword ? (
-              <OpenEyeIcon size={25} />
+              <OpenEyeIcon size={30} />
             ) : (
-              <ClosedEyeIcon size={25} />
+              <ClosedEyeIcon size={30} />
             )}
           </button>
         )}
