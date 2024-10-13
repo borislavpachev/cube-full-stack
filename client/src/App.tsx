@@ -13,6 +13,7 @@ import { ROUTES } from './constants';
 import { Footer, Header } from './components/layout';
 import { ProtectedRoute } from './components';
 import {
+  Address,
   Favorites,
   Orders,
   ProfileDetails,
@@ -59,6 +60,7 @@ function App() {
           <Route path="orders" element={<Orders />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="details" element={<ProfileDetails />} />
+          <Route path="address" element={<Address />} />
           <Route path="security" element={<Security />} />
         </Route>
 
