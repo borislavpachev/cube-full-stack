@@ -13,7 +13,7 @@ import { signUp } from '../../services/authService';
 import toast from 'react-hot-toast';
 import {
   validateEmail,
-  validateName,
+  validateText,
   validatePassword,
   validatePhoneNumber,
 } from '../../utils/validations';
@@ -58,11 +58,11 @@ export default function SignUp() {
       passwordConfirm,
     } = form;
 
-    if (!validateName(firstName)) {
+    if (!validateText(firstName)) {
       toast.error('User must have a first name!');
       return;
     }
-    if (!validateName(lastName)) {
+    if (!validateText(lastName)) {
       toast.error('User must have a last name!');
       return;
     }
