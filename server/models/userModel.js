@@ -56,7 +56,9 @@ const userSchema = new Schema({
     default: [],
   },
   deliveryAddress: {
-    type: String,
+    street: { type: String },
+    city: { type: String },
+    additionalInfo: { type: String },
   },
   password: {
     type: String,
