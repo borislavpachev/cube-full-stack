@@ -1,4 +1,5 @@
 import { Button } from '@/components/buttons';
+import { TrashIcon } from '@/components/icons';
 import Modal from '@/components/Modal';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
@@ -31,7 +32,11 @@ export default function DeleteMe() {
   return (
     <div className="bg-red-500 rounded">
       <Modal
-        trigger="Delete my profile"
+        trigger={
+          <p className="flex items-center justify-center space-x-2">
+            <span>Delete profile</span> <TrashIcon size={25} />
+          </p>
+        }
         title={
           <p className="text-center mt-5">
             Are you sure you want to delete your profile ?
