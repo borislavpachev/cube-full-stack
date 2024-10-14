@@ -1,21 +1,43 @@
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/buttons';
 import { Section } from '@/components/layout';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
 import { ProductCard } from '@/components/productComponents';
+import { getAllFavorites } from '@/services/favoriteService';
+import toast from 'react-hot-toast';
+import FavoriteCard from './FavoriteCard';
 
-type FavoriteType = {
+export type FavoriteType = {
   productId: string;
   productSize: string;
 };
 
 export default function Favorites() {
-  const { user } = useContext(AuthContext) as AuthContextType;
-  const [favorites, setFavorites] = useState<FavoriteType[] | undefined>(
-    user?.favorites || []
-  );
+  const [favorites, setFavorites] = useState<FavoriteType[] | undefined>([]);
+
+  useEffect(() => {
+    getAllFavorites()
+      .then((res) => {
+        if (res.error) {
+          toast.error(res.error);
+          return;
+        }
+        const userFavorites = res.data.favorites;
+        setFavorites(userFavorites);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  }, []);
+
+  const deleteFavorite = async (id: string) => {
+    setFavorites((prevFavorites) => {
+      return prevFavorites?.filter((item) => {
+        return item.productId !== id;
+      });
+    });
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -23,12 +45,13 @@ export default function Favorites() {
       {!favorites?.length ? (
         <Section>
           <p className="text-center text-xl flex items-center">
-            No products added to your favorites. Check our deals and feel free
-            to add anything you like.
+            No products added to your favorites.
+          </p>
+          <p className="text-center text-sm text-gray-500 mt-2">
+            Check our deals and feel free to add anything you like.
           </p>
           <div className="w-1/2 mt-12">
             <Button
-              disabled={false}
               onClick={() => {
                 navigate('/');
               }}
@@ -43,7 +66,12 @@ export default function Favorites() {
             {favorites.map((item, index) => {
               return (
                 <div key={index} className="w-[300px]">
-                  <ProductCard id={item?.productId} size={item.productSize} />
+                  <FavoriteCard
+                    id={item?.productId}
+                    size={item?.productSize}
+                    liked={true}
+                    deleteFavorite={deleteFavorite}
+                  />
                 </div>
               );
             })}

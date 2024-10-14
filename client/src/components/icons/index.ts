@@ -8,4 +8,6 @@ export { default as InfoIcon } from './InfoIcon';
 export { default as PackageIcon } from './PackageIcon';
 export { default as LocationIcon } from './LocationIcon';
 export { default as LockIcon } from './LockIcon';
+export { default as TrashIcon } from './TrashIcon';
+
 
