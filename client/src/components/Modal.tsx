@@ -9,7 +9,7 @@ import {
 import { Button } from './buttons';
 
 type ModalProps = {
-  trigger: string;
+  trigger: JSX.Element;
   title: ReactNode;
   description: ReactNode;
   content: ReactNode;

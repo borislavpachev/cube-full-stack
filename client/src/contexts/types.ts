@@ -11,7 +11,11 @@ export type User = {
   email: string;
   role: 'Admin' | 'User';
   phoneNumber: string;
-  deliveryAddress: string;
+  deliveryAddress: {
+    street?: string;
+    city?: string;
+    additionalInfo?: string;
+  };
   favorites: [];
   shoppingCart: [];
   password: string;
