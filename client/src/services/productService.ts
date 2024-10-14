@@ -14,7 +14,7 @@ export const getProduct = async (id: string) => {
     if (!response.ok) {
       const error = await response.json();
       return {
-        error: error.message || `Error getting product with id: ${id}`,
+        error: error.message || `Error getting product with id: ${id}! Please try again!`,
       };
     }
 
