@@ -1,7 +1,18 @@
 import { API_BASE_URL } from '@/constants';
-import { UpdateForm } from '@/pages/Profile/components/ProfileDetails';
 
-export const updateCurrentUserData = async (form: UpdateForm) => {
+type UserForm = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  deliveryAddress?: {
+    street: string;
+    city: string;
+    additionalInfo?: string;
+  };
+};
+
+export const updateCurrentUserData = async (form: UserForm) => {
   const url = `${API_BASE_URL}users/me`;
 
   try {
@@ -11,9 +22,7 @@ export const updateCurrentUserData = async (form: UpdateForm) => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({
-        ...form,
-      }),
+      body: JSON.stringify(form),
     });
 
     if (!response.ok) {

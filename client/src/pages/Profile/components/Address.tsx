@@ -23,18 +23,14 @@ type AddressForm = {
 
 export default function Address() {
   const { user, setUser } = useContext(AuthContext) as AuthContextType;
-  const [userStreet, userCity, addressAdditionalInfo] = user?.deliveryAddress
-    ? user.deliveryAddress.split('###')
-    : ['', '', ''];
-
   const [form, updateForm] = useForm<AddressForm>({
-    street: userStreet || '',
-    city: userCity || '',
-    additionalInfo: addressAdditionalInfo || '',
+    street: user?.deliveryAddress?.street || '',
+    city: user?.deliveryAddress?.city || '',
+    additionalInfo: user?.deliveryAddress?.additionalInfo || '',
   });
 
   const updateAddress = async () => {
-    const { street = '', city = '' } = form;
+    const { street = '', city = '', additionalInfo = '' } = form;
 
     if (!validateText(street)) {
       toast.error('Delivery address can not be empty!');
@@ -44,10 +40,15 @@ export default function Address() {
       toast.error('Address must have city!');
       return;
     }
-    const address = Object.values(form).join('###');
 
     try {
-      const result = await updateCurrentUserData({ deliveryAddress: address });
+      const result = await updateCurrentUserData({
+        deliveryAddress: {
+          street,
+          city,
+          additionalInfo,
+        },
+      });
 
       if (result.error) {
         toast.error(result.error);
@@ -96,7 +97,7 @@ export default function Address() {
             placeholder="Additional info (Optional)"
             onChange={updateForm('additionalInfo')}
           />
-          <Button   
+          <Button
             type="submit"
             onClick={updateAddress}
             disabled={!form.street && true}

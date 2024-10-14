@@ -20,12 +20,11 @@ import {
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
-export type UpdateForm = {
+type UpdateForm = {
   firstName?: string;
   lastName?: string;
   email?: string;
   phoneNumber?: string;
-  deliveryAddress?: string;
 };
 
 export default function ProfileDetails() {
