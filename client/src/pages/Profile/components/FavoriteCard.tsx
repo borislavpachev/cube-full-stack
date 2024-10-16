@@ -72,7 +72,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
 
   return (
     <>
-      <div className="flex flex-col rounded border-2">
+      <div className="flex flex-col rounded border-2 shadow-2xl">
         <div className="relative">
           <div className="absolute bg-white rounded-full right-0 m-1">
             <div className="p-1 cursor-pointer" onClick={removeProductFromFavorites}>
@@ -88,7 +88,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
         <div className="flex flex-col cursor-default p-5">
           <h1 className="text-xl">{product?.name}</h1>
           <p
-            className="text-gray-500 text-ellipsis text-nowrap overflow-hidden"
+            className="text-gray-500 line-clamp-1"
             title={product?.description}
           >
             {product?.description}
