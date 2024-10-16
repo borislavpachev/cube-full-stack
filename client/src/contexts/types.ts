@@ -5,7 +5,7 @@ export type AuthProviderProps = {
 };
 
 export type User = {
-  id: string;
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -19,6 +19,7 @@ export type User = {
   favorites: [];
   shoppingCart: [];
   password: string;
+  isBlocked: boolean;
 };
 
 export type AuthContextType = {
