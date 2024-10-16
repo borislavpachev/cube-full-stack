@@ -12,7 +12,7 @@ export default function MonthCategory() {
 
   return (
     <div className="p-10 flex flex-col md:flex-row">
-      <div className="flex flex-col md:flex-row w-full p-10 text-start md:text-end bg-slate-300">
+      <div className="flex flex-col md:flex-row w-full p-10 text-start md:text-end bg-slate-200">
         <div className="w-full md:w-1/2">
           <img
             src="./categories/Space.png"
