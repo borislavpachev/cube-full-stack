@@ -2,7 +2,6 @@ import { ROUTES } from '@/constants';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 import { useContext } from 'react';
-import SideNavItem from './SideNavItem';
 import {
     HeartIcon,
   LocationIcon,
@@ -10,6 +9,7 @@ import {
   PackageIcon,
   UserIcon,
 } from '@/components/icons';
+import { SideNavItem } from '@/components';
 
 export default function SideNav() {
   const { user } = useContext(AuthContext) as AuthContextType;

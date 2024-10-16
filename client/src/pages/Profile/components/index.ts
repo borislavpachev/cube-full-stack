@@ -6,4 +6,3 @@ export { default as Security } from './Security';
 export { default as Address } from './Address';
 export { default as DeleteMe } from './DeleteMe';
 export { default as SideNav } from './SideNav';
-export { default as SideNavItem } from './SideNavItem';
