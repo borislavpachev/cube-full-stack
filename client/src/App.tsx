@@ -1,6 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import {
+  AdminPage,
   ErrorPage,
   Home,
   Login,
@@ -19,6 +20,8 @@ import {
   ProfileDetails,
   Security,
 } from './pages/Profile/components';
+import { ProductComponent } from './components/productComponents';
+import { Users } from './pages/AdminPage/components';
 
 function App() {
   const location = useLocation();
@@ -37,6 +40,23 @@ function App() {
           element={<Navigate to={`${ROUTES.PRODUCTS}/women`} />}
         />
         <Route path={`${ROUTES.PRODUCTS}/:g`} element={<Products />} />
+        <Route path={`${ROUTES.PRODUCT}/:id`} element={<ProductComponent />} />
+
+        <Route
+          path={ROUTES.ADMIN}
+          element={<Navigate to={`${ROUTES.ADMIN}/users`} />}
+        />
+        <Route
+          path={ROUTES.ADMIN}
+          element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="users" element={<Users />} />
+          {/* <Route path="products" element={<Users />} /> */}
+        </Route>
         <Route
           path={ROUTES.SHOPPING_CART}
           element={

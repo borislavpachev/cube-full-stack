@@ -5,3 +5,5 @@ export { default as Profile } from './Profile/Profile';
 export { default as Products } from './Products/Products';
 export { default as ShoppingCart } from './ShoppingCart/ShoppingCart';
 export { default as ErrorPage } from './ErrorPage/ErrorPage';
+export { default as AdminPage } from './AdminPage/AdminPage';
+

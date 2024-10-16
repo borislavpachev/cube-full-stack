@@ -6,10 +6,10 @@ import { AuthContextType } from '@/contexts/types';
 import { Button, LogoutButton } from '../buttons';
 import Logo from '../Logo';
 import SearchComponent from '../SearchComponent';
-import { HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
+import { AdminIcon, HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
 
 export default function Header() {
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+  const { user, isAuthenticated } = useContext(AuthContext) as AuthContextType;
   const navigate = useNavigate();
 
   return (
@@ -48,6 +48,12 @@ export default function Header() {
               <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
                 <UserIcon size={35} />
               </NavLink>
+              {user?.role === 'Admin' && (
+                <NavLink to={`${ROUTES.ADMIN}`}>
+                  <AdminIcon size={35} />
+                </NavLink>
+              )}
+
               <LogoutButton />
             </>
           )}
