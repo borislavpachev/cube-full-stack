@@ -7,29 +7,17 @@ import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 import { FavoriteType } from '@/pages/Profile/components/Favorites';
 import { addFavorite, removeFavorite } from '@/services/favoriteService';
+import { ProductValue } from './types';
 
 type CardProps = {
   id: string;
   size?: string;
-  liked: boolean;
-};
-
-export type ProductValue = {
-  _id: string;
-  category: string;
-  color: string;
-  description: string;
-  gallery: string[];
-  gender: string;
-  name: string;
-  price: number;
-  quantity: [];
-  sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 };
 
 export default function ProductCard({ id, size }: CardProps) {
   const { user } = useContext(AuthContext) as AuthContextType;
   const [product, setProduct] = useState<ProductValue | null>(null);
+
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -42,10 +30,6 @@ export default function ProductCard({ id, size }: CardProps) {
         }
         const item = res.data.product;
 
-        user?.favorites.some((fav: FavoriteType) =>
-          setIsLiked(fav.productId === item._id)
-        );
-
         setProduct(item);
       })
       .catch((error) => {
@@ -55,6 +39,14 @@ export default function ProductCard({ id, size }: CardProps) {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    const existAsFavorite = user?.favorites?.some((fav: FavoriteType) => {
+      return fav.productId === id;
+    });
+
+    setIsLiked(!!existAsFavorite);
+  }, [user?.favorites, id]);
 
   const addProductToFavorites = async () => {
     try {
@@ -69,9 +61,7 @@ export default function ProductCard({ id, size }: CardProps) {
       setIsLiked(true);
     } catch (error) {
       console.error(error);
-      toast.error(
-        'An unexpected error occurred during sign up. Please try again!'
-      );
+      toast.error('An unexpected error occurred. Please try again!');
     }
   };
 
@@ -88,9 +78,7 @@ export default function ProductCard({ id, size }: CardProps) {
       setIsLiked(false);
     } catch (error) {
       console.error(error);
-      toast.error(
-        'An unexpected error occurred during sign up. Please try again!'
-      );
+      toast.error('An unexpected error occurred. Please try again!');
     }
   };
 
@@ -100,7 +88,7 @@ export default function ProductCard({ id, size }: CardProps) {
 
   return (
     <>
-      <div className="flex flex-col rounded border-2">
+      <div className="flex flex-col rounded border-2 shadow-2xl">
         <div className="relative">
           <div className="absolute bg-white cursor-pointer rounded-full right-0 m-1">
             {!isLiked ? (
@@ -122,7 +110,7 @@ export default function ProductCard({ id, size }: CardProps) {
         <div className="flex flex-col cursor-default p-5">
           <h1 className="text-xl">{product?.name}</h1>
           <p
-            className="text-gray-500 text-ellipsis text-nowrap overflow-hidden"
+            className="text-gray-500 line-clamp-1"
             title={product?.description}
           >
             {product?.description}
