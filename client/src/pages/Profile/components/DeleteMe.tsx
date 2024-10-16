@@ -1,6 +1,12 @@
-import { Button } from '@/components/buttons';
+import { Button, CustomDialogTrigger } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
-import Modal from '@/components/Modal';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
 import { deleteCurrentUser } from '@/services/userService';
@@ -30,30 +36,38 @@ export default function DeleteMe() {
   };
 
   return (
-    <div className="bg-red-500 rounded">
-      <Modal
-        trigger={
+    <div className="rounded">
+      <Dialog>
+        <CustomDialogTrigger>
           <p className="flex items-center justify-center space-x-2">
-            <span>Delete profile</span> <TrashIcon size={25} />
+            <span>Delete profile</span>{' '}
+            <TrashIcon size={25} fillColor="red" />
           </p>
-        }
-        title={
-          <p className="text-center mt-5">
-            Are you sure you want to delete your profile ?
-          </p>
-        }
-        description={
-          <span className="text-gray-500 text-center">
-            This action is irreversible !
-          </span>
-        }
-        content={
-          <div className="flex mx-10 mt-5 space-x-5">
-            <Button onClick={deleteUser}>Yes</Button>
-            <Button>No</Button>
+        </CustomDialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {' '}
+              <p className="text-center mt-5">
+                Are you sure you want to delete your profile ?
+              </p>
+            </DialogTitle>
+            <DialogDescription className="text-center text-gray-500 text-md">
+              <span className="text-gray-500 text-center">
+                This action is irreversible !
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+          <div>
+            <div className="flex mx-10 mt-5 space-x-5">
+              <Button onClick={deleteUser}>Yes</Button>
+              <CustomDialogTrigger>
+                <span>No</span>
+              </CustomDialogTrigger>
+            </div>
           </div>
-        }
-      />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
