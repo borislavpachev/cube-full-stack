@@ -147,3 +147,39 @@ exports.deleteLoggedInUser = async (req, res, next) => {
 
   return user;
 };
+
+exports.blockUser = async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(
+    id,
+    { isBlocked: true },
+    {
+      runValidators: true,
+      new: true,
+    }
+  );
+
+  if (!user) {
+    return next(new CustomError('User not found', httpStatus.NOT_FOUND));
+  }
+
+  return user;
+};
+
+exports.unBlockUser = async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(
+    id,
+    { isBlocked: false },
+    {
+      runValidators: true,
+      new: true,
+    }
+  );
+
+  if (!user) {
+    return next(new CustomError('User not found', httpStatus.NOT_FOUND));
+  }
+
+  return user;
+};

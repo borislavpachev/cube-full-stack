@@ -123,3 +123,31 @@ exports.deleteLoggedInUser = async (req, res, next) => {
     return next(new CustomError(error.message, error.status));
   }
 };
+
+exports.blockUser = async (req, res, next) => {
+  try {
+    const user = await userService.blockUser(req, res, next);
+    if (!user) return;
+
+    res.status(httpStatus.CREATED).json({
+      status: 'success',
+      data: user,
+    });
+  } catch (error) {
+    return next(new CustomError(error.message, error.status));
+  }
+};
+
+exports.unBlockUser = async (req, res, next) => {
+  try {
+    const user = await userService.unBlockUser(req, res, next);
+    if (!user) return;
+
+    res.status(httpStatus.CREATED).json({
+      status: 'success',
+      data: user,
+    });
+  } catch (error) {
+    return next(new CustomError(error.message, error.status));
+  }
+};

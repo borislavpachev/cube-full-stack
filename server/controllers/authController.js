@@ -9,7 +9,7 @@ const jwtInCookie = (res, token) => {
     expires: jwtCookieExpires,
     httpOnly: true,
     secure: true,
-    sameSite: 'Strict',
+    sameSite: 'None',
   });
 };
 

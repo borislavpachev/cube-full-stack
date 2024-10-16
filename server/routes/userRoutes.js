@@ -29,4 +29,7 @@ router
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
+router.route('/block/:id').patch(userController.blockUser);
+router.route('/unblock/:id').patch(userController.unBlockUser);
+
 module.exports = router;

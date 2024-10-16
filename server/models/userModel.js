@@ -77,6 +77,10 @@ const userSchema = new Schema({
       message: 'The password confirm should match password',
     },
   },
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {
