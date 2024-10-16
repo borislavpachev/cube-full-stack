@@ -1,9 +1,8 @@
-import { API_BASE_URL } from '@/constants';
+import { ordersURL } from '@/constants';
 
 export const getMyOrders = async () => {
-  const url = `${API_BASE_URL}orders`;
   try {
-    const response = await fetch(url, {
+    const response = await fetch(ordersURL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +18,7 @@ export const getMyOrders = async () => {
     }
 
     const data = await response.json();
-   
+
     return data;
   } catch (error) {
     return { error: 'An unexpected error occurred. Please try again!' };

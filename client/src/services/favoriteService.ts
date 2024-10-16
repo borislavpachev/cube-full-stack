@@ -1,5 +1,4 @@
-import { API_BASE_URL } from '@/constants';
-const url = `${API_BASE_URL}favorites`;
+import { favoritesURL } from "@/constants";
 
 type Product = {
   _id: string;
@@ -8,7 +7,7 @@ type Product = {
 
 export const getAllFavorites = async () => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(favoritesURL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +32,7 @@ export const getAllFavorites = async () => {
 
 export const addFavorite = async (product: Product) => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(favoritesURL, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +58,7 @@ export const addFavorite = async (product: Product) => {
 
 export const removeFavorite = async (product: Product) => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(favoritesURL, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

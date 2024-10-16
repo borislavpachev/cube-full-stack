@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/constants';
+import { usersURL } from '@/constants';
 
 type UserForm = {
   firstName?: string;
@@ -13,7 +13,7 @@ type UserForm = {
 };
 
 export const updateCurrentUserData = async (form: UserForm) => {
-  const url = `${API_BASE_URL}users/me`;
+  const url = `${usersURL}/me`;
 
   try {
     const response = await fetch(url, {
@@ -43,7 +43,7 @@ export const updateCurrentUserPassword = async (
   password: string,
   passwordConfirm: string
 ) => {
-  const url = `${API_BASE_URL}users/me/update-password`;
+  const url = `${usersURL}/me/update-password`;
 
   try {
     const response = await fetch(url, {
@@ -74,7 +74,7 @@ export const updateCurrentUserPassword = async (
 };
 
 export const deleteCurrentUser = async () => {
-  const url = `${API_BASE_URL}users/me`;
+  const url = `${usersURL}/me`;
   try {
     const response = await fetch(url, {
       method: 'DELETE',
@@ -90,6 +90,32 @@ export const deleteCurrentUser = async () => {
     return response;
   } catch (error) {
     console.log(error);
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};
+
+export const getAllUsers = async () => {
+  const url = `${usersURL}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error: error.message || 'Error getting all users! Please try again!',
+      };
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };

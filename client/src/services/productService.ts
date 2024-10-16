@@ -1,7 +1,7 @@
-import { API_BASE_URL } from '@/constants';
+import { productsURL } from '@/constants';
 
 export const getProduct = async (id: string) => {
-  const url = `${API_BASE_URL}products/${id}`;
+  const url = `${productsURL}/${id}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -14,7 +14,9 @@ export const getProduct = async (id: string) => {
     if (!response.ok) {
       const error = await response.json();
       return {
-        error: error.message || `Error getting product with id: ${id}! Please try again!`,
+        error:
+          error.message ||
+          `Error getting product with id: ${id}! Please try again!`,
       };
     }
 
@@ -27,7 +29,7 @@ export const getProduct = async (id: string) => {
 };
 
 export const getAllProducts = async () => {
-  const url = `${API_BASE_URL}products`;
+  const url = `${productsURL}`;
   try {
     const response = await fetch(url, {
       method: 'GET',

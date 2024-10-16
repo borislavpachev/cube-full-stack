@@ -1,9 +1,9 @@
 import { normalizePhoneNumber } from '@/utils/validations';
 import { SignUpForm } from '../pages/SignUp/SignUp';
-import { API_BASE_URL } from '@/constants';
+import { usersURL } from '@/constants';
 
 export const login = async (email: string, password: string) => {
-  const url = `${API_BASE_URL}users/login`;
+  const url = `${usersURL}/login`;
 
   try {
     const response = await fetch(url, {
@@ -28,7 +28,7 @@ export const login = async (email: string, password: string) => {
 };
 
 export const signUp = async (form: SignUpForm) => {
-  const url = `${API_BASE_URL}users/signup`;
+  const url = `${usersURL}/signup`;
 
   const { firstName, lastName, email, phoneNumber, password, passwordConfirm } =
     form;
@@ -65,7 +65,7 @@ export const signUp = async (form: SignUpForm) => {
 };
 
 export const authenticate = async () => {
-  const url = `${API_BASE_URL}users/auth`;
+  const url = `${usersURL}/auth`;
 
   try {
     const response = await fetch(url, {
@@ -90,4 +90,3 @@ export const authenticate = async () => {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
-
