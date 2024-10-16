@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/buttons';
 import { Section } from '@/components/layout';
-import { ProductCard } from '@/components/productComponents';
 import { getAllFavorites } from '@/services/favoriteService';
 import toast from 'react-hot-toast';
 import FavoriteCard from './FavoriteCard';
