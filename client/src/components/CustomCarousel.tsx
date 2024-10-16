@@ -17,22 +17,22 @@ type CustomCarouselProps = {
 export default function CustomCarousel({ items }: CustomCarouselProps) {
   return (
     <>
-      <div className="relative">
-        <Carousel className="w-full max-w-xs">
+      <div className="relative w-full md:1/2">
+        <Carousel>
           <CarouselContent>
             {items.map((item, index: number) => (
               <CarouselItem key={index}>
                 <img
                   src={`${item.src}`}
                   alt={`product-${index}`}
-                  className="flex w-[300px] mx-auto hover:scale-110 duration-300 rounded"
+                  className="w-full h-full object-cover flex hover:scale-110 duration-300 rounded"
                 />
               </CarouselItem>
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="top-18 left-28" />
-          <CarouselNext className="top-18 right-28" />
+          <CarouselPrevious className="mt-auto ml-14" />
+          <CarouselNext className="mt-auto mr-14" />
         </Carousel>
       </div>
     </>
