@@ -36,7 +36,13 @@ exports.loginUser = async (req, res, next) => {
 
   if (!user) {
     return next(
-      new CustomError('Incorrect email or password', httpStatus.UNAUTHORIZED)
+      new CustomError('Incorrect email or password!', httpStatus.UNAUTHORIZED)
+    );
+  }
+
+  if (user.isBlocked) {
+    return next(
+      new CustomError('Your account is blocked!', httpStatus.UNAUTHORIZED)
     );
   }
 
