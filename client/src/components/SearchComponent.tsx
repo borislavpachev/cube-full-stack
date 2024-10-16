@@ -13,6 +13,8 @@ export default function SearchComponent() {
         }`}
       >
         <Input
+          id="header-search-bar-component"
+          name="header-search-bar-component"
           type="search"
           value=""
           onChange={() => {}}
@@ -20,12 +22,14 @@ export default function SearchComponent() {
         />
       </div>
 
-      <div className='cursor-pointer'
+      <div
+        className="cursor-pointer"
         onClick={() => {
           setShow(!show);
         }}
-      ><SearchIcon size={35}/></div>
-      
+      >
+        <SearchIcon size={35} />
+      </div>
     </>
   );
 }
