@@ -19,16 +19,16 @@ export default function Hero() {
         <div className="mt-8 w-full md:w-1/2 md:mt-16">
           <Button
             onClick={() => {
-              navigate('/products');
+              navigate('/products/women');
             }}
           >
             Shop Now
           </Button>
         </div>
 
-        <div className="hidden md:flex w-full mt-10 -mr-10 -mb-10 justify-end">
-          <p className="cursor-default font-gope text-9xl text-slate-300">
-            CUBE
+        <div className="hidden md:flex w-full mt-10 -mb-10 justify-end">
+          <p className="cursor-default uppercase font-rubik font-extrabold text-9xl text-slate-200">
+            Wear
           </p>
         </div>
       </div>
