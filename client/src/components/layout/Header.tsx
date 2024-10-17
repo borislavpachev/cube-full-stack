@@ -3,7 +3,12 @@ import { ROUTES } from '../../constants';
 import { useContext } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
-import { Button, LogoutButton } from '../buttons';
+import {
+  Button,
+  LogoutButton,
+  TooltipButton,
+  TooltipContent,
+} from '../buttons';
 import Logo from '../Logo';
 import SearchComponent from '../SearchComponent';
 import { AdminIcon, HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
@@ -14,11 +19,11 @@ export default function Header() {
 
   return (
     <header>
-      <nav className="h-20 flex items-center justify-around">
+      <nav className="p-5 md:p-0 flex flex-col md:flex-row items-center justify-around">
         <div className="w-1/4 flex items-center justify-center">
           <Logo />
         </div>
-        <div className="flex space-x-10 w-1/4 text-lg uppercase items-center justify-center">
+        <div className="hidden md:flex space-x-10 w-1/4 text-lg uppercase items-center justify-center">
           <NavLink
             to={`${ROUTES.PRODUCTS}/women`}
             className={({ isActive }) => (isActive ? 'active-nav-link' : '')}
@@ -45,16 +50,23 @@ export default function Header() {
 
           {isAuthenticated && (
             <>
-              <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
-                <UserIcon size={35} />
-              </NavLink>
+              <TooltipButton
+                content={
+                  <TooltipContent>
+                    <LogoutButton />
+                  </TooltipContent>
+                }
+              >
+                <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
+                  <UserIcon size={35} />
+                </NavLink>
+              </TooltipButton>
+
               {user?.role === 'Admin' && (
                 <NavLink to={`${ROUTES.ADMIN}`}>
                   <AdminIcon size={35} />
                 </NavLink>
               )}
-
-              <LogoutButton />
             </>
           )}
           {!isAuthenticated && (
