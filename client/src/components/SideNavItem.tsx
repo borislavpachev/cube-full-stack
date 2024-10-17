@@ -13,7 +13,7 @@ export default function SideNavItem({ to, icon, children }: SideNavItemProps) {
       className={({ isActive }) =>
         `${
           isActive ? 'profile-nav-link' : ''
-        } flex items-center justify-start whitespace-nowrap transition-colors ease-in-out duration-300 hover:bg-black hover:text-white p-3`
+        } flex items-center justify-start line-clamp-1 transition-colors ease-in-out duration-300 hover:bg-black hover:text-white p-3`
       }
       to={to}
     >
