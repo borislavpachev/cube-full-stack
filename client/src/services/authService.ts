@@ -90,3 +90,26 @@ export const authenticate = async () => {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
+
+export const logout = async () => {
+  const url = `${usersURL}/logout`;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error: error.message || 'Logout failed! Please try again!',
+      };
+    }
+    return response;
+  } catch (error) {
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};
