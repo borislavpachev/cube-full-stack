@@ -5,7 +5,7 @@ import { HeartIcon } from '../icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import { AuthContext } from '@/contexts/AuthContext';
 import { AuthContextType } from '@/contexts/types';
-import { FavoriteType } from '@/pages/Profile/components/Favorites';
+import { FavoriteType } from '@/pages/ProfilePage/components/Favorites';
 import { addFavorite, removeFavorite } from '@/services/favoriteService';
 import { ProductValue } from './types';
 

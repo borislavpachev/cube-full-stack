@@ -1,5 +1,5 @@
 import { normalizePhoneNumber } from '@/utils/validations';
-import { SignUpForm } from '../pages/SignUp/SignUp';
+import { SignUpForm } from '../pages/SignUpPage/SignUpPage';
 import { usersURL } from '@/constants';
 
 export const login = async (email: string, password: string) => {
