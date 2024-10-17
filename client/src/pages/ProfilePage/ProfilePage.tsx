@@ -2,7 +2,7 @@ import { MainLayout } from '@/components/layout';
 import { Outlet } from 'react-router-dom';
 import { SideNav } from './components';
 
-export default function Profile() {
+export default function ProfilePage() {
   return (
     <MainLayout>
       <div className="w-full flex flex-col items-start justify-start px-20 py-10">

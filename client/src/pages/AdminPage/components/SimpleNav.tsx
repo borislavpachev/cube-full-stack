@@ -16,7 +16,7 @@ export default function SimpleNav() {
           to={`${ROUTES.ADMIN}/products`}
           icon={<PackageIcon fillColor="white" />}
         >
-          Product
+          Products
         </SideNavItem>
       </nav>
     </div>

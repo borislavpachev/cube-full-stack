@@ -33,7 +33,7 @@ export type SignUpForm = {
   passwordConfirm: string;
 };
 
-export default function SignUp() {
+export default function SignUpPage() {
   const { setUser, setIsAuthenticated } = useContext(
     AuthContext
   ) as AuthContextType;

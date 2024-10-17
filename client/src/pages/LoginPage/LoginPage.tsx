@@ -24,7 +24,7 @@ type LoginForm = {
   password: string;
 };
 
-export default function Login() {
+export default function LoginPage() {
   const { user, setUser, setIsAuthenticated } = useContext(
     AuthContext
   ) as AuthContextType;
@@ -40,7 +40,7 @@ export default function Login() {
     if (user) {
       navigate(location.state?.from.pathname || '/');
     }
-  }, [user]);
+  }, [user, navigate, location]);
 
   const loginUser = async () => {
     const { email, password } = form;

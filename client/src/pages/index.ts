@@ -1,9 +1,8 @@
-export { default as Home } from './Home/Home';
-export { default as Login } from './Login/Login';
-export { default as SignUp } from './SignUp/SignUp';
-export { default as Profile } from './Profile/Profile';
-export { default as Products } from './Products/Products';
-export { default as ShoppingCart } from './ShoppingCart/ShoppingCart';
+export { default as LoginPage } from './LoginPage/LoginPage';
+export { default as SignUpPage } from './SignUpPage/SignUpPage';
+export { default as HomePage } from './HomePage/HomePage';
+export { default as ProfilePage } from './ProfilePage/ProfilePage';
+export { default as ProductsPage } from './ProductsPage/ProductsPage';
+export { default as ShoppingCartPage } from './ShoppingCartPage/ShoppingCartPage';
 export { default as ErrorPage } from './ErrorPage/ErrorPage';
 export { default as AdminPage } from './AdminPage/AdminPage';
-
