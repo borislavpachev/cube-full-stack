@@ -7,7 +7,7 @@ import DataTable from './DataTable';
 import { createColumns } from './columns';
 import { blockUser, deleteUser, unBlockUser } from '@/services/adminService';
 
-export default function Users() {
+export default function UsersPanel() {
   const [users, setUsers] = useState<User[] | []>([]);
   const [loading, setLoading] = useState(true);
 
