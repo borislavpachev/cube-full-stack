@@ -11,7 +11,7 @@ import {
   ShoppingCartPage,
   SignUpPage,
 } from '@/pages';
-import { Users } from '@/pages/AdminPage/components';
+import { ProductPanel, UsersPanel } from '@/pages/AdminPage/components';
 import {
   Address,
   Favorites,
@@ -45,8 +45,8 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        <Route path="users" element={<Users />} />
-        {/* <Route path="products" element={<Users />} /> */}
+        <Route path="users" element={<UsersPanel />} />
+        <Route path="products" element={<ProductPanel />} />
       </Route>
       <Route
         path={ROUTES.SHOPPING_CART}
