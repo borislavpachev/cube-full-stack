@@ -56,6 +56,19 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.logout = async (req, res, next) => {
+  try {
+    jwtInCookie(res, null);
+
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (error) {
+    return next(new CustomError(error.message, error.status));
+  }
+};
+
 exports.authenticate = async (req, res, next) => {
   try {
     const user = await authService.authenticateUser(req, res, next);
