@@ -49,7 +49,7 @@ export default function Favorites() {
           <p className="text-center text-sm text-gray-500 mt-2">
             Check our deals and feel free to add anything you like.
           </p>
-          <div className="w-1/2 mt-12">
+          <div className="mt-12">
             <Button
               onClick={() => {
                 navigate('/');
