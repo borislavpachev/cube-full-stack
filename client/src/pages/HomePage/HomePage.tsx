@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <MainLayout>
-        <div className="w-full">
+        <div className="w-full space-y-20 mb-16">
           <Hero />
           <MonthCategory />
           <NewArrivals/>

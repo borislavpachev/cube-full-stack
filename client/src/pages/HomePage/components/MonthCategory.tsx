@@ -1,6 +1,10 @@
 import { Button } from '@/components/buttons';
+import { ROUTES } from '@/constants';
+import { useNavigate } from 'react-router-dom';
 
 export default function MonthCategory() {
+  const navigate = useNavigate();
+
   const thisMonth = new Date().getMonth() + 1;
   const thisYear = new Date().getFullYear();
   const today = new Date().getDate();
@@ -11,7 +15,7 @@ export default function MonthCategory() {
   const offerLastsInDays = daysInMonth(thisYear, thisMonth) - today;
 
   return (
-    <div className="p-10 flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row px-20">
       <div className="flex flex-col md:flex-row w-full p-10 text-start md:text-end bg-slate-200">
         <div className="w-full md:w-1/2">
           <img
@@ -26,7 +30,7 @@ export default function MonthCategory() {
           <p className="font-extrabold">Month</p>
 
           <div className="text-center mt-10">
-            <Button>Space</Button>
+            <Button onClick={() => navigate(`${ROUTES.PRODUCTS}`)}>Space</Button>
           </div>
 
           <div className="mt-10 text-2xl capitalize">
@@ -34,7 +38,7 @@ export default function MonthCategory() {
               enjoy <span className="font-extrabold">20% OFF</span>
             </p>
 
-            <p className="md:text-3xl [text-shadow:_0_6px_10px_black]">
+            <p className="md:text-3xl">
               Only
               <span className="mx-1 font-extrabold">{offerLastsInDays}</span>
               days left

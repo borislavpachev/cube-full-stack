@@ -5,7 +5,7 @@ export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col md:flex-row px-10">
+    <div className="flex flex-col md:flex-row px-20">
       <div className="flex flex-col w-full items-start p-10 bg-slate-100">
         <div className="text-3xl md:text-7xl">
           <p>The</p>
