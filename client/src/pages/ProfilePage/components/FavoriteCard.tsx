@@ -72,11 +72,14 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
 
   return (
     <>
-      <div className="flex flex-col rounded border-2 shadow-2xl">
+      <div className="max-w-xs flex flex-col rounded border-2">
         <div className="relative">
           <div className="absolute bg-white rounded-full right-0 m-1">
-            <div className="p-1 cursor-pointer" onClick={removeProductFromFavorites}>
-              <TrashIcon size={25} fillColor='red'/>
+            <div
+              className="p-1 cursor-pointer"
+              onClick={removeProductFromFavorites}
+            >
+              <TrashIcon size={25} fillColor="red" />
             </div>
           </div>
           <img

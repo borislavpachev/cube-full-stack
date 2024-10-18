@@ -25,6 +25,7 @@ export default function Favorites() {
         setFavorites(userFavorites);
       })
       .catch((error) => {
+        setFavorites([]);
         toast.error(error);
       });
   }, []);
@@ -61,17 +62,16 @@ export default function Favorites() {
         </Section>
       ) : (
         <Section>
-          <div className="flex flex-wrap w-full justify-center md:justify-start items-center gap-5">
-            {favorites.map((item, index) => {
+          <div className="flex flex-wrap w-full mb-10 gap-14 justify-center md:justify-start">
+            {favorites.map((item) => {
               return (
-                <div key={index} className="w-[300px]">
-                  <FavoriteCard
-                    id={item?.productId}
-                    size={item?.productSize}
-                    liked={true}
-                    deleteFavorite={deleteFavorite}
-                  />
-                </div>
+                <FavoriteCard
+                  key={item?.productId}
+                  id={item?.productId}
+                  size={item?.productSize}
+                  liked={true}
+                  deleteFavorite={deleteFavorite}
+                />
               );
             })}
           </div>
