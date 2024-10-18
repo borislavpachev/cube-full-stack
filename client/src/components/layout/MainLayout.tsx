@@ -6,6 +6,6 @@ type MainLayoutProps = {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <main className="min-h-screen flex flex-col md:flex-row">{children}</main>
+    <main className="min-h-screen flex flex-col md:flex-row items-start">{children}</main>
   );
 }
