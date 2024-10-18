@@ -1,15 +1,17 @@
 import { ProtectedRoute } from '@/components';
-import { ProductComponent } from '@/components/productComponents';
+// import { ProductComponent } from '@/components/productComponents';
 import { ROUTES } from '@/constants';
 import {
   AdminPage,
+  CategoryPage,
   ErrorPage,
   HomePage,
   LoginPage,
-  ProductsPage,
   ProfilePage,
+  ProductsPage,
   ShoppingCartPage,
   SignUpPage,
+  SingleProductPage,
 } from '@/pages';
 import { ProductPanel, UsersPanel } from '@/pages/AdminPage/components';
 import {
@@ -30,8 +32,12 @@ export default function AppRoutes() {
         path={ROUTES.PRODUCTS}
         element={<Navigate to={`${ROUTES.PRODUCTS}/women`} />}
       />
-      <Route path={`${ROUTES.PRODUCTS}/:g`} element={<ProductsPage />} />
-      <Route path={`${ROUTES.PRODUCT}/:id`} element={<ProductComponent />} />
+      <Route path={`${ROUTES.PRODUCTS}/:gender`} element={<CategoryPage />} />
+      <Route
+        path={`${ROUTES.PRODUCTS}/:gender/:category`}
+        element={<ProductsPage />}
+      />
+      <Route path={`${ROUTES.PRODUCT}/:id`} element={<SingleProductPage />} />
 
       <Route
         path={ROUTES.ADMIN}
