@@ -8,6 +8,8 @@ import { AuthContextType } from '@/contexts/types';
 import { FavoriteType } from '@/pages/ProfilePage/components/Favorites';
 import { addFavorite, removeFavorite } from '@/services/favoriteService';
 import { ProductValue } from './types';
+import { NavLink } from 'react-router-dom';
+import { ROUTES } from '@/constants';
 
 type CardProps = {
   id: string;
@@ -88,7 +90,7 @@ export default function ProductCard({ id, size }: CardProps) {
 
   return (
     <>
-      <div className="flex flex-col rounded border-2 shadow-2xl">
+      <div className="max-w-xs flex flex-col rounded border-2">
         <div className="relative">
           <div className="absolute bg-white cursor-pointer rounded-full right-0 m-1">
             {!isLiked ? (
@@ -107,8 +109,10 @@ export default function ProductCard({ id, size }: CardProps) {
             className="w-full h-full"
           />
         </div>
-        <div className="flex flex-col cursor-default p-5">
-          <h1 className="text-xl">{product?.name}</h1>
+        <div className="flex flex-col cursor-default p-5 bg-white">
+          <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
+            <h1 className="text-xl">{product?.name}</h1>
+          </NavLink>
           <p
             className="text-gray-500 line-clamp-1"
             title={product?.description}
@@ -116,7 +120,7 @@ export default function ProductCard({ id, size }: CardProps) {
             {product?.description}
           </p>
           <div className="flex mt-3 justify-between">
-            <p className="text-lg">${product?.price}</p>
+            <p className="text-lg">${product?.price.toFixed(2)}</p>
             {size && <p>size: {size}</p>}
           </div>
           <div className="mt-5">
