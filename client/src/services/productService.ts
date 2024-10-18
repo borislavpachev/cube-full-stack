@@ -53,3 +53,34 @@ export const getAllProducts = async () => {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
+
+export const getProductsByGenderAndCategory = async (
+  gender: string,
+  category: string
+) => {
+  const url = `${productsURL}/q?gender=${gender}&category=${category}`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error:
+          error.message ||
+          `Error getting ${gender} products in ${category} category`,
+      };
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};
