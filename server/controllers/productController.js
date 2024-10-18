@@ -18,6 +18,26 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
+exports.getAllProductsByCategory = async (req, res, next) => {
+  try {
+    const products = await productServices.getAllProductsByCategory(
+      req,
+      res,
+      next
+    );
+
+    res.status(httpStatus.OK).json({
+      status: 'success',
+      results: products.length,
+      data: {
+        products,
+      },
+    });
+  } catch (error) {
+    return next(new CustomError(error.message, error.status));
+  }
+};
+
 exports.createProduct = async (req, res, next) => {
   try {
     const newProduct = await productServices.createProduct(req);

@@ -4,6 +4,7 @@ const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
 
 router.route('/').get(productController.getAllProducts);
+router.route('/q').get(productController.getAllProductsByCategory);
 
 router.route('/:id').get(productController.getProduct);
 
