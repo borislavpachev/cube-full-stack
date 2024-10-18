@@ -6,7 +6,7 @@ export type ProductValue = {
   color: string;
   description: string;
   gallery: string[];
-  gender: string;
+  gender: 'Men' |'Women';
   name: string;
   price: number;
   quantity: Record<Sizes, number>;
