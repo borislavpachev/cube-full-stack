@@ -4,6 +4,9 @@ import toast, { LoaderIcon } from 'react-hot-toast';
 import { removeFavorite } from '@/services/favoriteService';
 import { Button } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
+import { NavLink } from 'react-router-dom';
+import { ROUTES } from '@/constants';
+import { priceFormatted } from '@/utils/helpers';
 
 type CardProps = {
   id: string;
@@ -28,6 +31,7 @@ export type ProductValue = {
 export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [loading, setLoading] = useState(true);
+  const roundedPrice = priceFormatted(product?.price);
 
   useEffect(() => {
     getProduct(id)
@@ -82,14 +86,18 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
               <TrashIcon size={25} fillColor="red" />
             </div>
           </div>
-          <img
-            src="/images/Back.png"
-            alt="product-cover"
-            className="w-full h-full"
-          />
+          <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
+            <img
+              src="/images/Back.png"
+              alt="product-cover"
+              className="w-full h-full"
+            />
+          </NavLink>
         </div>
         <div className="flex flex-col cursor-default p-5">
-          <h1 className="text-xl">{product?.name}</h1>
+          <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
+            <h1 className="text-xl">{product?.name}</h1>
+          </NavLink>
           <p
             className="text-gray-500 line-clamp-1"
             title={product?.description}
@@ -97,7 +105,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
             {product?.description}
           </p>
           <div className="flex mt-3 justify-between">
-            <p className="text-lg">${product?.price}</p>
+            <p className="text-lg">${roundedPrice}</p>
             {size && <p>size: {size}</p>}
           </div>
           <div className="mt-5">

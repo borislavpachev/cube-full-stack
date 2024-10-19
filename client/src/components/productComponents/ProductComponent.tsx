@@ -8,6 +8,8 @@ import { HeartIcon } from '../icons';
 import Loading from '../Loading';
 import ProductElement from './ProductElement';
 import { ProductValue, Sizes } from './types';
+import { ROUTES } from '@/constants';
+import { priceFormatted } from '@/utils/helpers';
 
 const images = [{ src: '/images/Front.png' }, { src: '/images/Back.png' }];
 
@@ -16,7 +18,7 @@ export default function ProductComponent() {
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<Sizes>('M');
   const [quantity, setQuantity] = useState(1);
-
+  const roundedPrice = priceFormatted(product?.price);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -52,26 +54,34 @@ export default function ProductComponent() {
   return (
     <MainLayout>
       <Section>
-        <div className="flex flex-col space-y-10 md:space-y-0 md:space-x-10 md:flex-row items-start p-10">
+        <div className="flex flex-col space-y-10 md:space-y-0 md:space-x-10 md:flex-row items-start p-10 mx-20">
           <CustomCarousel items={images} />
 
-          <div className="space-y-8 w-full">
+          <div className="space-y-5 w-full">
             <div className="flex flex-col md:flex-row items-start justify-between py-1">
               <h1 className="text-4xl font-bold">{product?.name}</h1>
               <HeartIcon size={40} />
             </div>
             <div>
               <ProductElement>{product?.gender}</ProductElement>
-              <p className="text-gray-500">{product?.description}</p>
+              <p className="text-gray-500 line-clamp-1">
+                {product?.description}
+              </p>
             </div>
 
             <div className="flex flex-col justify-start space-y-3">
-              <p className="text-3xl font-bold">${product?.price.toFixed(2)}</p>
+              <p className="text-3xl font-bold">${roundedPrice}</p>
 
-              <div className="space-y-3">
+              <div className="space-y-1">
                 <ProductElement>Category</ProductElement>
                 <div className="w-1/2">
-                  <Button onClick={() => navigate('/')}>
+                  <Button
+                    onClick={() =>
+                      navigate(
+                        `${ROUTES.PRODUCTS}/${product?.gender}/${product?.category}`
+                      )
+                    }
+                  >
                     {product?.category}
                   </Button>
                 </div>
@@ -80,7 +90,7 @@ export default function ProductComponent() {
               <div>
                 <ProductElement>Color</ProductElement>
                 <div
-                  className={`bg-${product?.color} w-16 h-16 border-2 border-black rounded`}
+                  className={`bg-${product?.color} w-14 h-14 border-2 border-black rounded`}
                   title={`${product?.color.toUpperCase()}`}
                 ></div>
               </div>
@@ -88,7 +98,7 @@ export default function ProductComponent() {
                 <ProductElement>Size</ProductElement>
 
                 <select
-                  className="appearance-auto rounded outline-none py-4 text-xl w-16 h-16 border-2 border-black"
+                  className="appearance-auto rounded outline-none py-4 text-xl w-14 h-14 border-2 border-black"
                   name="sizes"
                   id="select-sizes"
                   value={selectedSize}
@@ -134,7 +144,7 @@ export default function ProductComponent() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-start w-full px-10 mb-14">
+        <div className="flex flex-col justify-start w-full px-20 mb-14">
           <p className="text-2xl border-b-2 border-black w-fit">
             Full Description
           </p>

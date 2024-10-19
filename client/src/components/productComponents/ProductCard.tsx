@@ -10,6 +10,7 @@ import { addFavorite, removeFavorite } from '@/services/favoriteService';
 import { ProductValue } from './types';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
+import { priceFormatted } from '@/utils/helpers';
 
 type CardProps = {
   id: string;
@@ -22,6 +23,8 @@ export default function ProductCard({ id, size }: CardProps) {
 
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const roundedPrice = priceFormatted(product?.price);
 
   useEffect(() => {
     getProduct(id)
@@ -103,11 +106,13 @@ export default function ProductCard({ id, size }: CardProps) {
               </div>
             )}
           </div>
-          <img
-            src="/images/Back.png"
-            alt="product-cover"
-            className="w-full h-full"
-          />
+          <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
+            <img
+              src="/images/Back.png"
+              alt="product-cover"
+              className="w-full h-full"
+            />
+          </NavLink>
         </div>
         <div className="flex flex-col cursor-default p-5 bg-white">
           <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
@@ -120,7 +125,7 @@ export default function ProductCard({ id, size }: CardProps) {
             {product?.description}
           </p>
           <div className="flex mt-3 justify-between">
-            <p className="text-lg">${product?.price.toFixed(2)}</p>
+            <p className="text-lg">${roundedPrice}</p>
             {size && <p>size: {size}</p>}
           </div>
           <div className="mt-5">
