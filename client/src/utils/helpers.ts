@@ -6,3 +6,9 @@ export const capitalizeFirstLetter = (string: string) => {
 export const shuffleArray = (array: []) => {
   return array.sort(() => Math.random() - 0.5);
 };
+
+export const priceFormatted = (price: number | undefined) => {
+  if (price) {
+    return price.toFixed(2);
+  }
+};
