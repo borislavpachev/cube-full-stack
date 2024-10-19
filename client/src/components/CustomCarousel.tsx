@@ -17,7 +17,7 @@ type CustomCarouselProps = {
 export default function CustomCarousel({ items }: CustomCarouselProps) {
   return (
     <>
-      <div className="relative w-full md:1/2">
+      <div className="relative w-full">
         <Carousel>
           <CarouselContent>
             {items.map((item, index: number) => (
