@@ -64,7 +64,7 @@ export default function ProductsPage() {
         <Section>
           <div className="mb-20 space-y-12">
             {capitalizedGender && capitalizedCategory && (
-              <p className="md:mt-5 w-full tracking-wider cursor-default flex items-end text-xl md:text-3xl underline underline-offset-4">
+              <p className="md:mt-5 w-full tracking-wider cursor-default flex items-end text-xl md:text-2xl underline underline-offset-4">
                 <span>{`${capitalizedGender}'s Wear`}</span>
                 <span>
                   <PointerRightIcon size={30} />
