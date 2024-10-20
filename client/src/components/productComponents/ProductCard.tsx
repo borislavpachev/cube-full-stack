@@ -1,16 +1,15 @@
 import { getProduct } from '@/services/productService';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../buttons';
 import { HeartIcon } from '../icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
 import { FavoriteType } from '@/pages/ProfilePage/components/Favorites';
 import { addFavorite, removeFavorite } from '@/services/favoriteService';
 import { ProductValue } from './types';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
+import { useAuth } from '@/hooks';
 
 type CardProps = {
   id: string;
@@ -18,7 +17,7 @@ type CardProps = {
 };
 
 export default function ProductCard({ id, size }: CardProps) {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { user } = useAuth();
   const [product, setProduct] = useState<ProductValue | null>(null);
 
   const [isLiked, setIsLiked] = useState(false);

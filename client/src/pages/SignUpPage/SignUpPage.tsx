@@ -19,10 +19,8 @@ import {
 } from '../../utils/validations';
 import { useNavigate } from 'react-router-dom';
 import useForm from '@/hooks/useForm';
-import { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
 import { Logo } from '@/components';
+import { useAuth } from '@/hooks';
 
 export type SignUpForm = {
   firstName: string;
@@ -34,9 +32,7 @@ export type SignUpForm = {
 };
 
 export default function SignUpPage() {
-  const { setUser, setIsAuthenticated } = useContext(
-    AuthContext
-  ) as AuthContextType;
+  const { setUser, setIsAuthenticated } = useAuth();
 
   const [form, updateForm] = useForm<SignUpForm>({
     firstName: '',

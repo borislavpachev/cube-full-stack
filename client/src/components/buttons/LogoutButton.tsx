@@ -1,20 +1,15 @@
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
+import { useAuth } from '@/hooks';
 import { logout } from '@/services/authService';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
 export default function LogoutButton() {
-  const { setUser, setIsAuthenticated } = useContext(
-    AuthContext
-  ) as AuthContextType;
+  const { setUser, setIsAuthenticated } = useAuth();
 
   const logoutUser = async () => {
     try {
       await logout();
       setUser(null);
       setIsAuthenticated(false);
-      console.log('test');
     } catch (error) {
       toast.error(
         'An unexpected error occurred during logout. Please try again!'

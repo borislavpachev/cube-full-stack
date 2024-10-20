@@ -1,12 +1,11 @@
 import { MainLayout } from '@/components/layout';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { SimpleNav } from './components';
+import { useAuth } from '@/hooks';
 
 export default function AdminPage() {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

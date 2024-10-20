@@ -7,17 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
+import { useAuth } from '@/hooks';
 import { deleteCurrentUser } from '@/services/userService';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 export default function DeleteMe() {
-  const { setUser, setIsAuthenticated } = useContext(
-    AuthContext
-  ) as AuthContextType;
+  const { setUser, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const deleteUser = async () => {

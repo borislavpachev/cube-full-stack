@@ -1,7 +1,4 @@
 import { ROUTES } from '@/constants';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
-import { useContext } from 'react';
 import {
     HeartIcon,
   LocationIcon,
@@ -10,9 +7,10 @@ import {
   UserIcon,
 } from '@/components/icons';
 import { SideNavItem } from '@/components';
+import { useAuth } from '@/hooks';
 
 export default function SideNav() {
-  const { user } = useContext(AuthContext) as AuthContextType;
+  const { user } = useAuth();
 
   return (
     <div className="flex flex-col min-w-sm">

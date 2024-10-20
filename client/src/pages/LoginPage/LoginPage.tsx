@@ -13,10 +13,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
 import { validateEmail, validatePassword } from '../../utils/validations';
 import toast from 'react-hot-toast';
-import { useForm } from '@/hooks';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
+import { useAuth, useForm } from '@/hooks';
+import { useEffect } from 'react';
 import { Logo } from '@/components';
 
 type LoginForm = {
@@ -25,9 +23,7 @@ type LoginForm = {
 };
 
 export default function LoginPage() {
-  const { user, setUser, setIsAuthenticated } = useContext(
-    AuthContext
-  ) as AuthContextType;
+  const { user, setUser, setIsAuthenticated } = useAuth();
   const [form, updateForm] = useForm<LoginForm>({
     email: '',
     password: '',

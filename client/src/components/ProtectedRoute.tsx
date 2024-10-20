@@ -1,14 +1,13 @@
-import { AuthContext } from '@/contexts/AuthContext';
-import { useContext, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { AuthContextType } from '@/contexts/types';
+import { useAuth } from '@/hooks';
 
 type ProtectedRouteProps = {
   children: ReactNode;
 };
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) {

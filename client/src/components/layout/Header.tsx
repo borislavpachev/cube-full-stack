@@ -1,8 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants';
-import { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
 import {
   Button,
   LogoutButton,
@@ -12,9 +9,10 @@ import {
 import Logo from '../Logo';
 import SearchComponent from '../SearchComponent';
 import { AdminIcon, HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
+import { useAuth } from '@/hooks';
 
 export default function Header() {
-  const { user, isAuthenticated } = useContext(AuthContext) as AuthContextType;
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   return (
