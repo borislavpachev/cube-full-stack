@@ -8,16 +8,13 @@ import {
   PhoneInput,
 } from '@/components/form';
 import { Section } from '@/components/layout';
-import { AuthContext } from '@/contexts/AuthContext';
-import { AuthContextType } from '@/contexts/types';
-import { useForm } from '@/hooks';
+import { useAuth, useForm } from '@/hooks';
 import { updateCurrentUserData } from '@/services/userService';
 import {
   validateEmail,
   validateText,
   validatePhoneNumber,
 } from '@/utils/validations';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
 type UpdateForm = {
@@ -28,7 +25,7 @@ type UpdateForm = {
 };
 
 export default function ProfileDetails() {
-  const { user, setUser } = useContext(AuthContext) as AuthContextType;
+  const { user, setUser } = useAuth();
   const [form, updateForm] = useForm<UpdateForm>({
     firstName: user?.firstName,
     lastName: user?.lastName,
