@@ -7,12 +7,12 @@ import { TrashIcon } from '@/components/icons';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
+import { Sizes } from '@/components/productComponents/types';
 
 type CardProps = {
   id: string;
-  size?: string;
-  liked: boolean;
-  deleteFavorite: (id: string) => void;
+  size: Sizes;
+  deleteFavorite: (id: string, size: Sizes) => void;
 };
 
 export type ProductValue = {
@@ -25,7 +25,7 @@ export type ProductValue = {
   name: string;
   price: number;
   quantity: [];
-  sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  sizes: Sizes;
 };
 
 export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
@@ -53,7 +53,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
 
   const removeProductFromFavorites = async () => {
     try {
-      const product = { _id: id, size: 'M' };
+      const product = { _id: id, size: size };
       const result = await removeFavorite(product);
 
       if (result.error) {
@@ -61,7 +61,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
         return;
       }
 
-      deleteFavorite(id);
+      deleteFavorite(id, size);
     } catch (error) {
       console.error(error);
       toast.error(
