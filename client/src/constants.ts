@@ -17,6 +17,7 @@ export const usersURL = `${API_BASE_URL}users`;
 export const ordersURL = `${API_BASE_URL}orders`;
 export const productsURL = `${API_BASE_URL}products`;
 export const favoritesURL = `${API_BASE_URL}favorites`;
+export const cartURL = `${API_BASE_URL}cart`;
 
 export const productCategories = [
   {
