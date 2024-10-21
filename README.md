@@ -1,6 +1,6 @@
 # Cube E-commerce Web App
 
-A full-stack e-commerce application for selling customized t-shirts, with a modern and responsive UI, user authentication, and a secure backend API.
+A full-stack e-commerce application for selling customized t-shirts, with a modern and responsive UI, user authentication, and a RESTful API.
 
 ## Table of Contents
 
@@ -174,16 +174,18 @@ Visit http://localhost:5173/
 ```
 
 ## Screenshots
+
 ### Home page
+
 ![Home Page](client/public/images/home-page.png)
 
 ### Profile page
+
 ![Profile Page](client/public/images/profile-page.png)
 
-
 ### Admin page
-![Admin Page](client/public/images/admin-page.png)
 
+![Admin Page](client/public/images/admin-page.png)
 
 ## Contact
 
