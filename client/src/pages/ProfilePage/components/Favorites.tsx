@@ -5,10 +5,11 @@ import { Section } from '@/components/layout';
 import { getAllFavorites } from '@/services/favoriteService';
 import toast from 'react-hot-toast';
 import FavoriteCard from './FavoriteCard';
+import { Sizes } from '@/components/productComponents/types';
 
 export type FavoriteType = {
   productId: string;
-  productSize: string;
+  productSize: Sizes;
 };
 
 export default function Favorites() {
@@ -30,10 +31,13 @@ export default function Favorites() {
       });
   }, []);
 
-  const deleteFavorite = async (id: string) => {
+  const deleteFavorite = async (id: string, size: Sizes) => {
     setFavorites((prevFavorites) => {
       return prevFavorites?.filter((item) => {
-        return item.productId !== id;
+        return (
+          item.productId !== id ||
+          (item.productId === id && item.productSize !== size)
+        );
       });
     });
   };
@@ -63,13 +67,12 @@ export default function Favorites() {
       ) : (
         <Section>
           <div className="flex flex-wrap w-full mb-10 gap-14 justify-center md:justify-start">
-            {favorites.map((item) => {
+            {favorites.map((item, index) => {
               return (
                 <FavoriteCard
-                  key={item?.productId}
+                  key={index}
                   id={item?.productId}
                   size={item?.productSize}
-                  liked={true}
                   deleteFavorite={deleteFavorite}
                 />
               );
