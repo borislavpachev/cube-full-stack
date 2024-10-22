@@ -22,6 +22,15 @@ export default function ShoppingCartPage() {
 
         const fetchedCart = res.data.shoppingCart;
         setCart(fetchedCart);
+
+        const price = fetchedCart.reduce(
+          (total: number, item: ShoppingCartType) => {
+            total += item.quantity * item.price;
+            return total;
+          },
+          0
+        );
+        setTotalPrice(price);
       })
       .catch((error) => {
         setCart([]);
