@@ -44,13 +44,13 @@ export default function CustomCounter({
   };
 
   return (
-    <div className="flex w-1/2 text-2xl items-center justify-around rounded border-2 border-black">
+    <div className="flex text-xl items-center justify-around rounded border-2 border-black">
       <button className="p-2" onClick={decrease}>
         -
       </button>
       <input
-        className="outline-none text-center w-full"
-        id="product-quantity"
+        name="product-quantity-counter"
+        className="outline-none text-center w-[40px]"
         value={quantity}
         onChange={handleChange}
       />
