@@ -1,5 +1,5 @@
 import { Dispatch, type SetStateAction } from 'react';
-import { Sizes } from './productComponents/types';
+import { Sizes } from './types';
 
 type CustomCounterProps = {
   productQuantity: Record<Sizes, number> | undefined;
