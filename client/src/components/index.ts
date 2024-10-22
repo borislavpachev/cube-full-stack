@@ -4,4 +4,3 @@ export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as Logo } from './Logo';
 export { default as SearchComponent } from './SearchComponent';
 export { default as SideNavItem } from './SideNavItem';
-export { default as CustomCounter } from './CustomCounter';

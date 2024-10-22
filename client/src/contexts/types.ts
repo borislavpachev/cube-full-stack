@@ -1,7 +1,19 @@
+import { Sizes } from '@/components/product/types';
 import { type ReactNode } from 'react';
 
 export type AuthProviderProps = {
   children: ReactNode;
+};
+
+export type FavoriteType = {
+  productId: string;
+  productSize: Sizes;
+};
+
+export type ShoppingCartType = {
+  _id: string;
+  quantity: number;
+  size: Sizes;
 };
 
 export type User = {
@@ -16,8 +28,8 @@ export type User = {
     city?: string;
     additionalInfo?: string;
   };
-  favorites: [];
-  shoppingCart: [];
+  favorites: FavoriteType[];
+  shoppingCart: ShoppingCartType[];
   password: string;
   isBlocked: boolean;
 };
