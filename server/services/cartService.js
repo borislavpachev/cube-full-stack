@@ -5,7 +5,7 @@ const CustomError = require('../utils/CustomError');
 const validateMongoId = require('../utils/validateMongo');
 const userService = require('./userService');
 
-const validateAddProduct = async (id, size, quantity, next) => {
+const validateAddProduct = async (id, size, quantity, price, next) => {
   const _id = await validateMongoId(id, next);
   let shoppingCartItem;
 
@@ -24,13 +24,14 @@ const validateAddProduct = async (id, size, quantity, next) => {
       _id,
       quantity,
       size,
+      price,
     };
   }
 
   return [product, shoppingCartItem];
 };
 
-const validateRemoveProduct = async (id, size, quantity, next) => {
+const validateRemoveProduct = async (id, size, quantity, price, next) => {
   const _id = await validateMongoId(id, next);
 
   let shoppingCartItem;
@@ -45,6 +46,7 @@ const validateRemoveProduct = async (id, size, quantity, next) => {
       _id,
       quantity,
       size,
+      price,
     };
   }
   return [product, shoppingCartItem];
@@ -64,7 +66,11 @@ const updateCartItems = (
   action
 ) => {
   return shoppingCart.reduce((cart, item) => {
-    if (item._id === shoppingCartItem._id && item.size === size) {
+    if (
+      item._id === shoppingCartItem._id &&
+      item.price === shoppingCartItem.price &&
+      item.size === size
+    ) {
       if (action === 'add') {
         item.quantity += quantity;
       } else if (action === 'remove') {
@@ -118,7 +124,7 @@ exports.getCart = async (req, res, next) => {
 };
 
 exports.addToCart = async (req, res, next) => {
-  const { _id, quantity = 1, size } = req.body;
+  const { _id, quantity = 1, size, price } = req.body;
 
   const userId = req.user._id;
   const user = await userService.findUserById(userId, next);
@@ -129,8 +135,10 @@ exports.addToCart = async (req, res, next) => {
     _id,
     size,
     quantity,
+    price,
     next
   );
+
   if (!product) return;
 
   const updatedShoppingCart = updateCartItems(
@@ -172,7 +180,7 @@ exports.addToCart = async (req, res, next) => {
 };
 
 exports.removeFromCart = async (req, res, next) => {
-  const { _id, quantity = 1, size } = req.body;
+  const { _id, quantity = 1, size, price } = req.body;
 
   const userId = req.user._id;
   const user = await userService.findUserById(userId, next);
@@ -182,6 +190,7 @@ exports.removeFromCart = async (req, res, next) => {
     _id,
     size,
     quantity,
+    price,
     next
   );
   if (!product) return;
