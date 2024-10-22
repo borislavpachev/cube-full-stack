@@ -1,13 +1,15 @@
-import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import { removeFavorite } from '@/services/favoriteService';
 import { Button } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
-import { Sizes } from '@/components/productComponents/types';
+import { ProductValue, Sizes } from '@/components/product/types';
+import { useAuth, useCart } from '@/hooks';
+import { User } from '@/contexts/types';
+import { ProductQuantity } from '@/components/product';
+import { getProduct, removeFavorite } from '@/services';
 
 type CardProps = {
   id: string;
@@ -15,23 +17,14 @@ type CardProps = {
   deleteFavorite: (id: string, size: Sizes) => void;
 };
 
-export type ProductValue = {
-  _id: string;
-  category: string;
-  color: string;
-  description: string;
-  gallery: string[];
-  gender: string;
-  name: string;
-  price: number;
-  quantity: [];
-  sizes: Sizes;
-};
-
 export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
+  const { user, setUser } = useAuth();
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart(id, size);
+
   const roundedPrice = priceFormatted(product?.price);
+  const productQuantity = product?.quantity[size];
 
   useEffect(() => {
     getProduct(id)
@@ -62,6 +55,12 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
       }
 
       deleteFavorite(id, size);
+      const updatedFavorites = user?.favorites.filter((item) => {
+        if (item.productId !== id && item.productSize !== size) {
+          return item;
+        }
+      }) as { productId: string; productSize: Sizes }[];
+      setUser({ ...(user as User), favorites: updatedFavorites });
     } catch (error) {
       console.error(error);
       toast.error(
@@ -109,7 +108,14 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
             {size && <p>size: {size}</p>}
           </div>
           <div className="mt-5">
-            <Button onClick={() => {}}>Add to Cart</Button>
+            <ProductQuantity
+              quantity={productQuantity as number}
+              size={2}
+              fontSize="text-xs"
+            />
+            <Button disabled={!productQuantity} onClick={addToCart}>
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>
