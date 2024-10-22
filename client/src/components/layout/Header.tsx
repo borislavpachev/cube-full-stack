@@ -14,6 +14,10 @@ import { useAuth } from '@/hooks';
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const shoppingCartItems = user?.shoppingCart.reduce((count, item) => {
+    count += item.quantity;
+    return count;
+  }, 0);
 
   return (
     <header>
@@ -42,8 +46,13 @@ export default function Header() {
             <HeartIcon size={35} />
           </NavLink>
 
-          <NavLink to={ROUTES.SHOPPING_CART}>
+          <NavLink to={ROUTES.SHOPPING_CART} className={`relative`}>
             <ShoppingCartIcon size={35} />
+            <div className="absolute font-semibold text-xs -top-1 -right-2 bg-slate-200 rounded-full px-2">
+              <span className={`${!shoppingCartItems ? 'hidden' : 'flex'}`}>
+                {shoppingCartItems}
+              </span>
+            </div>
           </NavLink>
 
           {isAuthenticated && (
