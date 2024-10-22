@@ -24,7 +24,12 @@ export default function CartItem({
 }: CartItemProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [itemQuantity, setItemQuantity] = useState(quantity);
-  const { removeFromCart } = useCart(id, size, quantity);
+  const { removeFromCart } = useCart(
+    id,
+    size,
+    product?.price as number,
+    quantity
+  );
 
   const roundedPrice = priceFormatted(product?.price);
   const totalPrice =
