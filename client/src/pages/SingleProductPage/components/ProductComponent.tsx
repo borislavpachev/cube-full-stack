@@ -62,6 +62,21 @@ export default function ProductComponent() {
     return <Loading />;
   }
 
+  const handleAddToCart = async () => {
+    await addToCart();
+    const updatedCount = (product?.quantity[selectedSize] as number) - quantity;
+    const newQuantity = {
+      ...product?.quantity,
+      [selectedSize]: updatedCount,
+    } as Record<Sizes, number>;
+
+    setProduct({
+      ...(product as ProductValue),
+      quantity: newQuantity,
+    });
+    setQuantity(1);
+  };
+
   return (
     <Section>
       <div className="flex flex-col space-y-10 md:space-y-0 md:space-x-10 md:flex-row items-start p-10 mx-20">
@@ -121,7 +136,6 @@ export default function ProductComponent() {
           <div>
             <ProductQuantity
               quantity={productQuantity as number}
-              size={3}
               fontSize="text-sm"
             />
 
@@ -132,7 +146,7 @@ export default function ProductComponent() {
                 size={selectedSize}
                 setQuantity={setQuantity}
               />
-              <Button disabled={!productQuantity} onClick={addToCart}>
+              <Button disabled={!productQuantity} onClick={handleAddToCart}>
                 Add To Cart
               </Button>
             </div>
