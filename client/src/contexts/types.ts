@@ -14,6 +14,7 @@ export type ShoppingCartType = {
   _id: string;
   quantity: number;
   size: Sizes;
+  price: number;
 };
 
 export type User = {
