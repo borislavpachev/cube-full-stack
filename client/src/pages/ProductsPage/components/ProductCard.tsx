@@ -1,29 +1,28 @@
 import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
-import { Button } from '../buttons';
-import { HeartIcon } from '../icons';
+import { Button } from '../../../components/buttons';
+import { HeartIcon } from '../../../components/icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import { FavoriteType } from '@/pages/ProfilePage/components/Favorites';
-import { addFavorite, removeFavorite } from '@/services/favoriteService';
-import { ProductValue } from './types';
+import { ProductValue, Sizes } from '../../../components/product/types';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
-import { useAuth } from '@/hooks';
+import { useFavorites, useCart } from '@/hooks';
+import { ProductQuantity, SizeSelect } from '@/components/product';
 
 type CardProps = {
   id: string;
-  size?: string;
 };
 
-export default function ProductCard({ id, size }: CardProps) {
-  const { user } = useAuth();
+export default function ProductCard({ id }: CardProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
-
-  const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState<Sizes>('M');
+  const { isLiked, handleToggleFavorite } = useFavorites(id, selectedSize);
+  const { addToCart } = useCart(id, selectedSize);
 
   const roundedPrice = priceFormatted(product?.price);
+  const productQuantity = product?.quantity[selectedSize];
 
   useEffect(() => {
     getProduct(id)
@@ -44,48 +43,6 @@ export default function ProductCard({ id, size }: CardProps) {
       });
   }, [id]);
 
-  useEffect(() => {
-    const existAsFavorite = user?.favorites?.some((fav: FavoriteType) => {
-      return fav.productId === id;
-    });
-
-    setIsLiked(!!existAsFavorite);
-  }, [user?.favorites, id]);
-
-  const addProductToFavorites = async () => {
-    try {
-      const product = { _id: id, size: 'M' };
-      const result = await addFavorite(product);
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      setIsLiked(true);
-    } catch (error) {
-      console.error(error);
-      toast.error('An unexpected error occurred. Please try again!');
-    }
-  };
-
-  const removeProductFromFavorites = async () => {
-    try {
-      const product = { _id: id, size: 'M' };
-      const result = await removeFavorite(product);
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      setIsLiked(false);
-    } catch (error) {
-      console.error(error);
-      toast.error('An unexpected error occurred. Please try again!');
-    }
-  };
-
   if (loading) {
     return <LoaderIcon className="h-10 w-10" />;
   }
@@ -95,15 +52,13 @@ export default function ProductCard({ id, size }: CardProps) {
       <div className="max-w-xs flex flex-col rounded border-2">
         <div className="relative">
           <div className="absolute bg-white cursor-pointer rounded-full right-0 m-1">
-            {!isLiked ? (
-              <div className="p-1" onClick={addProductToFavorites}>
+            <div className="p-1" onClick={handleToggleFavorite}>
+              {!isLiked ? (
                 <HeartIcon size={25} />
-              </div>
-            ) : (
-              <div className="p-1" onClick={removeProductFromFavorites}>
+              ) : (
                 <HeartIcon size={25} fillColor="red" />
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
             <img
@@ -125,10 +80,18 @@ export default function ProductCard({ id, size }: CardProps) {
           </p>
           <div className="flex mt-3 justify-between">
             <p className="text-lg">${roundedPrice}</p>
-            {size && <p>size: {size}</p>}
+            <SizeSelect size={selectedSize} setSize={setSelectedSize} />
           </div>
+
           <div className="mt-5">
-            <Button onClick={() => {}}>Add to Cart</Button>
+            <ProductQuantity
+              quantity={productQuantity as number}
+              size={2}
+              fontSize="text-xs"
+            />
+            <Button disabled={!productQuantity} onClick={addToCart}>
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>

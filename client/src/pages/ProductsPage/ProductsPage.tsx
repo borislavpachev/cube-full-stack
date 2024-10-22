@@ -4,8 +4,8 @@ import { ROUTES } from '@/constants';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/buttons';
 import { MainLayout, Section } from '@/components/layout';
-import { ProductCard } from '@/components/productComponents';
-import { ProductValue } from '@/components/productComponents/types';
+import { ProductCard } from '@/pages/ProductsPage/components';
+import { ProductValue } from '@/components/product/types';
 import { getProductsByGenderAndCategory } from '@/services/productService';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 import { PointerRightIcon } from '@/components/icons';
@@ -18,6 +18,7 @@ export default function ProductsPage() {
 
   let capitalizedGender: string = '';
   let capitalizedCategory: string = '';
+
   if (gender && category) {
     capitalizedGender = capitalizeFirstLetter(gender);
     capitalizedCategory = capitalizeFirstLetter(category);
@@ -62,9 +63,9 @@ export default function ProductsPage() {
         </Section>
       ) : (
         <Section>
-          <div className="mb-20 space-y-12">
+          <div className="mb-20 space-y-12 w-full">
             {capitalizedGender && capitalizedCategory && (
-              <p className="md:mt-5 w-full tracking-wider cursor-default flex items-end text-xl md:text-2xl underline underline-offset-4">
+              <p className="mx-10 md:mt-5 w-full tracking-wider cursor-default flex items-end text-xl md:text-2xl underline underline-offset-4">
                 <span>{`${capitalizedGender}'s Wear`}</span>
                 <span>
                   <PointerRightIcon size={30} />
@@ -72,6 +73,7 @@ export default function ProductsPage() {
                 <span>{`${capitalizedCategory}`}</span>
               </p>
             )}
+
             <div className=" flex flex-wrap w-full gap-14 justify-center items-center">
               {products.map((item) => {
                 return <ProductCard id={item._id} key={item._id} />;
