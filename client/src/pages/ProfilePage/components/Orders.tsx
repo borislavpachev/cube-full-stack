@@ -1,6 +1,6 @@
 import { Button } from '@/components/buttons';
 import { Section } from '@/components/layout';
-import { getMyOrders } from '@/services/ordersService';
+import { getMyOrders } from '@/services/orderService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

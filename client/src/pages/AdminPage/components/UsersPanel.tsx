@@ -1,11 +1,10 @@
 import { Section } from '@/components/layout';
 import { User } from '@/contexts/types';
-import { getAllUsers } from '@/services/userService';
 import { useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import DataTable from './DataTable';
 import { createColumns } from './columns';
-import { blockUser, deleteUser, unBlockUser } from '@/services/adminService';
+import { getAllUsers, blockUser, deleteUser, unBlockUser } from '@/services';
 
 export default function UsersPanel() {
   const [users, setUsers] = useState<User[] | []>([]);

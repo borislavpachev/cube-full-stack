@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '@/services/productService';
-import { ProductCard } from '@/components/productComponents';
-import { ProductValue } from '@/components/productComponents/types';
+import { ProductCard } from '@/pages/ProductsPage/components';
+import { ProductValue } from '@/components/product/types';
 import { shuffleArray } from '@/utils/helpers';
 
 export default function NewArrivals() {

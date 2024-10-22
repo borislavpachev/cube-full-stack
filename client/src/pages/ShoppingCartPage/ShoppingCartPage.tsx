@@ -1,16 +1,19 @@
 import { Button } from '@/components/buttons';
 import { MainLayout, Section } from '@/components/layout';
+import { ShoppingCartType } from '@/contexts/types';
 import { getShoppingCart } from '@/services/cartService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function ShoppingCartPage() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<ShoppingCartType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getShoppingCart()
       .then((res) => {
+        console.log(res);
+        
         const fetchedCart = res.data.shoppingCart;
         setCart(fetchedCart);
       })
