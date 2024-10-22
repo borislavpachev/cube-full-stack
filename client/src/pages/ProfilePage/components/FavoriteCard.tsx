@@ -69,6 +69,20 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
     }
   };
 
+  const handleAddToCart = async () => {
+    await addToCart();
+    const updatedCount = (product?.quantity[size] as number) - 1;
+    const newQuantity = {
+      ...product?.quantity,
+      [size]: updatedCount,
+    } as Record<Sizes, number>;
+
+    setProduct({
+      ...(product as ProductValue),
+      quantity: newQuantity,
+    });
+  };
+
   if (loading) {
     return <LoaderIcon className="h-10 w-10" />;
   }
@@ -110,10 +124,10 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
           <div className="mt-5">
             <ProductQuantity
               quantity={productQuantity as number}
-              size={2}
+              size="small"
               fontSize="text-xs"
             />
-            <Button disabled={!productQuantity} onClick={addToCart}>
+            <Button disabled={!productQuantity} onClick={handleAddToCart}>
               Add to Cart
             </Button>
           </div>
