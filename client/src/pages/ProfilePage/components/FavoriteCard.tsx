@@ -21,7 +21,7 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
   const { user, setUser } = useAuth();
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart } = useCart(id, size);
+  const { addToCart } = useCart(id, size, product?.price as number);
 
   const roundedPrice = priceFormatted(product?.price);
   const productQuantity = product?.quantity[size];

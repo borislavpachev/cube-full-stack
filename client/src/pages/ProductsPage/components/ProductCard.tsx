@@ -19,7 +19,7 @@ export default function ProductCard({ id }: CardProps) {
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<Sizes>('M');
   const { isLiked, handleToggleFavorite } = useFavorites(id, selectedSize);
-  const { addToCart } = useCart(id, selectedSize);
+  const { addToCart } = useCart(id, selectedSize, product?.price as number);
 
   const roundedPrice = priceFormatted(product?.price);
   const productQuantity = product?.quantity[selectedSize];

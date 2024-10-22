@@ -32,7 +32,12 @@ export default function ProductComponent() {
     id as string,
     selectedSize
   );
-  const { addToCart } = useCart(id as string, selectedSize, quantity);
+  const { addToCart } = useCart(
+    id as string,
+    selectedSize,
+    product?.price as number,
+    quantity
+  );
 
   const roundedPrice = priceFormatted(product?.price);
   const productQuantity = product?.quantity[selectedSize];

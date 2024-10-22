@@ -5,6 +5,7 @@ type Product = {
   _id: string;
   quantity?: number;
   size: Sizes;
+  price: number;
 };
 
 export const getShoppingCart = async () => {
