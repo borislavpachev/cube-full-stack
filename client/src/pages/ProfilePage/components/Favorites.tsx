@@ -5,12 +5,8 @@ import { Section } from '@/components/layout';
 import { getAllFavorites } from '@/services/favoriteService';
 import toast from 'react-hot-toast';
 import FavoriteCard from './FavoriteCard';
-import { Sizes } from '@/components/productComponents/types';
-
-export type FavoriteType = {
-  productId: string;
-  productSize: Sizes;
-};
+import { Sizes } from '@/components/product/types';
+import { FavoriteType } from '@/contexts/types';
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<FavoriteType[] | undefined>([]);
