@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import { Button } from '@/components/buttons';
+import { AddToCartButton } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '@/constants';
@@ -127,9 +127,10 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
               size="small"
               fontSize="text-xs"
             />
-            <Button disabled={!productQuantity} onClick={handleAddToCart}>
-              Add to Cart
-            </Button>
+            <AddToCartButton
+              productQuantity={productQuantity as number}
+              onClick={handleAddToCart}
+            />
           </div>
         </div>
       </div>

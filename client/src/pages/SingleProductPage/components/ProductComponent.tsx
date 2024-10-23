@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CustomCarousel from '../../../components/CustomCarousel';
-import { Button } from '../../../components/buttons';
+import { AddToCartButton, Button } from '../../../components/buttons';
 import { HeartIcon } from '../../../components/icons';
 import { Section } from '../../../components/layout';
 import Loading from '../../../components/Loading';
@@ -151,9 +151,10 @@ export default function ProductComponent() {
                 size={selectedSize}
                 setQuantity={setQuantity}
               />
-              <Button disabled={!productQuantity} onClick={handleAddToCart}>
-                Add To Cart
-              </Button>
+              <AddToCartButton
+                productQuantity={quantity}
+                onClick={handleAddToCart}
+              />
             </div>
           </div>
         </div>

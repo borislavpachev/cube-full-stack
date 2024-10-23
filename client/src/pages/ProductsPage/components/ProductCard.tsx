@@ -1,6 +1,6 @@
 import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
-import { Button } from '../../../components/buttons';
+import { AddToCartButton } from '../../../components/buttons';
 import { HeartIcon } from '../../../components/icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import { ProductValue, Sizes } from '../../../components/product/types';
@@ -103,9 +103,10 @@ export default function ProductCard({ id }: CardProps) {
               size="small"
               fontSize="text-xs"
             />
-            <Button disabled={!productQuantity} onClick={handleAddToCart}>
-              Add to Cart
-            </Button>
+            <AddToCartButton
+              productQuantity={productQuantity as number}
+              onClick={handleAddToCart}
+            />
           </div>
         </div>
       </div>

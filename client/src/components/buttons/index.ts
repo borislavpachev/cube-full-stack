@@ -4,3 +4,4 @@ export { default as TooltipButton } from './TooltipButton.tsx';
 export { default as TooltipContent } from './TooltipContent.tsx';
 export { default as TableSortButton } from './TableSortButton.tsx';
 export { default as CustomDialogTrigger } from './CustomDialogTrigger.tsx';
+export { default as AddToCartButton } from './AddToCartButton.tsx';
