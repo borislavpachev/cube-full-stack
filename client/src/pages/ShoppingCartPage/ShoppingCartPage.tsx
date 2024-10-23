@@ -82,6 +82,7 @@ export default function ShoppingCartPage() {
                         size={item.size}
                         key={index}
                         deleteCartItem={deleteCartItem}
+                        setTotal={setTotalPrice}
                       />
                     );
                   })}

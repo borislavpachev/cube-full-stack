@@ -5,7 +5,7 @@ import { ROUTES } from '@/constants';
 import { useCart } from '@/hooks';
 import { getProduct } from '@/services';
 import { priceFormatted } from '@/utils/helpers';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ type CartItemProps = {
   quantity: number;
   size: Sizes;
   deleteCartItem: (id: string, size: Sizes) => void;
+  setTotal: Dispatch<SetStateAction<number>>;
 };
 
 export default function CartItem({
@@ -21,6 +22,7 @@ export default function CartItem({
   quantity,
   size,
   deleteCartItem,
+  setTotal,
 }: CartItemProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [itemQuantity, setItemQuantity] = useState(quantity);
@@ -54,6 +56,8 @@ export default function CartItem({
   const handleDelete = async () => {
     await removeFromCart();
     deleteCartItem(id, size);
+    const itemsPrice = (product?.price as number) * quantity;
+    setTotal((prevPrice) => prevPrice - itemsPrice);
   };
 
   return (
