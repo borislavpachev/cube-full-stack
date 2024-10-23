@@ -46,7 +46,7 @@ export default function ProductsPage() {
       {!products?.length ? (
         <Section>
           <p className="text-center text-xl flex items-center">
-            No products in this category.
+            {`No products in ${capitalizedCategory} category.`}
           </p>
           <p className="text-center text-sm text-gray-500 mt-2">
             Check our products in the other categories.
