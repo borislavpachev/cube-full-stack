@@ -1,5 +1,5 @@
+import { Button } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
-import { CustomCounter } from '@/components/product';
 import { ProductValue, Sizes } from '@/components/product/types';
 import { ROUTES } from '@/constants';
 import { useCart } from '@/hooks';
@@ -8,6 +8,7 @@ import { priceFormatted } from '@/utils/helpers';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
+import debounce from 'lodash.debounce';
 
 type CartItemProps = {
   id: string;
@@ -26,11 +27,11 @@ export default function CartItem({
 }: CartItemProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [itemQuantity, setItemQuantity] = useState(quantity);
-  const { removeFromCart } = useCart(
+
+  const { addToCart, removeFromCart } = useCart(
     id,
     size,
-    product?.price as number,
-    quantity
+    product?.price as number
   );
 
   const roundedPrice = priceFormatted(product?.price);
@@ -54,11 +55,44 @@ export default function CartItem({
   }, [id]);
 
   const handleDelete = async () => {
-    await removeFromCart();
+    await removeFromCart(itemQuantity);
     deleteCartItem(id, size);
-    const itemsPrice = (product?.price as number) * quantity;
-    setTotal((prevPrice) => prevPrice - itemsPrice);
+
+    if (product) {
+      const itemsPrice = (product?.price as number) * quantity;
+      setTotal((prevPrice) => prevPrice - itemsPrice);
+    }
   };
+
+  const handleAdd = debounce(
+    async () => {
+      await addToCart();
+      setItemQuantity((prevQuantity) => prevQuantity + 1);
+
+      if (product) {
+        setTotal((prevPrice) => prevPrice + product?.price);
+      }
+    },
+    1500,
+    { leading: true, trailing: false }
+  );
+
+  const handleRemove = debounce(
+    async () => {
+      await removeFromCart();
+      setItemQuantity((prevQuantity) => prevQuantity - 1);
+
+      if (itemQuantity <= 1) {
+        deleteCartItem(id, size);
+      }
+
+      if (product) {
+        setTotal((prevPrice) => prevPrice - product?.price);
+      }
+    },
+    1500,
+    { leading: true, trailing: false }
+  );
 
   return (
     <div className="flex flex-col md:flex-row w-full px-0 md:px-5 py-5 items-center space-x-0 space-y-2 md:space-x-10 md:space-y-0 border-b">
@@ -80,13 +114,14 @@ export default function CartItem({
       <div className="w-full md:w-1/6 md:mr-2 flex justify-center font-semibold">
         ${roundedPrice}
       </div>
-      <div className="w-1/2 md:w-1/6 md:mr-2 flex justify-center">
-        <CustomCounter
-          productQuantity={product?.quantity}
-          quantity={itemQuantity}
-          size={size}
-          setQuantity={setItemQuantity}
-        />
+      <div className="w-1/2 md:w-1/6 md:mr-2 flex font-semibold items-center justify-center">
+        <div>
+          <Button onClick={handleRemove}>-</Button>
+        </div>
+        <p className="p-4">{itemQuantity}</p>
+        <div>
+          <Button onClick={handleAdd}>+</Button>
+        </div>
       </div>
       <div className="w-full flex md:w-1/6 md:mr-2 justify-center">
         <p className="font-semibold text-center">${totalPrice}</p>
