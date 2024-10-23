@@ -121,3 +121,31 @@ export const createUser = async (form: CreateUserForm) => {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
 };
+
+export const updateUser = async (id: string, role: string) => {
+ 
+  try {
+    const response = await fetch(`${usersURL}/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        role:role,
+      }),
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error: error.message || 'User create failed! Please try again!',
+      };
+    }
+
+    const data = response.json();
+    return data;
+  } catch (error) {
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};

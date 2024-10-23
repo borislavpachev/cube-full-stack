@@ -13,6 +13,7 @@ import { MoreHorizontalIcon } from 'lucide-react';
 import { TableSortButton } from '@/components/buttons';
 
 export const createColumns = (
+  switchUserRole: (id: string, role: 'Admin' | 'User') => void,
   deleteUserById: (id: string) => void,
   unBlockUserById: (id: string) => void,
   blockUserById: (id: string) => void
@@ -61,7 +62,7 @@ export const createColumns = (
           <TableSortButton
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Admin
+            Role
           </TableSortButton>
         );
       },
@@ -115,6 +116,11 @@ export const createColumns = (
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => deleteUserById(user._id)}>
                 Delete User
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => switchUserRole(user._id, user.role)}
+              >
+                Switch User Role
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

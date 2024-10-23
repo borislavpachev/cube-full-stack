@@ -4,7 +4,13 @@ import { useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import DataTable from './DataTable';
 import { createColumns } from './columns';
-import { getAllUsers, blockUser, deleteUser, unBlockUser } from '@/services';
+import {
+  getAllUsers,
+  blockUser,
+  deleteUser,
+  unBlockUser,
+  updateUser,
+} from '@/services';
 
 export default function UsersPanel() {
   const [users, setUsers] = useState<User[] | []>([]);
@@ -51,9 +57,7 @@ export default function UsersPanel() {
       setUsers(updatedUsers);
     } catch (error) {
       console.error(error);
-      toast.error(
-        'An unexpected error occurred during sign up. Please try again!'
-      );
+      toast.error('An unexpected error occurred. Please try again!');
     }
   };
 
@@ -67,13 +71,38 @@ export default function UsersPanel() {
       setUsers(updatedUsers);
     } catch (error) {
       console.error(error);
-      toast.error(
-        'An unexpected error occurred during sign up. Please try again!'
-      );
+      toast.error('An unexpected error occurred. Please try again!');
     }
   };
 
-  const columns = createColumns(deleteUserById, unBlockUserById, blockUserById);
+  const switchUserRole = async (id: string, role: 'Admin' | 'User') => {
+    const newRole = role === 'User' ? 'Admin' : 'User';
+
+    try {
+      const result = await updateUser(id, newRole);
+
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+      const updatedUsers = users.map((user) => {
+        return user._id === id ? { ...user, role: newRole } : user;
+      });
+
+      setUsers(updatedUsers as User[]);
+      toast.success('User role updated successfully !');
+    } catch (error) {
+      console.error(error);
+      toast.error('An unexpected error occurred. Please try again!');
+    }
+  };
+
+  const columns = createColumns(
+    switchUserRole,
+    deleteUserById,
+    unBlockUserById,
+    blockUserById
+  );
 
   return (
     <Section>
