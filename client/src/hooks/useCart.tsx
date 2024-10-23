@@ -4,15 +4,10 @@ import toast from 'react-hot-toast';
 import useAuth from './useAuth';
 import { User } from '@/contexts/types';
 
-export default function useCart(
-  id: string,
-  size: Sizes,
-  price: number,
-  quantity: number = 1
-) {
+export default function useCart(id: string, size: Sizes, price: number) {
   const { user, setUser } = useAuth();
 
-  const addToCart = async () => {
+  const addToCart = async (quantity: number = 1) => {
     try {
       const productToAdd = {
         _id: id,
@@ -37,7 +32,7 @@ export default function useCart(
     }
   };
 
-  const removeFromCart = async () => {
+  const removeFromCart = async (quantity: number = 1) => {
     try {
       const productToRemove = {
         _id: id,
