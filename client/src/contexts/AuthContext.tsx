@@ -27,8 +27,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           setUser(data.user);
           setIsAuthenticated(true);
         } else {
-          setUser(null);
-          setIsAuthenticated(false);
+          setUser(initialValue.user);
+          setIsAuthenticated(initialValue.isAuthenticated);
         }
       })
       .catch((error) => {
