@@ -23,16 +23,7 @@ import {
 } from '@/utils/validations';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import toast from 'react-hot-toast';
-
-export type CreateUserForm = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: 'Admin' | 'User';
-  phoneNumber: string;
-  password: string;
-  passwordConfirm: string;
-};
+import { CreateUserForm } from './types';
 
 type CreateUserProps = {
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
@@ -108,7 +99,7 @@ export default function CreateUser({ setUsers }: CreateUserProps) {
         <CustomDialogTrigger>
           <span>Create User</span>
         </CustomDialogTrigger>
-        <DialogContent className="h-screen overflow-auto">
+        <DialogContent className="h-screen max-w-lg overflow-auto">
           <DialogHeader>
             <DialogTitle className="text-3xl font-semibold mb-1">
               Create New Account
