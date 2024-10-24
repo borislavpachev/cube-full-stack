@@ -1,4 +1,5 @@
 export type Sizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
+export type Quantity = Record<Sizes, number>;
 
 export type ProductValue = {
   _id: string;
@@ -6,9 +7,9 @@ export type ProductValue = {
   color: string;
   description: string;
   gallery: string[];
-  gender: 'Men' |'Women';
+  gender: 'Men' | 'Women';
   name: string;
   price: number;
-  quantity: Record<Sizes, number>;
+  quantity: Quantity;
   sizes: 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
 };
