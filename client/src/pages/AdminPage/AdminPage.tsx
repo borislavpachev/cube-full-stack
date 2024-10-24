@@ -9,10 +9,12 @@ export default function AdminPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.role !== 'Admin') {
-      navigate('/error');
+    if (user) {
+      if (user.role !== 'Admin') {
+        navigate('/error');
+      }
     }
-  }, [user?.role, navigate]);
+  }, [user, navigate]);
 
   return (
     <MainLayout>

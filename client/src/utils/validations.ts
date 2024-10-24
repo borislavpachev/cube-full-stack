@@ -23,3 +23,11 @@ export const normalizePhoneNumber = (text: string) => {
   const normalized = text.replace(/[^\d+]/g, '');
   return normalized;
 };
+
+export const validateProductDescription = (text: string) => {
+  if (text.length <= 10 || text.length >= 200) {
+    return false;
+  } else {
+    return true;
+  }
+};
