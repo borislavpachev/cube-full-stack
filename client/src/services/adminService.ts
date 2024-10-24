@@ -1,5 +1,8 @@
-import { usersURL } from '@/constants';
-import { CreateUserForm } from '@/pages/AdminPage/components/CreateUser';
+import { productsURL, usersURL } from '@/constants';
+import {
+  CreateProductFormWithQuantity,
+  CreateUserForm,
+} from '@/pages/AdminPage/components/types';
 import { normalizePhoneNumber } from '@/utils/validations';
 
 export const deleteUser = async (id: string) => {
@@ -123,7 +126,6 @@ export const createUser = async (form: CreateUserForm) => {
 };
 
 export const updateUser = async (id: string, role: string) => {
- 
   try {
     const response = await fetch(`${usersURL}/${id}`, {
       method: 'PATCH',
@@ -131,7 +133,7 @@ export const updateUser = async (id: string, role: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        role:role,
+        role: role,
       }),
       credentials: 'include',
     });
@@ -145,6 +147,31 @@ export const updateUser = async (id: string, role: string) => {
 
     const data = response.json();
     return data;
+  } catch (error) {
+    return { error: 'An unexpected error occurred. Please try again!' };
+  }
+};
+
+export const createNewProduct = async (form: CreateProductFormWithQuantity) => {
+  try {
+    const response = await fetch(productsURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        error: error.message || 'Failed to create product! Please try again!',
+      };
+    }
+
+    const product = await response.json();
+    return product;
   } catch (error) {
     return { error: 'An unexpected error occurred. Please try again!' };
   }
