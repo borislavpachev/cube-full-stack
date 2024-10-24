@@ -14,6 +14,7 @@ const productSchema = new Schema({
     type: String,
     trim: true,
     minLength: 10,
+    maxLength: 200,
   },
   price: {
     type: Number,
@@ -61,7 +62,7 @@ const productSchema = new Schema({
   color: {
     type: String,
     required: [true, 'A product must have a color'],
-    default: 'white',
+    default: 'White',
   },
   gender: {
     type: String,
