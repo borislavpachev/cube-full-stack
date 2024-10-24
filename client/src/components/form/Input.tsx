@@ -7,7 +7,7 @@ type InputProps = {
   type?: string;
   placeholder?: string;
   autoComplete?: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
