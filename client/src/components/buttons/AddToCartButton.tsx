@@ -1,6 +1,6 @@
 import { useAuth } from '@/hooks';
 import Button from './Button';
-import debounce from 'lodash.debounce';
+import { debounceFn } from '@/utils/helpers';
 
 type AddToCartButtonProps = {
   productQuantity: number;
@@ -13,13 +13,7 @@ export default function AddToCartButton({
 }: AddToCartButtonProps) {
   const { isAuthenticated } = useAuth();
 
-  const handleClick = debounce(
-    () => {
-      onClick();
-    },
-    1500,
-    { leading: true, trailing: false }
-  );
+  const handleClick = debounceFn(onClick);
 
   return (
     <Button

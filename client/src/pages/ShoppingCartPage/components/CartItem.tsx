@@ -4,11 +4,10 @@ import { ProductValue, Sizes } from '@/components/product/types';
 import { ROUTES } from '@/constants';
 import { useCart } from '@/hooks';
 import { getProduct } from '@/services';
-import { priceFormatted } from '@/utils/helpers';
+import { debounceFn, priceFormatted } from '@/utils/helpers';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
-import debounce from 'lodash.debounce';
 
 type CartItemProps = {
   id: string;
@@ -64,35 +63,27 @@ export default function CartItem({
     }
   };
 
-  const handleAdd = debounce(
-    async () => {
-      await addToCart();
-      setItemQuantity((prevQuantity) => prevQuantity + 1);
+  const handleAdd = debounceFn(async () => {
+    await addToCart();
+    setItemQuantity((prevQuantity) => prevQuantity + 1);
 
-      if (product) {
-        setTotal((prevPrice) => prevPrice + product?.price);
-      }
-    },
-    1500,
-    { leading: true, trailing: false }
-  );
+    if (product) {
+      setTotal((prevPrice) => prevPrice + product?.price);
+    }
+  });
 
-  const handleRemove = debounce(
-    async () => {
-      await removeFromCart();
-      setItemQuantity((prevQuantity) => prevQuantity - 1);
+  const handleRemove = debounceFn(async () => {
+    await removeFromCart();
+    setItemQuantity((prevQuantity) => prevQuantity - 1);
 
-      if (itemQuantity <= 1) {
-        deleteCartItem(id, size);
-      }
+    if (itemQuantity <= 1) {
+      deleteCartItem(id, size);
+    }
 
-      if (product) {
-        setTotal((prevPrice) => prevPrice - product?.price);
-      }
-    },
-    1500,
-    { leading: true, trailing: false }
-  );
+    if (product) {
+      setTotal((prevPrice) => prevPrice - product?.price);
+    }
+  });
 
   return (
     <div className="flex flex-col md:flex-row w-full px-0 md:px-5 py-5 items-center space-x-0 space-y-2 md:space-x-10 md:space-y-0 border-b">
