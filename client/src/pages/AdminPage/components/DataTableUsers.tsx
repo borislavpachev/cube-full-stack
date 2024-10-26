@@ -25,17 +25,17 @@ import React, { useState } from 'react';
 import CreateUser from './CreateUser';
 import { User } from '@/contexts/types';
 
-type DataTableProps<TData, TValue> = {
+type DataTableUsersProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 };
 
-export default function DataTable<TData, TValue>({
+export default function DataTableUsers<TData, TValue>({
   columns,
   data,
   setUsers,
-}: DataTableProps<TData, TValue>) {
+}: DataTableUsersProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({

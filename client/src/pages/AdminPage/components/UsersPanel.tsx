@@ -2,8 +2,7 @@ import { Section } from '@/components/layout';
 import { User } from '@/contexts/types';
 import { useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import DataTable from './DataTable';
-import { createColumns } from './columns';
+import { createUserColumns } from './columnsUsers';
 import {
   getAllUsers,
   blockUser,
@@ -11,6 +10,7 @@ import {
   unBlockUser,
   updateUser,
 } from '@/services';
+import DataTableUsers from './DataTableUsers';
 
 export default function UsersPanel() {
   const [users, setUsers] = useState<User[] | []>([]);
@@ -97,7 +97,7 @@ export default function UsersPanel() {
     }
   };
 
-  const columns = createColumns(
+  const columns = createUserColumns(
     switchUserRole,
     deleteUserById,
     unBlockUserById,
@@ -107,7 +107,7 @@ export default function UsersPanel() {
   return (
     <Section>
       {loading && <LoaderIcon className="w-32 h-32" />}
-      <DataTable columns={columns} data={users} setUsers={setUsers} />
+      <DataTableUsers columns={columns} data={users} setUsers={setUsers} />
     </Section>
   );
 }

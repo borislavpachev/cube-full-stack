@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { TableSortButton } from '@/components/buttons';
 
-export const createColumns = (
+export const createUserColumns = (
   switchUserRole: (id: string, role: 'Admin' | 'User') => void,
   deleteUserById: (id: string) => void,
   unBlockUserById: (id: string) => void,
