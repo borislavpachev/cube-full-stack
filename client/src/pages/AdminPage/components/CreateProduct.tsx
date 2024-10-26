@@ -6,7 +6,7 @@ import {
   Label,
   Textarea,
 } from '@/components/form';
-import { Quantity, Sizes } from '@/components/product/types';
+import { ProductValue, Quantity, Sizes } from '@/components/product/types';
 import {
   Dialog,
   DialogContent,
@@ -22,9 +22,11 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CreateProductForm } from './types';
 
+type CreateProductProps = {
+  setProducts: React.Dispatch<React.SetStateAction<ProductValue[]>>;
+};
 
-
-export default function CreateProduct() {
+export default function CreateProduct({ setProducts }: CreateProductProps) {
   const [form, updateForm, clearForm] = useForm<CreateProductForm>({
     name: '',
     description: '',
