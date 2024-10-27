@@ -42,7 +42,7 @@ export default function UsersPanel() {
     } catch (error) {
       console.error(error);
       toast.error(
-        'An unexpected error occurred during sign up. Please try again!'
+        'An unexpected error occurred. Please try again!'
       );
     }
   };
