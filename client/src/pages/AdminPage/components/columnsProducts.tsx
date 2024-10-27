@@ -12,7 +12,9 @@ import { MoreHorizontalIcon } from 'lucide-react';
 import { TableSortButton } from '@/components/buttons';
 import { ProductValue } from '@/components/product/types';
 
-export const createProductColumns = (): ColumnDef<ProductValue>[] => {
+export const createProductColumns = (
+  deleteProductById: (id: string) => void
+): ColumnDef<ProductValue>[] => {
   return [
     {
       accessorKey: 'name',
@@ -79,7 +81,9 @@ export const createProductColumns = (): ColumnDef<ProductValue>[] => {
             <DropdownMenuContent align="center">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>1</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => deleteProductById(product._id)}>
+                Delete Product
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

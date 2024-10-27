@@ -1,7 +1,7 @@
 import { Section } from '@/components/layout';
 import { useEffect, useState } from 'react';
 import { ProductValue } from '@/components/product/types';
-import { getAllProducts } from '@/services';
+import { deleteProduct, getAllProducts } from '@/services';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import { createProductColumns } from './columnsProducts';
 import DataTableProducts from './DataTableProducts';
@@ -28,7 +28,20 @@ export default function ProductPanel() {
       });
   }, []);
 
-  const columns = createProductColumns();
+  const deleteProductById = async (id: string) => {
+    try {
+      await deleteProduct(id);
+      toast.success('Product deleted successfully !');
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== id)
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error('An unexpected error occurred. Please try again!');
+    }
+  };
+
+  const columns = createProductColumns(deleteProductById);
 
   return (
     <Section>
