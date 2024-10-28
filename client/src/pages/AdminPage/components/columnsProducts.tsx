@@ -10,12 +10,26 @@ import {
 import { Button } from '@/components/ui/button';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { TableSortButton } from '@/components/buttons';
-import { ProductValue } from '@/components/product/types';
+import { ProductValue, Quantity, Sizes } from '@/components/product/types';
 
 export const createProductColumns = (
   deleteProductById: (id: string) => void
 ): ColumnDef<ProductValue>[] => {
   return [
+    {
+      header: 'Cover',
+      cell: () => {
+        return (
+          <div className='flex items-center justify-center'>
+            <img
+              src="/images/Back.png"
+              alt="product-cover"
+              className="w-[150px] h-[150px] rounded object-cover"
+            />
+          </div>
+        );
+      },
+    },
     {
       accessorKey: 'name',
       header: ({ column }) => {
@@ -63,6 +77,22 @@ export const createProductColumns = (
           </TableSortButton>
         );
       },
+    },
+    {
+      accessorKey: 'quantity',
+      cell: ({ getValue }) => {
+        const quantity = getValue() as Quantity;
+        return (
+          <div>
+            {Object.keys(quantity).map((size, index) => (
+              <div key={index}>
+                {size}: {quantity[size as Sizes]}
+              </div>
+            ))}
+          </div>
+        );
+      },
+      header: 'Quantity',
     },
     {
       id: 'actions',
