@@ -87,7 +87,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
       }
 
       const createdProduct = result.data.product;
-      console.log(createdProduct);
+      setProducts((prevProducts) => [createdProduct, ...prevProducts]);
       clearForm();
     } catch (error) {
       console.error(error);
