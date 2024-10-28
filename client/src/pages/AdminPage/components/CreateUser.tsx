@@ -81,7 +81,7 @@ export default function CreateUser({ setUsers }: CreateUserProps) {
         return;
       }
       const newUser = result.data.user;
-      setUsers((prevUsers) => [...prevUsers, newUser]);
+      setUsers((prevUsers) => [newUser, ...prevUsers]);
 
       toast.success('User created successfully !');
       clearForm();
