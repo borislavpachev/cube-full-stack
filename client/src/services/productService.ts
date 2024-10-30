@@ -85,28 +85,4 @@ export const getProductsByGenderAndCategory = async (
   }
 };
 
-export const deleteProduct = async (id: string) => {
-  const url = `${productsURL}/${id}`;
-  try {
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
 
-    if (!response.ok) {
-      const error = await response.json();
-      return {
-        error: error.message || `Error deleting product with id: ${id}!`,
-      };
-    }
-
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    return { error: 'An unexpected error occurred. Please try again!' };
-  }
-};
