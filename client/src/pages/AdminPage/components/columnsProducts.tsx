@@ -1,18 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { MoreHorizontalIcon } from 'lucide-react';
 import { TableSortButton } from '@/components/buttons';
 import { ProductValue, Quantity, Sizes } from '@/components/product/types';
-import UpdateProduct from './UpdateProduct';
 import { type Dispatch, type SetStateAction } from 'react';
+import ProductActions from './productActions';
 
 export const createProductColumns = (
   deleteProductById: (id: string) => void,
@@ -103,28 +93,11 @@ export const createProductColumns = (
         const product = row.original;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontalIcon />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem onClick={(e) => e.preventDefault()}>
-                <UpdateProduct product={product} setProducts={setProducts} />
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="p-3"
-                onClick={() => deleteProductById(product._id)}
-              >
-                Delete Product
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ProductActions
+            product={product}
+            setProducts={setProducts}
+            deleteProductById={deleteProductById}
+          />
         );
       },
     },
