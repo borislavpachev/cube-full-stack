@@ -41,7 +41,7 @@ export default function ProductPanel() {
     }
   };
 
-  const columns = createProductColumns(deleteProductById);
+  const columns = createProductColumns(deleteProductById, setProducts);
 
   return (
     <Section>
