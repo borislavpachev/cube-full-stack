@@ -13,7 +13,8 @@ import {
   SignUpPage,
   SingleProductPage,
 } from '@/pages';
-import { ProductPanel, UsersPanel } from '@/pages/AdminPage/components';
+import { ProductPanel } from '@/pages/AdminPage/components/productComponents';
+import { UsersPanel } from '@/pages/AdminPage/components/userComponents';
 import {
   Address,
   Favorites,
