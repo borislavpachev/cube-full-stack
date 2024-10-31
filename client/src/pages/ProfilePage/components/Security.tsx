@@ -19,7 +19,7 @@ type NewPasswordForm = {
 };
 
 export default function Security() {
-  const [form, updateForm, clearForm] = useForm<NewPasswordForm>({
+  const { form, updateForm, clearForm } = useForm<NewPasswordForm>({
     newPassword: '',
     passwordConfirm: '',
   });

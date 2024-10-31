@@ -17,5 +17,5 @@ export default function useForm<T extends FormValues>(initialValues: T) {
 
   const clearForm = () => setForm(initialValues);
 
-  return [form, updateForm, clearForm] as const;
+  return { form, updateForm, setForm, clearForm } as const;
 }

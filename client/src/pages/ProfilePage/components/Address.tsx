@@ -20,7 +20,7 @@ type AddressForm = {
 
 export default function Address() {
   const { user, setUser } = useAuth();
-  const [form, updateForm] = useForm<AddressForm>({
+  const {form, updateForm} = useForm<AddressForm>({
     street: user?.deliveryAddress?.street || '',
     city: user?.deliveryAddress?.city || '',
     additionalInfo: user?.deliveryAddress?.additionalInfo || '',

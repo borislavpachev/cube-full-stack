@@ -34,7 +34,7 @@ export type SignUpForm = {
 export default function SignUpPage() {
   const { setUser, setIsAuthenticated } = useAuth();
 
-  const [form, updateForm] = useForm<SignUpForm>({
+  const { form, updateForm } = useForm<SignUpForm>({
     firstName: '',
     lastName: '',
     email: '',

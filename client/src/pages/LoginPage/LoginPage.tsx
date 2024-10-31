@@ -24,7 +24,7 @@ type LoginForm = {
 
 export default function LoginPage() {
   const { user, setUser, setIsAuthenticated } = useAuth();
-  const [form, updateForm] = useForm<LoginForm>({
+  const { form, updateForm } = useForm<LoginForm>({
     email: '',
     password: '',
   });

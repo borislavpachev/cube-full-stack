@@ -26,7 +26,7 @@ type UpdateForm = {
 
 export default function ProfileDetails() {
   const { user, setUser } = useAuth();
-  const [form, updateForm] = useForm<UpdateForm>({
+  const {form, updateForm} = useForm<UpdateForm>({
     firstName: user?.firstName,
     lastName: user?.lastName,
     email: user?.email,
