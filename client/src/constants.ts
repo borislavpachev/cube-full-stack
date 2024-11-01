@@ -11,6 +11,8 @@ export const ROUTES = {
   USER_PROFILE: '/profile',
 };
 
+export const AWS_BUCKET_NAME = import.meta.env.VITE_AWS_BUCKET_NAME;
+
 export const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const usersURL = `${API_BASE_URL}users`;
