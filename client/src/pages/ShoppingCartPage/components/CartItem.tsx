@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Button } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
 import { ProductValue, Sizes } from '@/components/product/types';
@@ -5,25 +7,15 @@ import { ROUTES } from '@/constants';
 import { useCart } from '@/hooks';
 import { getProduct } from '@/services';
 import { debounceFn, priceFormatted } from '@/utils/helpers';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { NavLink } from 'react-router-dom';
 
 type CartItemProps = {
   id: string;
   quantity: number;
   size: Sizes;
-  deleteCartItem: (id: string, size: Sizes) => void;
-  setTotal: Dispatch<SetStateAction<number>>;
 };
 
-export default function CartItem({
-  id,
-  quantity,
-  size,
-  deleteCartItem,
-  setTotal,
-}: CartItemProps) {
+export default function CartItem({ id, quantity, size }: CartItemProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [itemQuantity, setItemQuantity] = useState(quantity);
 
@@ -55,34 +47,32 @@ export default function CartItem({
 
   const handleDelete = async () => {
     await removeFromCart(itemQuantity);
-    deleteCartItem(id, size);
-
-    if (product) {
-      const itemsPrice = (product?.price as number) * quantity;
-      setTotal((prevPrice) => prevPrice - itemsPrice);
-    }
   };
 
   const handleAdd = debounceFn(async () => {
     await addToCart();
     setItemQuantity((prevQuantity) => prevQuantity + 1);
 
-    if (product) {
-      setTotal((prevPrice) => prevPrice + product?.price);
-    }
+    const updatedCount = (product?.quantity[size] as number) - 1;
+    const newQuantity = {
+      ...product?.quantity,
+      [size]: updatedCount,
+    } as Record<Sizes, number>;
+
+    setProduct({ ...(product as ProductValue), quantity: newQuantity });
   });
 
   const handleRemove = debounceFn(async () => {
     await removeFromCart();
     setItemQuantity((prevQuantity) => prevQuantity - 1);
 
-    if (itemQuantity <= 1) {
-      deleteCartItem(id, size);
-    }
+    const updatedCount = (product?.quantity[size] as number) + 1;
+    const newQuantity = {
+      ...product?.quantity,
+      [size]: updatedCount,
+    } as Record<Sizes, number>;
 
-    if (product) {
-      setTotal((prevPrice) => prevPrice - product?.price);
-    }
+    setProduct({ ...(product as ProductValue), quantity: newQuantity });
   });
 
   return (
@@ -111,7 +101,9 @@ export default function CartItem({
         </div>
         <p className="p-4">{itemQuantity}</p>
         <div>
-          <Button onClick={handleAdd}>+</Button>
+          <Button disabled={!product?.quantity[size]} onClick={handleAdd}>
+            +
+          </Button>
         </div>
       </div>
       <div className="w-full flex md:w-1/6 md:mr-2 justify-center">
