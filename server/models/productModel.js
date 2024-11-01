@@ -20,10 +20,15 @@ const productSchema = new Schema({
     type: Number,
     min: 0,
   },
-  gallery: {
-    type: [String],
-    required: [true, 'A product must have images'],
-    default: [],
+  frontCover: {
+    type: String,
+    default: '',
+    required: [true, 'A product must have a front cover'],
+  },
+  backCover: {
+    type: String,
+    default: '',
+    required: [true, 'A product must have a back cover'],
   },
   sizes: {
     type: [String],
