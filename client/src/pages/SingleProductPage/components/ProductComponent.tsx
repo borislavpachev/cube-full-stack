@@ -8,15 +8,12 @@ import Loading from '../../../components/Loading';
 import ProductElement from './ProductElement';
 import { getProduct } from '@/services/productService';
 import { ProductValue, Sizes } from '../../../components/product/types';
-import { ROUTES } from '@/constants';
+import { productSizes, ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
 import { useCart, useFavorites } from '@/hooks';
 import ProductDescription from './ProductDescription';
-import {
-  ProductQuantity,
-  SizeSelect,
-  CustomCounter,
-} from '@/components/product';
+import { ProductQuantity, CustomCounter } from '@/components/product';
+import { Select } from '@/components/form';
 
 const images = [{ src: '/images/Front.png' }, { src: '/images/Back.png' }];
 
@@ -25,7 +22,7 @@ export default function ProductComponent() {
 
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState<Sizes>('M');
+  const [selectedSize, setSelectedSize] = useState<Sizes>('XS');
   const [quantity, setQuantity] = useState(1);
 
   const { isLiked, handleToggleFavorite } = useFavorites(
@@ -35,8 +32,7 @@ export default function ProductComponent() {
   const { addToCart } = useCart(
     id as string,
     selectedSize,
-    product?.price as number,
-    quantity
+    product?.price as number
   );
 
   const roundedPrice = priceFormatted(product?.price);
@@ -68,7 +64,7 @@ export default function ProductComponent() {
   }
 
   const handleAddToCart = async () => {
-    await addToCart();
+    await addToCart(quantity);
     const updatedCount = (product?.quantity[selectedSize] as number) - quantity;
     const newQuantity = {
       ...product?.quantity,
@@ -82,6 +78,9 @@ export default function ProductComponent() {
     setQuantity(1);
   };
 
+  const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSize(e.target.value as Sizes);
+  };
   return (
     <Section>
       <div className="flex flex-col space-y-10 md:space-y-0 md:space-x-10 md:flex-row items-start p-10 mx-20">
@@ -130,9 +129,10 @@ export default function ProductComponent() {
             </div>
             <div>
               <ProductElement>Size</ProductElement>
-              <SizeSelect
-                size={selectedSize}
-                setSize={setSelectedSize}
+              <Select
+                name="product-component-size"
+                onChange={handleSize}
+                options={productSizes}
                 className="rounded outline-none text-xl w-16 h-16 border-2 border-black"
               />
             </div>
