@@ -5,10 +5,11 @@ import { HeartIcon } from '../../../components/icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import { ProductValue, Sizes } from '../../../components/product/types';
 import { NavLink } from 'react-router-dom';
-import { ROUTES } from '@/constants';
+import { productSizes, ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
 import { useFavorites, useCart } from '@/hooks';
-import { ProductQuantity, SizeSelect } from '@/components/product';
+import { ProductQuantity } from '@/components/product';
+import { Select } from '@/components/form';
 
 type CardProps = {
   id: string;
@@ -17,7 +18,7 @@ type CardProps = {
 export default function ProductCard({ id }: CardProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedSize, setSelectedSize] = useState<Sizes>('M');
+  const [selectedSize, setSelectedSize] = useState<Sizes>('XS');
   const { isLiked, handleToggleFavorite } = useFavorites(id, selectedSize);
   const { addToCart } = useCart(id, selectedSize, product?.price as number);
 
@@ -57,6 +58,10 @@ export default function ProductCard({ id }: CardProps) {
     });
   };
 
+  const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSize(e.target.value as Sizes);
+  };
+
   if (loading) {
     return <LoaderIcon className="h-10 w-10" />;
   }
@@ -86,15 +91,15 @@ export default function ProductCard({ id }: CardProps) {
           <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
             <h1 className="text-xl">{product?.name}</h1>
           </NavLink>
-          <p
-            className="text-gray-500 line-clamp-1"
-            title={product?.description}
-          >
-            {product?.description}
-          </p>
+          <p className="text-gray-500 line-clamp-1">{product?.description}</p>
           <div className="flex mt-3 justify-between">
             <p className="text-lg">${roundedPrice}</p>
-            <SizeSelect size={selectedSize} setSize={setSelectedSize} />
+            <Select
+              name="sizes"
+              onChange={handleSize}
+              options={productSizes}
+              className="text-lg focus:outline-none"
+            />
           </div>
 
           <div className="mt-5">
