@@ -6,7 +6,8 @@ export type ProductValue = {
   category: string;
   color: string;
   description: string;
-  gallery: string[];
+  frontCover: string;
+  backCover: string;
   gender: 'Men' | 'Women';
   name: string;
   price: number;

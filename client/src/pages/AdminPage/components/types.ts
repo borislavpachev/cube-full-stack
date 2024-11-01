@@ -5,11 +5,26 @@ export type CreateProductForm = {
   description: string;
   price: number;
   gender: string;
+  frontCover: string;
+  backCover: string;
+  color: string;
+  category: string;
+};
+
+export type UpdateProductForm = {
+  name: string;
+  description: string;
+  price: number;
+  gender: string;
   color: string;
   category: string;
 };
 
 export type CreateProductFormWithQuantity = CreateProductForm & {
+  quantity: Quantity;
+};
+
+export type UpdateProductFormWithQuantity = UpdateProductForm & {
   quantity: Quantity;
 };
 
