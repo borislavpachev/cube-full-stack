@@ -2,6 +2,7 @@ import { productsURL, usersURL } from '@/constants';
 import {
   CreateProductFormWithQuantity,
   CreateUserForm,
+  UpdateProductFormWithQuantity,
 } from '@/pages/AdminPage/components/types';
 import { normalizePhoneNumber } from '@/utils/validations';
 
@@ -179,7 +180,7 @@ export const createNewProduct = async (form: CreateProductFormWithQuantity) => {
 
 export const updateProduct = async (
   id: string,
-  form: CreateProductFormWithQuantity
+  form: UpdateProductFormWithQuantity
 ) => {
   const url = `${productsURL}/${id}`;
 
