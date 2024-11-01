@@ -1,9 +1,11 @@
-import { CustomDialogTrigger } from '@/components/buttons';
+import { Button, CustomDialogTrigger } from '@/components/buttons';
 import {
+  FileInput,
   Form,
   FormInnerWrapper,
   Input,
   Label,
+  Select,
   Textarea,
 } from '@/components/form';
 import { ProductValue, Quantity, Sizes } from '@/components/product/types';
@@ -18,20 +20,28 @@ import { useForm } from '@/hooks';
 import { createNewProduct } from '@/services';
 import { validateProductDescription, validateText } from '@/utils/validations';
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { CreateProductForm } from '../types';
+import {
+  getFrontCoverFromBucket,
+  uploadFileToBucket,
+} from '@/services/awsService';
+import CreateGallery from './CreateGallery';
 
 type CreateProductProps = {
   setProducts: React.Dispatch<React.SetStateAction<ProductValue[]>>;
 };
 
 export default function CreateProduct({ setProducts }: CreateProductProps) {
-  const [form, updateForm, clearForm] = useForm<CreateProductForm>({
+  const [isOpen, setIsOpen] = useState(false);
+  const { form, updateForm, setForm, clearForm } = useForm<CreateProductForm>({
     name: '',
     description: '',
     price: 0,
-    gender: 'Women',
+    frontCover: '',
+    backCover: '',
+    gender: '',
     color: 'White',
     category: 'Maths',
   });
@@ -43,18 +53,61 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
     XL: 0,
     XXL: 0,
   });
+  const [, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (form.gender) {
+      getFrontCoverFromBucket(form.gender)
+        .then((data) => {
+          setForm({ ...form, frontCover: data as string });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [form.gender]);
 
   const updateQuantity =
     (prop: Sizes) => (e: React.ChangeEvent<HTMLInputElement>) => {
       setQuantity({ ...quantity, [prop]: e.target.value });
     };
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    if (selectedFile) {
+      setFile(selectedFile);
+      try {
+        const url = await uploadFileToBucket(form.gender, selectedFile);
+
+        if (!url) return;
+        setForm({ ...form, backCover: url });
+        toast.success('Cover added successfully');
+      } catch (error) {
+        toast.error('Unexpected error occurred! Please try again!');
+        console.error(error);
+      }
+    }
+  };
+
   const createProduct = async () => {
-    const { name, description, price, gender, category } = form;
+    const {
+      name,
+      description,
+      price,
+      frontCover,
+      backCover,
+      gender,
+      category,
+    } = form;
     const { XS, S, M, L, XL, XXL } = quantity;
 
     if (!validateText(name)) {
       toast.error('Product must have a name!');
+      return;
+    }
+    if (!frontCover || !backCover) {
+      toast.error('Product must have Front and Back cover');
       return;
     }
     if (!validateProductDescription(description)) {
@@ -87,8 +140,11 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
       }
 
       const createdProduct = result.data.product;
+
       setProducts((prevProducts) => [...prevProducts, createdProduct]);
+      toast.success('Product created successfully');
       clearForm();
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
       toast.error('An unexpected error occurred. Please try again!');
@@ -97,10 +153,8 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
 
   return (
     <div>
-      <Dialog>
-        <CustomDialogTrigger>
-          <span>Create Product</span>
-        </CustomDialogTrigger>
+      <Dialog open={isOpen} modal={isOpen} onOpenChange={setIsOpen}>
+        <CustomDialogTrigger>Create Product</CustomDialogTrigger>
         <DialogContent className="h-screen max-w-2xl overflow-auto">
           <DialogHeader>
             <DialogTitle className="text-3xl font-semibold mb-1">
@@ -110,8 +164,33 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
               Please enter details
             </DialogDescription>
           </DialogHeader>
+          <CreateGallery
+            frontCover={form.frontCover}
+            backCover={form.backCover}
+          />
           <FormInnerWrapper size="w-full">
             <Form>
+              <div className="flex gap-2 mb-5 items-end">
+                <div className="flex flex-col w-full">
+                  <Label htmlFor="new-product-gender">Gender</Label>
+                  <Select
+                    id="new-product-gender"
+                    name="new-product-gender"
+                    onChange={updateForm('gender')}
+                    options={['', 'Women', 'Men']}
+                  />
+                </div>
+
+                <div className="flex flex-col items-start w-full">
+                  <Label htmlFor="back-cover-file-input">Back Cover</Label>
+                  <FileInput
+                    id="back-cover-file-input"
+                    disabled={!form.gender}
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
+
               <div className="flex gap-2">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-name">Product name</Label>
@@ -142,6 +221,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
               <Textarea
                 id="new-product-description"
                 name="new-product-description"
+                placeholder="Product Description"
                 value={form.description}
                 onChange={updateForm('description')}
               />
@@ -149,32 +229,14 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
               <div className="flex gap-2 mb-5">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-category">Category</Label>
-                  <select
+                  <Select
                     id="new-product-category"
                     name="new-product-category"
-                    className="text-lg w-full border border-black rounded focus:outline-black p-3"
                     onChange={updateForm('category')}
-                  >
-                    {productCategories.map((category, index) => {
-                      return (
-                        <option key={index} value={category.name}>
-                          {category.name}
-                        </option>
-                      );
+                    options={productCategories.map((category) => {
+                      return category.name;
                     })}
-                  </select>
-                </div>
-                <div className="flex flex-col w-full">
-                  <Label htmlFor="new-product-gender">Gender</Label>
-                  <select
-                    id="new-product-gender"
-                    name="new-product-gender"
-                    className="text-lg w-full border border-black rounded focus:outline-black p-3"
-                    onChange={updateForm('gender')}
-                  >
-                    <option value="Women">Women</option>
-                    <option value="Men">Men</option>
-                  </select>
+                  />
                 </div>
               </div>
 
@@ -204,9 +266,9 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
                 value={form.color}
                 onChange={updateForm('color')}
               />
-              <CustomDialogTrigger type="submit" onClick={createProduct}>
+              <Button type="button" onClick={createProduct}>
                 Create Cube
-              </CustomDialogTrigger>
+              </Button>
             </Form>
           </FormInnerWrapper>
         </DialogContent>
