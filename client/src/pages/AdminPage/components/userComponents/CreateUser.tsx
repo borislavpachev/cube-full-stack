@@ -30,7 +30,7 @@ type CreateUserProps = {
 };
 
 export default function CreateUser({ setUsers }: CreateUserProps) {
-  const [form, updateForm, clearForm] = useForm<CreateUserForm>({
+  const { form, updateForm, clearForm } = useForm<CreateUserForm>({
     firstName: '',
     lastName: '',
     email: '',
