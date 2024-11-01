@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { CreateProductForm } from '../types';
 import { useForm } from '@/hooks';
 import { type Dispatch, type SetStateAction, useState } from 'react';
 import {
@@ -21,6 +20,7 @@ import { productCategories, productSizes } from '@/constants';
 import { updateProduct } from '@/services';
 import toast from 'react-hot-toast';
 import { validateProductDescription, validateText } from '@/utils/validations';
+import { UpdateProductForm } from '../types';
 
 type UpdateProductProps = {
   open: boolean;
@@ -35,7 +35,7 @@ export default function UpdateProduct({
   product,
   setProducts,
 }: UpdateProductProps) {
-  const [form, updateForm, clearForm] = useForm<CreateProductForm>({
+  const { form, updateForm, clearForm } = useForm<UpdateProductForm>({
     name: product.name,
     description: product.description,
     price: product.price,
