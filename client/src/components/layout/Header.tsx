@@ -14,7 +14,7 @@ import { useAuth } from '@/hooks';
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const shoppingCartItems = user?.shoppingCart.reduce((count, item) => {
+  const shoppingCartItems = user?.shoppingCart?.reduce((count, item) => {
     count += item.quantity;
     return count;
   }, 0);
