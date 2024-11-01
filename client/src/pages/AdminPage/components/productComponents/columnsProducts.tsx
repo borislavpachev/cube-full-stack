@@ -11,11 +11,13 @@ export const createProductColumns = (
   return [
     {
       header: 'Cover',
-      cell: () => {
+      cell: ({ row }) => {
+        const product = row.original;
+
         return (
           <div className="flex items-center justify-center">
             <img
-              src="/images/Back.png"
+              src={product.backCover}
               alt="product-cover"
               className="w-[150px] h-[150px] rounded object-cover"
             />
