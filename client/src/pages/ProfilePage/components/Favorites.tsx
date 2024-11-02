@@ -63,10 +63,10 @@ export default function Favorites() {
       ) : (
         <Section>
           <div className="flex flex-wrap w-full mb-10 gap-14 justify-center md:justify-start">
-            {favorites.map((item, index) => {
+            {favorites.map((item) => {
               return (
                 <FavoriteCard
-                  key={index}
+                  key={`${item.productId}-${item.productSize}`}
                   id={item?.productId}
                   size={item?.productSize}
                   deleteFavorite={deleteFavorite}
