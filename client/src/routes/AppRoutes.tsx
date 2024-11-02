@@ -1,5 +1,4 @@
 import { ProtectedRoute } from '@/components';
-// import { ProductComponent } from '@/components/productComponents';
 import { ROUTES } from '@/constants';
 import {
   AdminPage,
@@ -12,6 +11,7 @@ import {
   ShoppingCartPage,
   SignUpPage,
   SingleProductPage,
+  SearchPage,
 } from '@/pages';
 import { ProductPanel } from '@/pages/AdminPage/components/productComponents';
 import { UsersPanel } from '@/pages/AdminPage/components/userComponents';
@@ -39,7 +39,7 @@ export default function AppRoutes() {
         element={<ProductsPage />}
       />
       <Route path={`${ROUTES.PRODUCT}/:id`} element={<SingleProductPage />} />
-
+      <Route path={`${ROUTES.SEARCH}`} element={<SearchPage />} />
       <Route
         path={ROUTES.ADMIN}
         element={<Navigate to={`${ROUTES.ADMIN}/users`} />}
