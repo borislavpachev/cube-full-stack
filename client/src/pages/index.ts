@@ -8,3 +8,4 @@ export { default as SingleProductPage } from './SingleProductPage/SingleProductP
 export { default as ShoppingCartPage } from './ShoppingCartPage/ShoppingCartPage';
 export { default as ErrorPage } from './ErrorPage/ErrorPage';
 export { default as AdminPage } from './AdminPage/AdminPage';
+export { default as SearchPage } from './SearchPage/SearchPage';
