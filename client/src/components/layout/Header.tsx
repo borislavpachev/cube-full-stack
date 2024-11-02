@@ -7,8 +7,13 @@ import {
   TooltipContent,
 } from '../buttons';
 import Logo from '../Logo';
-import SearchComponent from '../SearchComponent';
-import { AdminIcon, HeartIcon, ShoppingCartIcon, UserIcon } from '../icons';
+import {
+  AdminIcon,
+  HeartIcon,
+  SearchIcon,
+  ShoppingCartIcon,
+  UserIcon,
+} from '../icons';
 import { useAuth } from '@/hooks';
 
 export default function Header() {
@@ -21,11 +26,11 @@ export default function Header() {
 
   return (
     <header>
-      <nav className="p-5 md:p-0 flex flex-col md:flex-row items-center justify-around">
+      <nav className="h-auto md:h-20 space-y-3 md:space-y-0 p-5 md:p-0 flex flex-col md:flex-row items-center justify-center">
         <div className="w-1/4 flex items-center justify-center">
           <Logo />
         </div>
-        <div className="hidden md:flex space-x-10 w-1/4 text-lg uppercase items-center justify-center">
+        <div className="flex space-x-10 w-1/4 text-lg uppercase items-center justify-center">
           <NavLink
             to={`${ROUTES.PRODUCTS}/women`}
             className={({ isActive }) => (isActive ? 'active-nav-link' : '')}
@@ -40,8 +45,9 @@ export default function Header() {
           </NavLink>
         </div>
         <div className="flex space-x-5 w-2/4 items-center justify-center">
-          <SearchComponent />
-
+          <NavLink to={`${ROUTES.SEARCH}`}>
+            <SearchIcon size={35} />
+          </NavLink>
           <NavLink to={`${ROUTES.USER_PROFILE}/favorites`}>
             <HeartIcon size={35} />
           </NavLink>
