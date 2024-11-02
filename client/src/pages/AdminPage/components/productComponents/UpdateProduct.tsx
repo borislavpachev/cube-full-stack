@@ -124,7 +124,7 @@ export default function UpdateProduct({
             </DialogDescription>
           </DialogHeader>
           <FormInnerWrapper size="w-full">
-            <Form>
+            <Form className='flex-col my-5'>
               <div className="flex gap-2">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-name">Product name</Label>

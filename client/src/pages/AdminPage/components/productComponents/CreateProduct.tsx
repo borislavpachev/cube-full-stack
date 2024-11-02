@@ -169,7 +169,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
             backCover={form.backCover}
           />
           <FormInnerWrapper size="w-full">
-            <Form>
+            <Form className='flex-col'>
               <div className="flex gap-2 mb-5 items-end">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-gender">Gender</Label>
@@ -240,7 +240,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
                 </div>
               </div>
 
-              <div className="flex gap-2 mb-5 text-center">
+              <div className="flex gap-2 text-center">
                 {productSizes.map((size: string, index) => {
                   return (
                     <div key={index} className="flex flex-col w-full">

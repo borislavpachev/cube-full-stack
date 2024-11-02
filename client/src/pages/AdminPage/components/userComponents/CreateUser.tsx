@@ -107,7 +107,7 @@ export default function CreateUser({ setUsers }: CreateUserProps) {
             </DialogDescription>
           </DialogHeader>
           <FormInnerWrapper>
-            <Form>
+            <Form className='flex-col my-5'>
               <Label htmlFor="new-user-first-name">First name:</Label>
               <Input
                 id="new-user-first-name"
