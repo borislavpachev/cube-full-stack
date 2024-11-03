@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getAllProducts } from '@/services/productService';
-import { ProductCard } from '@/pages/ProductsPage/components';
 import { ProductValue } from '@/components/product/types';
 import { shuffleArray } from '@/utils/helpers';
+import ProductCard from './ProductCard';
 
 export default function NewArrivals() {
   const [allProducts, setAllProducts] = useState<ProductValue[]>([]);

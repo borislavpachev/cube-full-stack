@@ -4,11 +4,11 @@ import { ROUTES } from '@/constants';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/buttons';
 import { MainLayout, Section } from '@/components/layout';
-import { ProductCard } from '@/pages/ProductsPage/components';
 import { ProductValue } from '@/components/product/types';
 import { getProductsByGenderAndCategory } from '@/services/productService';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 import { PointerRightIcon } from '@/components/icons';
+import { ProductCard } from '@/components';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductValue[] | undefined>([]);

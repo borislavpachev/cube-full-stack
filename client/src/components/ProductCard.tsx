@@ -1,9 +1,9 @@
 import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
-import { AddToCartButton } from '../../../components/buttons';
-import { HeartIcon } from '../../../components/icons';
+import { AddToCartButton } from './buttons';
+import { HeartIcon } from './icons';
 import toast, { LoaderIcon } from 'react-hot-toast';
-import { ProductValue, Sizes } from '../../../components/product/types';
+import { ProductValue, Sizes } from './product/types';
 import { NavLink } from 'react-router-dom';
 import { productSizes, ROUTES } from '@/constants';
 import { priceFormatted } from '@/utils/helpers';
