@@ -24,7 +24,7 @@ export default function MonthCategory() {
             className=" object-cover"
           />
         </div>
-        <div className="w-full md:w-1/2 flex flex-col text-4xl md:text-5xl justify-center uppercase">
+        <div className="w-full md:w-1/2 flex flex-col text-4xl md:text-5xl justify-center uppercase break-words">
           <p>Category</p>
           <p>of the</p>
           <p className="font-extrabold">Month</p>
