@@ -1,13 +1,13 @@
 import { type ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
-type SideNavItemProps = {
+type SidebarItemProps = {
   to: string;
   icon?: JSX.Element;
   children: ReactNode;
 };
 
-export default function SideNavItem({ to, icon, children }: SideNavItemProps) {
+export default function SidebarItem({ to, icon, children }: SidebarItemProps) {
   return (
     <NavLink
       className={({ isActive }) =>
