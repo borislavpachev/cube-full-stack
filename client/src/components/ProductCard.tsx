@@ -98,6 +98,7 @@ export default function ProductCard({ id }: CardProps) {
               name="sizes"
               onChange={handleSize}
               options={productSizes}
+              value={selectedSize}
               className="text-lg focus:outline-none"
             />
           </div>

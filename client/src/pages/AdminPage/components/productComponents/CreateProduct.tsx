@@ -169,7 +169,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
             backCover={form.backCover}
           />
           <FormInnerWrapper size="w-full">
-            <Form className='flex-col'>
+            <Form className="flex-col">
               <div className="flex gap-2 mb-5 items-end">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-gender">Gender</Label>
@@ -177,6 +177,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
                     id="new-product-gender"
                     name="new-product-gender"
                     onChange={updateForm('gender')}
+                    value={form.gender}
                     options={['', 'Women', 'Men']}
                   />
                 </div>
@@ -233,6 +234,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
                     id="new-product-category"
                     name="new-product-category"
                     onChange={updateForm('category')}
+                    value={form.category}
                     options={productCategories.map((category) => {
                       return category.name;
                     })}

@@ -5,6 +5,7 @@ import {
   Input,
   Label,
   PhoneInput,
+  Select,
 } from '@/components/form';
 import {
   Dialog,
@@ -107,7 +108,7 @@ export default function CreateUser({ setUsers }: CreateUserProps) {
             </DialogDescription>
           </DialogHeader>
           <FormInnerWrapper>
-            <Form className='flex-col my-5'>
+            <Form className="flex-col my-5">
               <Label htmlFor="new-user-first-name">First name:</Label>
               <Input
                 id="new-user-first-name"
@@ -133,15 +134,14 @@ export default function CreateUser({ setUsers }: CreateUserProps) {
                 onChange={updateForm('email')}
               />
               <Label htmlFor="new-user-role">User role:</Label>
-              <select
+              <Select
                 id="new-user-role"
                 name="new-user-role"
                 className="text-lg border border-black mb-5 rounded focus:outline-black p-3"
                 onChange={updateForm('role')}
-              >
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
+                options={['User', 'Admin']}
+                value={form.role}
+              />
 
               <Label htmlFor="new-user-phone">Phone number:</Label>
               <PhoneInput

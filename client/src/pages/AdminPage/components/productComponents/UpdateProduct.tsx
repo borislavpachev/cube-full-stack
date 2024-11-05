@@ -14,6 +14,7 @@ import {
   FormInnerWrapper,
   Input,
   Label,
+  Select,
   Textarea,
 } from '@/components/form';
 import { productCategories, productSizes } from '@/constants';
@@ -124,7 +125,7 @@ export default function UpdateProduct({
             </DialogDescription>
           </DialogHeader>
           <FormInnerWrapper size="w-full">
-            <Form className='flex-col my-5'>
+            <Form className="flex-col my-5">
               <div className="flex gap-2">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-name">Product name</Label>
@@ -162,32 +163,27 @@ export default function UpdateProduct({
               <div className="flex gap-2 mb-5">
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-category">Category</Label>
-                  <select
+                  <Select
                     id="new-product-category"
                     name="new-product-category"
                     className="text-lg w-full border border-black rounded focus:outline-black p-3"
                     onChange={updateForm('category')}
-                  >
-                    {productCategories.map((category, index) => {
-                      return (
-                        <option key={index} value={category.name}>
-                          {category.name}
-                        </option>
-                      );
+                    value={form.category}
+                    options={productCategories.map((category) => {
+                      return category.name;
                     })}
-                  </select>
+                  />
                 </div>
                 <div className="flex flex-col w-full">
                   <Label htmlFor="new-product-gender">Gender</Label>
-                  <select
+                  <Select
                     id="new-product-gender"
                     name="new-product-gender"
                     className="text-lg w-full border border-black rounded focus:outline-black p-3"
                     onChange={updateForm('gender')}
-                  >
-                    <option value="Women">Women</option>
-                    <option value="Men">Men</option>
-                  </select>
+                    value={form.gender}
+                    options={['Women', 'Men']}
+                  />
                 </div>
               </div>
 

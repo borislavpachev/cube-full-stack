@@ -1,6 +1,7 @@
 type SelectProps = {
   id?: string;
   name?: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: string[];
   className?: string;
@@ -9,6 +10,7 @@ type SelectProps = {
 export default function Select({
   id = '',
   name = '',
+  value = '',
   onChange,
   options,
   className = '',
@@ -23,6 +25,7 @@ export default function Select({
           ? className
           : 'text-lg border border-black rounded focus:outline-black p-3'
       }`}
+      value={value}
       onChange={onChange}
       {...props}
     >

@@ -133,6 +133,7 @@ export default function ProductComponent() {
                 name="product-component-size"
                 onChange={handleSize}
                 options={productSizes}
+                value={selectedSize}
                 className="rounded outline-none text-xl w-16 h-16 border-2 border-black"
               />
             </div>
