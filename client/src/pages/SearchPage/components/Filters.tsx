@@ -32,7 +32,7 @@ export default function Filters({
           name="app-search-bar"
           value={search}
           onChange={handleSearch}
-          placeholder="Search items"
+          placeholder="Search by name"
         />
         <div className="flex flex-col w-full mb-5">
           <Label htmlFor="search-gender-select">Gender</Label>
