@@ -71,7 +71,7 @@ export default function SearchPage() {
                     ? `All products`
                     : `Results for '${search}/${form.gender}/${form.category}'`
                 }`}</p>
-                <div className="flex flex-wrap w-full gap-10 justify-start">
+                <div className="flex flex-wrap w-full gap-10 justify-center">
                   {filteredProducts.map((item) => {
                     return <ProductCard key={item._id} id={item._id} />;
                   })}
