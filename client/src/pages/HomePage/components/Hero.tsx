@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <div className="flex flex-col md:flex-row px-20">
       <div className="flex flex-col w-full items-start p-10 bg-slate-100">
-        <div className="text-3xl md:text-7xl w-full break-words">
+        <div className="text-3xl md:text-7xl w-full md:w-auto break-words">
           <p>The</p>
           <p className="font-extrabold tracking-widest border-2 border-black p-2">
             Geometry
