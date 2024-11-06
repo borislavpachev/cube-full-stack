@@ -1,4 +1,4 @@
-import { NewArrivals, ProductCard } from '@/components';
+import { NewArrivals, NoData, ProductCard } from '@/components';
 import { MainLayout, Section } from '@/components/layout';
 import { ProductValue } from '@/components/product/types';
 import { useForm } from '@/hooks';
@@ -98,19 +98,10 @@ export default function SearchPage() {
                 </div>
               </>
             ) : (
-              <Section>
-                <div
-                  className="w-full flex flex-col mt-10 md:mt-0 
-                  items-center justify-center px-10"
-                >
-                  <p className="text-center text-xl flex items-center">
-                    No search results.
-                  </p>
-                  <p className="text-center text-sm text-gray-500 mt-2">
-                    Set search criteria to find the best deals for you.
-                  </p>
-                </div>
-              </Section>
+              <NoData
+                main={'No search results.'}
+                secondary="Set search criteria to find the best deals for you."
+              />
             )}
           </Section>
         </div>

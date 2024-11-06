@@ -8,7 +8,7 @@ import { ProductValue } from '@/components/product/types';
 import { getProductsByGenderAndCategory } from '@/services/productService';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 import { PointerRightIcon } from '@/components/icons';
-import { ProductCard } from '@/components';
+import { NoData, ProductCard } from '@/components';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductValue[] | undefined>([]);
@@ -44,14 +44,10 @@ export default function ProductsPage() {
   return (
     <MainLayout>
       {!products?.length ? (
-        <Section>
-          <p className="text-center text-xl flex items-center">
-            {`No products in ${capitalizedCategory} category.`}
-          </p>
-          <p className="text-center text-sm text-gray-500 mt-2">
-            Check our products in the other categories.
-          </p>
-          <div className="mt-12">
+        <NoData
+          main={`No products in ${capitalizedCategory} category.`}
+          secondary="Check our products in the other categories."
+          button={
             <Button
               onClick={() => {
                 navigate(`${ROUTES.PRODUCTS}/${gender}`);
@@ -59,8 +55,8 @@ export default function ProductsPage() {
             >
               Continue shopping
             </Button>
-          </div>
-        </Section>
+          }
+        />
       ) : (
         <Section>
           <div className="mb-20 space-y-12 w-full">

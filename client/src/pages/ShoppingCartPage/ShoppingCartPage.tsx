@@ -5,6 +5,7 @@ import { CartItem, CartNav, CartTotal } from './components';
 import { useAuth } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { ShoppingCartType } from '@/contexts/types';
+import { NoData } from '@/components';
 
 export default function ShoppingCartPage() {
   const { user } = useAuth();
@@ -28,14 +29,10 @@ export default function ShoppingCartPage() {
         <p className="text-3xl px-10">Shopping cart</p>
         <div className="w-full flex mt-5 items-center justify-center">
           {!user?.shoppingCart.length ? (
-            <Section>
-              <p className="text-center text-xl flex items-center">
-                You don't have items in your shopping cart yet.
-              </p>
-              <p className="text-center text-sm text-gray-500 mt-2">
-                Check our deals and feel free to add anything you like.
-              </p>
-              <div className="mt-12">
+            <NoData
+              main={`You don't have items in your shopping cart yet.`}
+              secondary="Check our deals and feel free to add anything you like."
+              button={
                 <Button
                   onClick={() => {
                     navigate('/');
@@ -43,8 +40,8 @@ export default function ShoppingCartPage() {
                 >
                   Continue shopping
                 </Button>
-              </div>
-            </Section>
+              }
+            />
           ) : (
             <Section>
               <div className="flex flex-col md:flex-row gap-5 w-full">

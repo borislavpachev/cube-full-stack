@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import FavoriteCard from './FavoriteCard';
 import { Sizes } from '@/components/product/types';
 import { FavoriteType } from '@/contexts/types';
+import { NoData } from '@/components';
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<FavoriteType[] | undefined>([]);
@@ -43,14 +44,10 @@ export default function Favorites() {
   return (
     <>
       {!favorites?.length ? (
-        <Section>
-          <p className="text-center text-xl flex items-center">
-            No products added to your favorites.
-          </p>
-          <p className="text-center text-sm text-gray-500 mt-2">
-            Check our deals and feel free to add anything you like.
-          </p>
-          <div className="mt-12">
+        <NoData
+          main="No products added to your favorites."
+          secondary="Check our deals and feel free to add anything you like."
+          button={
             <Button
               onClick={() => {
                 navigate('/');
@@ -58,8 +55,8 @@ export default function Favorites() {
             >
               Continue shopping
             </Button>
-          </div>
-        </Section>
+          }
+        />
       ) : (
         <Section>
           <div className="flex flex-wrap w-full mb-10 gap-14 justify-center md:justify-start">

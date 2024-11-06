@@ -1,3 +1,4 @@
+import { NoData } from '@/components';
 import { Button } from '@/components/buttons';
 import { Section } from '@/components/layout';
 import { getMyOrders } from '@/services/orderService';
@@ -23,14 +24,10 @@ export default function Orders() {
   return (
     <>
       {!orders.length ? (
-        <Section>
-          <p className="text-center text-xl flex items-center">
-            You haven't ordered yet.
-          </p>
-          <p className="text-center text-sm text-gray-500 mt-2">
-            Check our deals and feel free to add anything you like.
-          </p>
-          <div className="mt-12">
+        <NoData
+          main={`You haven't ordered yet.`}
+          secondary="Check our deals and feel free to add anything you like."
+          button={
             <Button
               onClick={() => {
                 navigate('/');
@@ -38,8 +35,8 @@ export default function Orders() {
             >
               Continue shopping
             </Button>
-          </div>
-        </Section>
+          }
+        />
       ) : (
         <Section>
           {orders.map((order, index) => {
