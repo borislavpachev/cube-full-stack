@@ -6,15 +6,16 @@ import { Button } from '@/components/buttons';
 type FiltersProps = {
   search: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  form: { gender: string; category: string };
+  form: { gender: string; category: string; price: number };
   updateForm: (
-    prop: 'gender' | 'category'
+    prop: 'gender' | 'category' | 'price'
   ) => (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
   reset: () => void;
+  maxPrice: number;
 };
 
 export default function Filters({
@@ -23,6 +24,7 @@ export default function Filters({
   handleSearch,
   updateForm,
   reset,
+  maxPrice,
 }: FiltersProps) {
   return (
     <Sidebar>
@@ -35,7 +37,7 @@ export default function Filters({
           placeholder="Search by name"
         />
         <div className="flex flex-col w-full mb-5">
-          <Label htmlFor="search-gender-select">Gender</Label>
+          <Label htmlFor="search-gender-select">Filter by Gender</Label>
           <Select
             id="search-gender-select"
             name="search-gender-select"
@@ -45,7 +47,7 @@ export default function Filters({
           />
         </div>
         <div className="flex flex-col w-full mb-6">
-          <Label htmlFor="search-category-select">Categories</Label>
+          <Label htmlFor="search-category-select">Filter by Category</Label>
           <Select
             id="search-category-select"
             name="search-category-select"
@@ -55,6 +57,20 @@ export default function Filters({
               return category.name;
             })}
           />
+        </div>
+        <div>
+          <Label htmlFor="search-price-select">Filter by Price</Label>
+          <input
+            type="range"
+            name="search-price-select"
+            id="search-price-select"
+            min={0}
+            max={maxPrice}
+            value={form.price}
+            onChange={updateForm('price')}
+            className="w-full accent-black"
+          />
+          <p className="tracking-wider text-center mb-5">{`Price: $0-$${!form.price ? maxPrice : form.price}`}</p>
         </div>
         <Button onClick={reset}>Reset</Button>
       </div>
