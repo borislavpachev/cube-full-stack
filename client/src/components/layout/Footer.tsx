@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <Logo />
         <div className="text-lg">
-          <Link to="mailto:cube@cube.com" className="hover:underline">
+          <Link to="mailto:cube-e-store@cube.com" className="hover:underline">
             Contact Us
           </Link>
         </div>
