@@ -1,10 +1,11 @@
-import { NewArrivals, NoData, ProductCard } from '@/components';
+import { NewArrivals, NoData } from '@/components';
 import { MainLayout, Section } from '@/components/layout';
 import { ProductValue } from '@/components/product/types';
 import { useForm } from '@/hooks';
 import { getAllProducts } from '@/services';
 import { useEffect, useMemo, useState } from 'react';
 import { Filters } from './components';
+import PaginatedItems from './components/PaginatedItems';
 
 export default function SearchPage() {
   const [search, setSearch] = useState('');
@@ -91,11 +92,7 @@ export default function SearchPage() {
                     ? `All products`
                     : `Results ${search ? `for '${search}'` : ''}`
                 }`}</p>
-                <div className="flex flex-wrap w-full gap-10 justify-center">
-                  {filteredProducts.map((item) => {
-                    return <ProductCard key={item._id} id={item._id} />;
-                  })}
-                </div>
+                <PaginatedItems products={filteredProducts} />
               </>
             ) : (
               <NoData
