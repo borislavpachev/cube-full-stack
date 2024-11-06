@@ -66,11 +66,13 @@ export default function Filters({
             id="search-price-select"
             min={0}
             max={maxPrice}
-            value={form.price}
+            value={!form.price ? maxPrice : form.price}
             onChange={updateForm('price')}
             className="w-full accent-black"
           />
-          <p className="tracking-wider text-center mb-5">{`Price: $0-$${!form.price ? maxPrice : form.price}`}</p>
+          <p className="tracking-wider text-center mb-5">{`Price: $0-$${
+            !form.price ? maxPrice : form.price
+          }`}</p>
         </div>
         <Button onClick={reset}>Reset</Button>
       </div>
