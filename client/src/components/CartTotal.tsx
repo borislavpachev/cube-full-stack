@@ -1,10 +1,11 @@
-import { Button } from '@/components/buttons';
+import { useTotalPrice } from '@/hooks';
 
 type CartTotalProps = {
-  totalPrice: number;
+  button: JSX.Element;
 };
+export default function CartTotal({ button }: CartTotalProps) {
+  const { totalPrice } = useTotalPrice();
 
-export default function CartTotal({ totalPrice }: CartTotalProps) {
   return (
     <div className="w-full p-4 space-y-10 rounded border">
       <h2 className="text-center font-semibold text-2xl">Checkout</h2>
@@ -13,7 +14,7 @@ export default function CartTotal({ totalPrice }: CartTotalProps) {
         <p>${totalPrice}</p>
       </div>
 
-      <Button>Proceed to Checkout</Button>
+      {button}
     </div>
   );
 }
