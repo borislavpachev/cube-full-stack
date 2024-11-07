@@ -50,3 +50,5 @@ export const productCategories = [
 ];
 
 export const productSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+export const SearchItemsPerPage = 9;

@@ -1,6 +1,7 @@
 import { ProductCard } from '@/components';
 import { ProductValue } from '@/components/product/types';
 import { Button } from '@/components/ui/button';
+import { SearchItemsPerPage } from '@/constants';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
@@ -12,10 +13,9 @@ export default function PaginatedItems({ products }: PaginatedItemsProps) {
   const [itemOffset, setItemOffset] = useState(0);
   const [selectedPage, setSelectedPage] = useState(0);
 
-  const itemsPerPage = 3;
-  const endOffset = itemOffset + itemsPerPage;
+  const endOffset = itemOffset + SearchItemsPerPage;
   const currentItems = products.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(products.length / itemsPerPage);
+  const pageCount = Math.ceil(products.length / SearchItemsPerPage);
 
   useEffect(() => {
     setSelectedPage(0);
@@ -24,13 +24,13 @@ export default function PaginatedItems({ products }: PaginatedItemsProps) {
 
   const handlePageClick = (e: { selected: number }) => {
     setSelectedPage(e.selected);
-    const newOffset = (e.selected * itemsPerPage) % products.length;
+    const newOffset = (e.selected * SearchItemsPerPage) % products.length;
     setItemOffset(newOffset);
   };
 
   return (
     <>
-      <div className="flex flex-wrap w-full gap-10 justify-center">
+      <div className="flex flex-wrap w-full gap-14 justify-center md:justify-start">
         {currentItems.map((item) => {
           return <ProductCard key={item._id} id={item._id} />;
         })}
