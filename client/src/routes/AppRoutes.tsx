@@ -12,6 +12,7 @@ import {
   SignUpPage,
   SingleProductPage,
   SearchPage,
+  CheckoutPage,
 } from '@/pages';
 import { ProductPanel } from '@/pages/AdminPage/components/productComponents';
 import { UsersPanel } from '@/pages/AdminPage/components/userComponents';
@@ -81,7 +82,14 @@ export default function AppRoutes() {
         <Route path="address" element={<Address />} />
         <Route path="security" element={<Security />} />
       </Route>
-
+      <Route
+        path={ROUTES.CHECKOUT}
+        element={
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.SIGN_UP} element={<SignUpPage />} />
       <Route path={ROUTES.ERROR} element={<ErrorPage />} />

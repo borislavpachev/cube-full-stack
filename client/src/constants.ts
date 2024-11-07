@@ -10,6 +10,7 @@ export const ROUTES = {
   SHOPPING_CART: '/cart',
   USER_PROFILE: '/profile',
   SEARCH: '/search',
+  CHECKOUT: '/checkout',
 };
 
 export const AWS_BUCKET_NAME = import.meta.env.VITE_AWS_BUCKET_NAME;
