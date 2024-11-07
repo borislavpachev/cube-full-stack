@@ -5,7 +5,7 @@ import { ROUTES } from '@/constants';
 import { useAuth } from '@/hooks';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AddressCard from './AddressCard';
+import { AddressCard } from './components';
 
 export default function CheckoutPage() {
   const { user } = useAuth();
