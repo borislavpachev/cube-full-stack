@@ -66,7 +66,9 @@ export default function Header() {
               <TooltipButton
                 content={
                   <TooltipContent>
-                    <LogoutButton />
+                    <div className="hidden md:flex">
+                      <LogoutButton />
+                    </div>
                   </TooltipContent>
                 }
               >
@@ -74,12 +76,14 @@ export default function Header() {
                   <UserIcon size={35} />
                 </NavLink>
               </TooltipButton>
-
               {user?.role === 'Admin' && (
                 <NavLink to={`${ROUTES.ADMIN}`}>
                   <AdminIcon size={35} />
                 </NavLink>
               )}
+              <div className="flex md:hidden">
+                <LogoutButton />
+              </div>
             </>
           )}
           {!isAuthenticated && (
