@@ -75,7 +75,7 @@ export default function SearchPage() {
   return (
     <MainLayout>
       <div className="space-y-10 mb-16 flex flex-col justify-center w-full">
-        <div className="px-20 flex flex-col md:flex-row mt-5">
+        <div className="px-10 flex flex-col md:flex-row mt-5">
           <Filters
             search={search}
             form={form}
