@@ -15,7 +15,7 @@ export default function MonthCategory() {
   const offerLastsInDays = daysInMonth(thisYear, thisMonth) - today;
 
   return (
-    <div className="flex flex-col md:flex-row px-20">
+    <div className="flex flex-col md:flex-row px-10 md:px-20">
       <div className="flex flex-col md:flex-row w-full p-10 text-start md:text-end bg-slate-200">
         <div className="w-full md:w-1/2">
           <img

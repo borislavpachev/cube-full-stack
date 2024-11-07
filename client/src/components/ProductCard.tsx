@@ -68,7 +68,7 @@ export default function ProductCard({ id }: CardProps) {
 
   return (
     <>
-      <div className="max-w-xs flex flex-col rounded border-2">
+      <div className="max-w-xs flex flex-col break-words w-full rounded border-2">
         <div className="relative">
           <div className="absolute bg-white cursor-pointer rounded-full right-0 m-1">
             <div className="p-1" onClick={handleToggleFavorite}>
