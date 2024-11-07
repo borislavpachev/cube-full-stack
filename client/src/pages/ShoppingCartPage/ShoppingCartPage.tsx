@@ -1,27 +1,14 @@
 import { Button } from '@/components/buttons';
 import { MainLayout, Section } from '@/components/layout';
 import { useNavigate } from 'react-router-dom';
-import { CartItem, CartNav, CartTotal } from './components';
+import { CartItem, CartNav } from './components';
 import { useAuth } from '@/hooks';
-import { useEffect, useState } from 'react';
-import { ShoppingCartType } from '@/contexts/types';
-import { NoData } from '@/components';
+import { CartTotal, NoData } from '@/components';
+import { ROUTES } from '@/constants';
 
 export default function ShoppingCartPage() {
   const { user } = useAuth();
-  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const price = user?.shoppingCart.reduce(
-      (total: number, item: ShoppingCartType) => {
-        total += item.quantity * item.price;
-        return total;
-      },
-      0
-    );
-    setTotalPrice(price as number);
-  }, [user?.shoppingCart]);
 
   return (
     <MainLayout>
@@ -59,7 +46,13 @@ export default function ShoppingCartPage() {
                   })}
                 </div>
                 <div className="my-10 md:my-16 w-full md:w-1/3">
-                  <CartTotal totalPrice={totalPrice} />
+                  <CartTotal
+                    button={
+                      <Button onClick={() => navigate(ROUTES.CHECKOUT)}>
+                        Proceed to Checkout
+                      </Button>
+                    }
+                  />
                 </div>
               </div>
             </Section>
