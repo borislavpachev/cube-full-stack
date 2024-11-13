@@ -1,9 +1,9 @@
 import { Button } from '@/components/buttons';
 import { MainLayout, Section } from '@/components/layout';
 import { useNavigate } from 'react-router-dom';
-import { CartItem, CartNav } from './components';
+import { CartItem } from './components';
 import { useAuth } from '@/hooks';
-import { CartTotal, NoData } from '@/components';
+import { CartNav, CartTotal, NoData } from '@/components';
 import { ROUTES } from '@/constants';
 
 export default function ShoppingCartPage() {
@@ -12,7 +12,7 @@ export default function ShoppingCartPage() {
 
   return (
     <MainLayout>
-      <div className="w-full flex flex-col items-start justify-start p-0 md:p-10">
+      <div className="w-full flex flex-col items-start justify-start">
         <p className="text-3xl px-10">Shopping cart</p>
         <div className="w-full flex mt-5 items-center justify-center">
           {!user?.shoppingCart.length ? (
@@ -31,7 +31,7 @@ export default function ShoppingCartPage() {
             />
           ) : (
             <Section>
-              <div className="flex flex-col md:flex-row gap-5 w-full">
+              <div className="flex flex-col md:flex-row gap-5 md:gap-2 w-full">
                 <div className="w-full">
                   <CartNav />
                   {user.shoppingCart.map((item) => {
