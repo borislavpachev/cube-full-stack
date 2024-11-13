@@ -81,7 +81,7 @@ export default function CartItem({ id, quantity, size }: CartItemProps) {
         <img
           src="/images/Back.png"
           alt="product-img"
-          className="w-36 h-36 md:w-24 md:h-24 md:mr-2 rounded object-cover"
+          className="w-36 h-36 md:w-24 md:h-24 md:mr-1 rounded object-cover"
         />
       </NavLink>
       <div className="w-full flex flex-col md:w-1/6 md:mr-2 items-center md:items-start justify-center">
