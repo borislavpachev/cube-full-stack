@@ -19,7 +19,7 @@ const getTotalPrice = async (shoppingCart) => {
 
 exports.getAllOrdersByUser = async (req, res, next) => {
   const userId = req.user._id;
-  const orders = (await Order.findOne({ userId: userId })) || [];
+  const orders = (await Order.find({ userId: userId })) || [];
 
   if (!orders) {
     return next(
