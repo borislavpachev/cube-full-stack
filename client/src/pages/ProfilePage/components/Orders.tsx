@@ -5,14 +5,23 @@ import { getMyOrders } from '@/services/orderService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+type OrdersType = {
+  _id: string;
+  createdAt: Date;
+  products: [];
+  totalPrice: number;
+  userId: string;
+};
+
 export default function Orders() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<OrdersType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getMyOrders()
       .then((res) => {
         const fetchedOrders = res.data.orders;
+
         setOrders(fetchedOrders);
       })
       .catch((error) => {
@@ -39,8 +48,8 @@ export default function Orders() {
         />
       ) : (
         <Section>
-          {orders.map((order, index) => {
-            return <p key={index}>{order}</p>;
+          {orders.map((order) => {
+            return <p key={order._id}>{order._id}</p>;
           })}
         </Section>
       )}
