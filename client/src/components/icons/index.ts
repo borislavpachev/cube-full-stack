@@ -11,3 +11,5 @@ export { default as LockIcon } from './LockIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as AdminIcon } from './AdminIcon';
 export { default as PointerRightIcon } from './PointerRightIcon';
+export { default as CloseIcon } from './CloseIcon';
+export { default as HamburgerIcon } from './HamburgerIcon';
