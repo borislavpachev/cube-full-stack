@@ -9,28 +9,48 @@ import {
 import Logo from '../Logo';
 import {
   AdminIcon,
+  CloseIcon,
+  HamburgerIcon,
   HeartIcon,
   SearchIcon,
   ShoppingCartIcon,
   UserIcon,
 } from '../icons';
 import { useAuth } from '@/hooks';
+import { useState } from 'react';
 
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
   const shoppingCartItems = user?.shoppingCart?.reduce((count, item) => {
     count += item.quantity;
     return count;
   }, 0);
 
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <header>
-      <nav className="h-auto md:h-20 space-y-3 md:space-y-0 p-5 md:p-0 flex flex-col md:flex-row items-center justify-center">
-        <div className="w-1/4 flex items-center justify-center">
+      <nav
+        className="flex flex-col md:flex-row h-auto p-5 md:p-0 md:h-20 
+        items-center justify-center"
+      >
+        <div className="flex w-full px-10 md:px-0 md:w-1/4 items-center justify-between md:justify-center">
           <Logo />
+          <div className="md:hidden flex items-center" onClick={handleIsOpen}>
+            {isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          </div>
         </div>
-        <div className="flex space-x-10 w-1/4 text-lg uppercase items-center justify-center">
+
+        <div
+          className={`${
+            isOpen ? 'flex' : 'hidden md:flex'
+          } flex w-full md:w-1/4 mt-2 md:mt-0 py-2 md:py-0 border-y md:border-y-0 space-x-10 text-lg uppercase items-center justify-center`}
+        >
           <NavLink
             to={`${ROUTES.PRODUCTS}/women`}
             className={({ isActive }) => (isActive ? 'active-nav-link' : '')}
@@ -44,15 +64,31 @@ export default function Header() {
             <p className="hover:font-medium">Men</p>
           </NavLink>
         </div>
-        <div className="flex space-x-5 w-2/4 items-center justify-center">
-          <NavLink to={`${ROUTES.SEARCH}`}>
+
+        <div
+          className={`${
+            isOpen ? 'flex flex-col mt-2' : 'hidden md:flex'
+          } md:flex-row space-y-5 md:space-y-0 md:space-x-5 md:w-2/4 items-center justify-center`}
+        >
+          <NavLink to={`${ROUTES.SEARCH}`} className="flex items-center">
+            <span className="text-xl mr-2 md:hidden">Search</span>
             <SearchIcon size={35} />
           </NavLink>
-          <NavLink to={`${ROUTES.USER_PROFILE}/favorites`}>
+          <NavLink
+            to={`${ROUTES.USER_PROFILE}/favorites`}
+            className="flex items-center"
+          >
+            <span className="text-xl mr-2 md:hidden">Favorites</span>
+
             <HeartIcon size={35} />
           </NavLink>
 
-          <NavLink to={ROUTES.SHOPPING_CART} className={`relative`}>
+          <NavLink
+            to={ROUTES.SHOPPING_CART}
+            className={`relative flex items-center`}
+          >
+            <span className="text-xl mr-2 md:hidden">Shopping cart</span>
+
             <ShoppingCartIcon size={35} />
             <div className="absolute font-semibold text-xs -top-1 -right-2 bg-slate-200 rounded-full px-2">
               <span className={`${!shoppingCartItems ? 'hidden' : 'flex'}`}>
@@ -63,21 +99,32 @@ export default function Header() {
 
           {isAuthenticated && (
             <>
-              <TooltipButton
-                content={
-                  <TooltipContent>
-                    <div className="hidden md:flex">
+              <div className="hidden md:flex">
+                <TooltipButton
+                  content={
+                    <TooltipContent>
                       <LogoutButton />
-                    </div>
-                  </TooltipContent>
-                }
-              >
-                <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
+                    </TooltipContent>
+                  }
+                >
+                  <NavLink to={`${ROUTES.USER_PROFILE}/orders`}>
+                    <UserIcon size={35} />
+                  </NavLink>
+                </TooltipButton>
+              </div>
+              <div className="flex md:hidden">
+                <NavLink
+                  to={`${ROUTES.USER_PROFILE}/orders`}
+                  className="flex items-center"
+                >
+                  <span className="text-xl mr-2 md:hidden">My Profile</span>
                   <UserIcon size={35} />
                 </NavLink>
-              </TooltipButton>
+              </div>
+
               {user?.role === 'Admin' && (
-                <NavLink to={`${ROUTES.ADMIN}`}>
+                <NavLink to={`${ROUTES.ADMIN}`} className="flex items-center">
+                  <span className="text-xl mr-2 md:hidden">Admin</span>
                   <AdminIcon size={35} />
                 </NavLink>
               )}
