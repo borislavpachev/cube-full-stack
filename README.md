@@ -55,6 +55,7 @@ The project includes:
   - Express
   - MongoDB
   - Mongoose
+  - Bcrypt
   - JWT Authentication
   - Service-Oriented Architecture
 
@@ -95,7 +96,7 @@ npm start
 Run the frontend:
 
 ```
-cd frontend
+cd client
 npm run dev
 ```
 
