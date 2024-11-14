@@ -83,7 +83,10 @@ export default function ProductComponent() {
   };
   return (
     <Section>
-      <div className="flex flex-col space-y-10 md:space-y-0 md:space-x-10 md:flex-row items-start p-10 mx-20">
+      <div
+        className="flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10 
+      items-start p-0 md:p-10 md:mx-20"
+      >
         <CustomCarousel items={images} />
 
         <div className="space-y-4 w-full">
