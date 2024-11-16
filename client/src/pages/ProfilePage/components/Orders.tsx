@@ -4,17 +4,19 @@ import { Section } from '@/components/layout';
 import { getMyOrders } from '@/services/orderService';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import OrderItem from './OrderItem';
 
-type OrdersType = {
+export type OrderType = {
   _id: string;
   createdAt: Date;
   products: [];
   totalPrice: number;
   userId: string;
+  status: string;
 };
 
 export default function Orders() {
-  const [orders, setOrders] = useState<OrdersType[]>([]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,9 +50,11 @@ export default function Orders() {
         />
       ) : (
         <Section>
-          {orders.map((order) => {
-            return <p key={order._id}>{order._id}</p>;
-          })}
+          <div className="flex flex-col w-full">
+            {orders.map((order) => {
+              return <OrderItem key={order._id} order={order} />;
+            })}
+          </div>
         </Section>
       )}
     </>
