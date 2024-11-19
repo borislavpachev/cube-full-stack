@@ -1,11 +1,11 @@
-import { CartNav, CartTotal } from '@/components';
+import { CartNav, CartTotal, ItemCard } from '@/components';
 import { Button } from '@/components/buttons';
 import { MainLayout } from '@/components/layout';
 import { ROUTES } from '@/constants';
 import { useAuth } from '@/hooks';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AddressCard, ItemCard } from './components';
+import { AddressCard } from './components';
 import toast from 'react-hot-toast';
 import { createOrder } from '@/services';
 import { User } from '@/contexts/types';
