@@ -2,9 +2,13 @@ const CustomError = require('../utils/CustomError');
 const httpStatus = require('../utils/httpStatus');
 const authService = require('../services/authService');
 const jwtService = require('../services/jwtService');
-const jwtCookieExpires = require('../utils/jwtCookieExpires');
 
 const jwtInCookie = (res, token) => {
+  const oneDayInMs = 24 * 60 * 60 * 1000;
+  const jwtCookieExpires = new Date(
+    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * oneDayInMs
+  );
+
   res.cookie('jwt', token, {
     expires: jwtCookieExpires,
     httpOnly: true,
