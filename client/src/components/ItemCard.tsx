@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 
-type ItemCardProps = {
+export type ItemCardProps = {
   id: string;
   quantity: number;
   size: Sizes;

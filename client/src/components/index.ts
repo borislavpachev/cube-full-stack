@@ -7,3 +7,4 @@ export { default as ProductCard } from './ProductCard';
 export { default as NoData } from './NoData';
 export { default as CartTotal } from './CartTotal';
 export { default as CartNav } from './CartNav';
+export { default as ItemCard } from './ItemCard';
