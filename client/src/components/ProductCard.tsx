@@ -2,7 +2,7 @@ import { getProduct } from '@/services/productService';
 import { useEffect, useState } from 'react';
 import { AddToCartButton } from './buttons';
 import { HeartIcon } from './icons';
-import toast, { LoaderIcon } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { ProductValue, Sizes } from './product/types';
 import { NavLink } from 'react-router-dom';
 import { productSizes, ROUTES } from '@/constants';
@@ -17,7 +17,6 @@ type CardProps = {
 
 export default function ProductCard({ id }: CardProps) {
   const [product, setProduct] = useState<ProductValue | null>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<Sizes>('XS');
   const { isLiked, handleToggleFavorite } = useFavorites(id, selectedSize);
   const { addToCart } = useCart(id, selectedSize, product?.price as number);
@@ -38,9 +37,6 @@ export default function ProductCard({ id }: CardProps) {
       })
       .catch((error) => {
         toast.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }, [id]);
 
@@ -61,10 +57,6 @@ export default function ProductCard({ id }: CardProps) {
   const handleSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSize(e.target.value as Sizes);
   };
-
-  if (loading) {
-    return <LoaderIcon className="h-10 w-10" />;
-  }
 
   return (
     <>

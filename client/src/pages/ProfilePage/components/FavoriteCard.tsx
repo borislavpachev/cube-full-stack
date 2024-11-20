@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import toast, { LoaderIcon } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { AddToCartButton } from '@/components/buttons';
 import { TrashIcon } from '@/components/icons';
 import { NavLink } from 'react-router-dom';
@@ -20,7 +20,6 @@ type CardProps = {
 export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
   const { user, setUser } = useAuth();
   const [product, setProduct] = useState<ProductValue | null>(null);
-  const [loading, setLoading] = useState(true);
   const { addToCart } = useCart(id, size, product?.price as number);
 
   const roundedPrice = priceFormatted(product?.price);
@@ -38,9 +37,6 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
       })
       .catch((error) => {
         toast.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }, [id]);
 
@@ -82,10 +78,6 @@ export default function FavoriteCard({ id, size, deleteFavorite }: CardProps) {
       quantity: newQuantity,
     });
   };
-
-  if (loading) {
-    return <LoaderIcon className="h-10 w-10" />;
-  }
 
   return (
     <>
