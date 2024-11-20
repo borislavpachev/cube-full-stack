@@ -18,7 +18,7 @@ export default function ProfileNav() {
         <div className="border-2 border-b-0 p-3 space-y-1">
           <p>Hello 👋</p>
           <p className="font-semibold">
-            {`${user?.firstName} ${user?.lastName}` || 'User'}
+            {user ? `${user?.firstName} ${user?.lastName}` : 'User'}
           </p>
         </div>
       }
