@@ -42,7 +42,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   if (loading) {
-    return <Loading />;
+    return <Loading top={false} />;
   }
 
   return (
