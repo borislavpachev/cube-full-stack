@@ -8,10 +8,11 @@ import { ProductValue } from '@/components/product/types';
 import { getProductsByGenderAndCategory } from '@/services/productService';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 import { PointerRightIcon } from '@/components/icons';
-import { NoData, ProductCard } from '@/components';
+import { Loading, NoData, ProductCard } from '@/components';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductValue[] | undefined>([]);
+  const [loading, setLoading] = useState(true);
 
   const { gender, category } = useParams();
   const navigate = useNavigate();
@@ -38,8 +39,15 @@ export default function ProductsPage() {
       .catch((error) => {
         setProducts([]);
         toast.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [capitalizedGender, capitalizedCategory]);
+
+  if (loading) {
+    return <Loading top={false} />;
+  }
 
   return (
     <MainLayout>

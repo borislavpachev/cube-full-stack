@@ -1,4 +1,4 @@
-import { NoData } from '@/components';
+import { Loading, NoData } from '@/components';
 import { Button } from '@/components/buttons';
 import { Section } from '@/components/layout';
 import { getMyOrders } from '@/services/orderService';
@@ -17,6 +17,7 @@ export type OrderType = {
 
 export default function Orders() {
   const [orders, setOrders] = useState<OrderType[]>([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,8 +30,15 @@ export default function Orders() {
       .catch((error) => {
         setOrders([]);
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

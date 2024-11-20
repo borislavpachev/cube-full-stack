@@ -1,7 +1,7 @@
 import { Section } from '@/components/layout';
 import { User } from '@/contexts/types';
 import { useEffect, useState } from 'react';
-import toast, { LoaderIcon } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { createUserColumns } from './columnsUsers';
 import {
   getAllUsers,
@@ -11,6 +11,7 @@ import {
   updateUser,
 } from '@/services';
 import DataTableUsers from './DataTableUsers';
+import { Loading } from '@/components';
 
 export default function UsersPanel() {
   const [users, setUsers] = useState<User[] | []>([]);
@@ -41,9 +42,7 @@ export default function UsersPanel() {
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
       console.error(error);
-      toast.error(
-        'An unexpected error occurred. Please try again!'
-      );
+      toast.error('An unexpected error occurred. Please try again!');
     }
   };
 
@@ -104,9 +103,12 @@ export default function UsersPanel() {
     blockUserById
   );
 
+  if (loading) {
+    return <Loading top={false} />;
+  }
+
   return (
     <Section>
-      {loading && <LoaderIcon className="w-32 h-32" />}
       <DataTableUsers columns={columns} data={users} setUsers={setUsers} />
     </Section>
   );

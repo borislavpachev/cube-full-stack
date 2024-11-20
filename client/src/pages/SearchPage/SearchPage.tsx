@@ -1,4 +1,4 @@
-import { NewArrivals, NoData } from '@/components';
+import { Loading, NewArrivals, NoData } from '@/components';
 import { MainLayout, Section } from '@/components/layout';
 import { ProductValue } from '@/components/product/types';
 import { useForm } from '@/hooks';
@@ -16,6 +16,7 @@ export default function SearchPage() {
     price: 0,
   });
   const [allProducts, setAllProducts] = useState<ProductValue[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAllProducts()
@@ -38,6 +39,9 @@ export default function SearchPage() {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -71,6 +75,10 @@ export default function SearchPage() {
       price: 0,
     });
   };
+
+  if (loading) {
+    return <Loading top={false} />;
+  }
 
   return (
     <MainLayout>

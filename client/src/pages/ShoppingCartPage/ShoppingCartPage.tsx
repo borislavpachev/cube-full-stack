@@ -15,7 +15,7 @@ export default function ShoppingCartPage() {
       <div className="w-full flex flex-col items-start justify-start">
         <p className="text-3xl px-10">Shopping cart</p>
         <div className="w-full flex mt-5 items-center justify-center">
-          {!user?.shoppingCart.length ? (
+          {user?.shoppingCart.length === 0 ? (
             <NoData
               main={`You don't have items in your shopping cart yet.`}
               secondary="Check our deals and feel free to add anything you like."
@@ -34,7 +34,7 @@ export default function ShoppingCartPage() {
               <div className="flex flex-col md:flex-row gap-5 md:gap-2 w-full">
                 <div className="w-full">
                   <CartNav />
-                  {user.shoppingCart.map((item) => {
+                  {user?.shoppingCart?.map((item) => {
                     return (
                       <CartItem
                         id={item._id}

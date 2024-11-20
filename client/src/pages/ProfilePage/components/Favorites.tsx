@@ -7,10 +7,12 @@ import toast from 'react-hot-toast';
 import FavoriteCard from './FavoriteCard';
 import { Sizes } from '@/components/product/types';
 import { FavoriteType } from '@/contexts/types';
-import { NoData } from '@/components';
+import { Loading, NoData } from '@/components';
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<FavoriteType[] | undefined>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllFavorites()
@@ -25,6 +27,9 @@ export default function Favorites() {
       .catch((error) => {
         setFavorites([]);
         toast.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -39,7 +44,9 @@ export default function Favorites() {
     });
   };
 
-  const navigate = useNavigate();
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
