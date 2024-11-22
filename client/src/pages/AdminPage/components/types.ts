@@ -4,7 +4,7 @@ export type CreateProductForm = {
   name: string;
   description: string;
   price: number;
-  gender: string;
+  gender: 'Men' | 'Women' | '';
   frontCover: string;
   backCover: string;
   color: string;

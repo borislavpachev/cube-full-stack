@@ -53,3 +53,18 @@ export const productCategories = [
 export const productSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 export const SearchItemsPerPage = 9;
+
+export const productDescription = {
+  Men: `XS: Chest Width 81-86 cm, Length 66 cm,
+S: Chest Width 86-91 cm, Length 69 cm,
+M: Chest Width 96-101 cm, Length 71 cm,
+L: Chest Width 106-111 cm, Length 74 cm,
+XL: Chest Width 116-121 cm, Length 76 cm,
+XXL: Chest Width 127-132 cm, Length 79 cm`,
+  Women: `XS: Chest Width 76-81 cm, Length 62 cm
+S: Chest Width 81-86 cm, Length 64 cm
+M: Chest Width 91-96 cm, Length 66 cm
+L: Chest Width 101-106 cm, Length 69 cm
+XL: Chest Width 111-116 cm, Length 71 cm
+XXL: Chest Width 121-127 cm, Length 74 cm`,
+};

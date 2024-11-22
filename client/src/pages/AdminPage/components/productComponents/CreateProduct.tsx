@@ -15,7 +15,11 @@ import {
   DialogDescription,
   DialogHeader,
 } from '@/components/ui/dialog';
-import { productCategories, productSizes } from '@/constants';
+import {
+  productCategories,
+  productDescription,
+  productSizes,
+} from '@/constants';
 import { useForm } from '@/hooks';
 import { createNewProduct } from '@/services';
 import { validateProductDescription, validateText } from '@/utils/validations';
@@ -64,6 +68,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
         .catch((error) => {
           console.log(error);
         });
+      setForm({ ...form, description: productDescription[form.gender] });
     }
   }, [form.gender]);
 
