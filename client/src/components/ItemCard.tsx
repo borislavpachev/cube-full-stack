@@ -37,7 +37,7 @@ export default function ItemCard({ id, quantity, size }: ItemCardProps) {
     <div className="flex flex-col md:flex-row w-full px-0 md:px-5 py-5 items-center space-x-0 space-y-2 md:space-x-10 md:space-y-0 border-b">
       <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
         <img
-          src="/images/Back.png"
+          src={product?.backCover}
           alt="product-img"
           className="w-36 h-36 md:w-24 md:h-24 md:mr-2 rounded object-cover"
         />

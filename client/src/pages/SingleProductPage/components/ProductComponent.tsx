@@ -15,8 +15,6 @@ import ProductDescription from './ProductDescription';
 import { ProductQuantity, CustomCounter } from '@/components/product';
 import { Select } from '@/components/form';
 
-const images = [{ src: '/images/Front.png' }, { src: '/images/Back.png' }];
-
 export default function ProductComponent() {
   const { id } = useParams<{ id: string }>();
 
@@ -87,7 +85,9 @@ export default function ProductComponent() {
         className="flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10 
       items-start p-0 md:p-10 md:mx-20"
       >
-        <CustomCarousel items={images} />
+        <CustomCarousel
+          items={[product?.frontCover as string, product?.backCover as string]}
+        />
 
         <div className="space-y-4 w-full">
           <div className="flex flex-col md:flex-row items-start justify-between py-1">

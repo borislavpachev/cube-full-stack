@@ -73,7 +73,7 @@ export default function ProductCard({ id }: CardProps) {
           </div>
           <NavLink to={`${ROUTES.PRODUCT}/${id}`}>
             <img
-              src="/images/Back.png"
+              src={product?.backCover}
               alt="product-cover"
               className="w-full h-full"
             />

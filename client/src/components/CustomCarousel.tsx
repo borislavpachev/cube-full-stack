@@ -6,12 +6,8 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 
-type CarouselItemProps = {
-  src: string;
-};
-
 type CustomCarouselProps = {
-  items: CarouselItemProps[];
+  items: string[];
 };
 
 export default function CustomCarousel({ items }: CustomCarouselProps) {
@@ -23,7 +19,7 @@ export default function CustomCarousel({ items }: CustomCarouselProps) {
             {items.map((item, index: number) => (
               <CarouselItem key={index}>
                 <img
-                  src={`${item.src}`}
+                  src={`${item}`}
                   alt={`product-${index}`}
                   className="w-full h-full object-cover flex hover:scale-110 duration-300 rounded"
                 />
