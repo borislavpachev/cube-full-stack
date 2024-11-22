@@ -119,7 +119,7 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
       return;
     }
     if (!validateProductDescription(description)) {
-      toast.error('Product description must be between 10 - 200 characters !');
+      toast.error('Product description must be between 10 - 300 characters !');
       return;
     }
     if (!price) {

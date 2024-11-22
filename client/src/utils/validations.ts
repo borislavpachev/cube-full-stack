@@ -25,7 +25,7 @@ export const normalizePhoneNumber = (text: string) => {
 };
 
 export const validateProductDescription = (text: string) => {
-  if (text.length <= 10 || text.length >= 200) {
+  if (text.length <= 10 || text.length >= 300) {
     return false;
   } else {
     return true;
