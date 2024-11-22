@@ -9,7 +9,7 @@ const rateLimit = require('./rateLimiter');
 
 module.exports = (app) => {
   app.use(helmet());
-  app.use(cors({ origin: 'https://cube-full-stack.onrender.com/', credentials: true }));
+  app.use(cors({ origin: 'https://cube-full-stack.vercel.app/', credentials: true }));
   app.use(morgan('dev'));
   app.use(express.json());
   app.use(mongoSanitize());
