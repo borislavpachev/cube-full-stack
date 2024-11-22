@@ -63,12 +63,15 @@ export default function CreateProduct({ setProducts }: CreateProductProps) {
     if (form.gender) {
       getFrontCoverFromBucket(form.gender)
         .then((data) => {
-          setForm({ ...form, frontCover: data as string });
+          setForm({
+            ...form,
+            frontCover: data as string,
+            description: productDescription[form.gender as 'Men' | 'Women'],
+          });
         })
         .catch((error) => {
           console.log(error);
         });
-      setForm({ ...form, description: productDescription[form.gender] });
     }
   }, [form.gender]);
 
