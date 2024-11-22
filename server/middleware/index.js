@@ -8,15 +8,14 @@ const cookieParser = require('cookie-parser');
 const rateLimit = require('./rateLimiter');
 
 module.exports = (app) => {
-  app.use(helmet());
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-  });
   app.use(
-    cors({ origin: 'https://cube-full-stack.vercel.app/', credentials: true })
+    cors({
+      origin: 'https://cube-full-stack.vercel.app',
+      credentials: true,
+    })
   );
   app.options('*', cors());
+  app.use(helmet());
   app.use(morgan('dev'));
   app.use(express.json());
   app.use(mongoSanitize());
