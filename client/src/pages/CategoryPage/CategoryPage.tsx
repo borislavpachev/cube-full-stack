@@ -9,7 +9,7 @@ export default function CategoryPage() {
   return (
     <MainLayout>
       <Section>
-        <div className={`w-6xl ${gender === 'women' ? 'bg-red-100/50' : 'bg-blue-100/50'} m-auto flex flex-wrap items-center justify-center p-10 gap-14 mb-10`}>
+        <div className={`w-6xl ${gender === 'women' ? 'bg-red-100/50' : 'bg-blue-100/50'} mx-auto flex flex-wrap items-center justify-center p-14 gap-16 mb-10`}>
           {productCategories.map((category, index) => {
             return <CategoryCard key={index} category={category} />;
           })}

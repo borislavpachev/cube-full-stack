@@ -12,7 +12,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   
   return (
     <div
-      className="max-w-xs shadow-2xl cursor-pointer bg-white group relative overflow-hidden rounded"
+      className="max-w-[400px] shadow-2xl cursor-pointer bg-white group relative overflow-hidden rounded"
       onClick={() => {
         navigate(`${ROUTES.PRODUCTS}/${gender}/${categoryName}`);
       }}

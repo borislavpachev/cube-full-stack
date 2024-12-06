@@ -16,12 +16,12 @@ export default function MonthCategory() {
 
   return (
     <div className="flex flex-col md:flex-row px-10 md:px-20">
-      <div className="flex flex-col md:flex-row w-full p-10 text-start md:text-end bg-slate-200">
+      <div className="flex flex-col md:flex-row w-full px-10 text-start md:text-end bg-slate-200">
         <div className="w-full md:w-1/2">
           <img
             src="./categories/Space.png"
             alt="Category of the Month"
-            className=" object-cover"
+            className="object-cover"
           />
         </div>
         <div className="w-full md:w-1/2 flex flex-col text-4xl md:text-5xl justify-center uppercase break-words">

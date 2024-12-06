@@ -6,14 +6,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-black p-5 text-white">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col md:flex-row items-center md:justify-between">
         <Logo />
         <div className="text-lg">
           <Link to="mailto:cube-e-store@cube.com" className="hover:underline">
             Contact Us
           </Link>
         </div>
-        <nav className="flex flex-col items-start justify-center">
+        <nav className="flex flex-col items-center md:items-start justify-center">
           <Link className="hover:underline" to="/">
             Terms of Service
           </Link>

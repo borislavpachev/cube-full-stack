@@ -77,7 +77,7 @@ export default function LoginPage() {
           <Logo />
         </div>
         <img
-          src="/images/Back.png"
+          src="/images/Front.png"
           alt="Image of Product"
           className="w-full h-full object-cover"
         />
