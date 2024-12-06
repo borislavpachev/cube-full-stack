@@ -78,7 +78,7 @@ export default function ProductsPage() {
               </p>
             )}
 
-            <div className=" flex flex-wrap w-full px-10 gap-16 justify-center items-center">
+            <div className=" flex flex-wrap w-full gap-y-4 md:px-[100px] lg:px-[200px] md:gap-x-16 lg:gap-x-24 justify-center items-center">
               {products.map((item) => {
                 return <ProductCard id={item._id} key={item._id} />;
               })}
